@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript & Angular Interview Q&A</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <button class="sidebar-toggle" id="sidebarToggle" title="Toggle Sidebar">
+        <i class="fas fa-bars"></i>
+      </button>
+      <h1 class="logo">Interview Prep</h1>
+    </div>
+    <div class="header-filters">
+      <div class="filter-group">
+        <label>Topic:</label>
+        <select id="topicFilter">
+          <option value="all">All</option>
+          <option value="javascript" selected>JavaScript</option>
+          <option value="angular">Angular</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Level:</label>
+        <select id="levelFilter">
+          <option value="all">All Levels</option>
+          <option value="beginner">Beginner (0-1 yr)</option>
+          <option value="intermediate">Intermediate (1-2 yr)</option>
+          <option value="advanced">Advanced (2+ yr)</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <input type="text" id="searchInput" placeholder="Search questions..." />
+      </div>
+      <div class="filter-group">
+        <button class="btn-bookmark-filter" id="bookmarkFilter" title="Show Bookmarked">
+          <i class="far fa-bookmark"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-title">Questions</span>
+        <div class="sidebar-actions">
+          <button class="expand-all-btn" id="expandAllBtn" title="Expand All">
+            <i class="fas fa-angle-double-down"></i>
+          </button>
+          <button class="collapse-all-btn" id="collapseAllBtn" title="Collapse All">
+            <i class="fas fa-angle-double-up"></i>
+          </button>
+        </div>
+      </div>
+      <nav class="sidebar-nav" id="sidebarNav"></nav>
+    </aside>
+
+    <main class="content" id="content">
+      <div class="welcome-screen" id="welcomeScreen">
+        <i class="fas fa-code welcome-icon"></i>
+        <h2>Welcome to Interview Prep</h2>
+        <p>Select a question from the sidebar or use the filters above to get started.</p>
+        <div class="stats" id="stats"></div>
+      </div>
+      <div class="qa-display" id="qaDisplay" style="display:none;">
+        <div class="qa-header">
+          <span class="qa-badge" id="qaBadge"></span>
+          <span class="qa-level" id="qaLevel"></span>
+          <button class="btn-bookmark" id="qaBookmark" title="Bookmark">
+            <i class="far fa-bookmark"></i>
+          </button>
+        </div>
+        <h2 class="qa-question" id="qaQuestion"></h2>
+        <div class="qa-answer" id="qaAnswer"></div>
+        <div class="qa-nav">
+          <button class="btn-nav" id="prevBtn"><i class="fas fa-arrow-left"></i> Previous</button>
+          <button class="btn-nav" id="nextBtn">Next <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
