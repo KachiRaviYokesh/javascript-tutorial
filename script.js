@@ -21,8 +21,8 @@
   const sidebar = document.getElementById('sidebar');
   const sidebarToggle = document.getElementById('sidebarToggle');
   const sidebarNav = document.getElementById('sidebarNav');
-  const expandAllBtn = document.getElementById('expandAllBtn');
-  const collapseAllBtn = document.getElementById('collapseAllBtn');
+  const toggleAllBtn = document.getElementById('toggleAllBtn');
+  let allExpanded = true;
   const topicFilter = document.getElementById('topicFilter');
   const levelFilter = document.getElementById('levelFilter');
   const searchInput = document.getElementById('searchInput');
@@ -86,9 +86,20 @@
       }
     });
 
+    const searchClear = document.getElementById('searchClear');
+
     topicFilter.addEventListener('change', applyFilters);
     levelFilter.addEventListener('change', applyFilters);
-    searchInput.addEventListener('input', debounce(applyFilters, 300));
+    searchInput.addEventListener('input', () => {
+      searchClear.classList.toggle('visible', searchInput.value.length > 0);
+      debounce(applyFilters, 300)();
+    });
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      searchClear.classList.remove('visible');
+      searchInput.focus();
+      applyFilters();
+    });
 
     bookmarkFilter.addEventListener('click', () => {
       showBookmarksOnly = !showBookmarksOnly;
@@ -97,8 +108,12 @@
       applyFilters();
     });
 
-    expandAllBtn.addEventListener('click', () => toggleAllGroups(true));
-    collapseAllBtn.addEventListener('click', () => toggleAllGroups(false));
+    toggleAllBtn.addEventListener('click', () => {
+      allExpanded = !allExpanded;
+      toggleAllGroups(allExpanded);
+      toggleAllBtn.querySelector('i').className = allExpanded ? 'fas fa-angle-double-up' : 'fas fa-angle-double-down';
+      toggleAllBtn.title = allExpanded ? 'Collapse All' : 'Expand All';
+    });
 
     qaBookmark.addEventListener('click', () => {
       if (!currentQuestion) return;

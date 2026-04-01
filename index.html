@@ -17,16 +17,17 @@
       <div class="sidebar-header">
         <span class="sidebar-logo"><i class="fas fa-code"></i> Interview Prep</span>
         <div class="sidebar-actions">
-          <button class="expand-all-btn" id="expandAllBtn" title="Expand All">
-            <i class="fas fa-angle-double-down"></i>
-          </button>
-          <button class="collapse-all-btn" id="collapseAllBtn" title="Collapse All">
+          <button id="toggleAllBtn" title="Collapse All">
             <i class="fas fa-angle-double-up"></i>
           </button>
         </div>
       </div>
       <div class="sidebar-filters">
-        <input type="text" id="searchInput" placeholder="Search questions..." />
+        <div class="search-wrapper">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="searchInput" placeholder="Search questions..." />
+          <button class="search-clear" id="searchClear" title="Clear"><i class="fas fa-times"></i></button>
+        </div>
       </div>
       <nav class="sidebar-nav" id="sidebarNav"></nav>
     </aside>
