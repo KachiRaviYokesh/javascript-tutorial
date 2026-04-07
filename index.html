@@ -26,6 +26,10 @@
         <div class="search-wrapper">
           <i class="fas fa-search search-icon"></i>
           <input type="text" id="searchInput" placeholder="Search questions..." />
+          <div class="search-options">
+            <button type="button" class="search-opt" id="matchCaseBtn" title="Match Case" aria-pressed="false">Aa</button>
+            <button type="button" class="search-opt" id="matchWordBtn" title="Match Whole Word" aria-pressed="false">Ab|</button>
+          </div>
           <button class="search-clear" id="searchClear" title="Clear"><i class="fas fa-times"></i></button>
         </div>
       </div>
@@ -48,6 +52,7 @@
             <select id="topicFilter">
               <option value="all" selected>All</option>
               <option value="javascript">JavaScript</option>
+              <option value="typescript">TypeScript</option>
               <option value="angular">Angular</option>
             </select>
           </div>
@@ -87,6 +92,7 @@
   </div>
 
   <script src="javascript-questions.js"></script>
+  <script src="typescript-questions.js"></script>
   <script src="angular-questions.js"></script>
   <script src="script.js"></script>
 </body>

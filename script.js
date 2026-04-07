@@ -8,6 +8,7 @@
   // Combine all questions from data files
   const allQuestions = [
     ...(window.JAVASCRIPT_QUESTIONS || []),
+    ...(window.TYPESCRIPT_QUESTIONS || []),
     ...(window.ANGULAR_QUESTIONS || []),
   ];
 
@@ -16,6 +17,7 @@
   let currentQuestion = null;
   let bookmarks = JSON.parse(localStorage.getItem('interview-bookmarks') || '[]');
   let showBookmarksOnly = false;
+  let currentMatcher = null;
 
   // DOM Elements
   const sidebar = document.getElementById('sidebar');
@@ -26,6 +28,10 @@
   const topicFilter = document.getElementById('topicFilter');
   const levelFilter = document.getElementById('levelFilter');
   const searchInput = document.getElementById('searchInput');
+  const matchCaseBtn = document.getElementById('matchCaseBtn');
+  const matchWordBtn = document.getElementById('matchWordBtn');
+  let matchCase = false;
+  let matchWord = false;
   const bookmarkFilter = document.getElementById('bookmarkFilter');
   const qaDisplay = document.getElementById('qaDisplay');
   const qaBadge = document.getElementById('qaBadge');
@@ -101,6 +107,19 @@
       applyFilters();
     });
 
+    matchCaseBtn.addEventListener('click', () => {
+      matchCase = !matchCase;
+      matchCaseBtn.classList.toggle('active', matchCase);
+      matchCaseBtn.setAttribute('aria-pressed', matchCase);
+      applyFilters();
+    });
+    matchWordBtn.addEventListener('click', () => {
+      matchWord = !matchWord;
+      matchWordBtn.classList.toggle('active', matchWord);
+      matchWordBtn.setAttribute('aria-pressed', matchWord);
+      applyFilters();
+    });
+
     bookmarkFilter.addEventListener('click', () => {
       showBookmarksOnly = !showBookmarksOnly;
       bookmarkFilter.classList.toggle('active', showBookmarksOnly);
@@ -136,13 +155,30 @@
   function applyFilters() {
     const topic = topicFilter.value;
     const level = levelFilter.value;
-    const search = searchInput.value.toLowerCase().trim();
+    const rawSearch = searchInput.value.trim();
+
+    let searchMatcher = null;
+    if (rawSearch) {
+      const escaped = rawSearch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const pattern = matchWord ? '\\b' + escaped + '\\b' : escaped;
+      const flags = matchCase ? '' : 'i';
+      try {
+        searchMatcher = new RegExp(pattern, flags);
+      } catch (e) {
+        searchMatcher = null;
+      }
+    }
+    currentMatcher = searchMatcher;
 
     filteredQuestions = allQuestions.filter(q => {
       if (topic !== 'all' && q.topic !== topic) return false;
       if (level !== 'all' && q.level !== level) return false;
       if (showBookmarksOnly && !bookmarks.includes(q.id)) return false;
-      if (search && !q.question.toLowerCase().includes(search) && !stripHtml(q.answer).toLowerCase().includes(search)) return false;
+      if (searchMatcher) {
+        const question = q.question;
+        const answer = stripHtml(q.answer);
+        if (!searchMatcher.test(question) && !searchMatcher.test(answer)) return false;
+      }
       return true;
     });
 
@@ -164,6 +200,71 @@
     const tmp = document.createElement('div');
     tmp.innerHTML = html;
     return tmp.textContent || tmp.innerText || '';
+  }
+
+  // Escape text for safe insertion into innerHTML
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  // Return plain text with matches wrapped in <mark> (output is HTML-safe)
+  function highlightText(text, matcher) {
+    const safe = String(text || '');
+    if (!matcher) return escapeHtml(safe);
+    const g = new RegExp(matcher.source, matcher.flags.indexOf('g') === -1 ? matcher.flags + 'g' : matcher.flags);
+    let out = '';
+    let last = 0;
+    let m;
+    while ((m = g.exec(safe)) !== null) {
+      if (m[0].length === 0) { g.lastIndex++; continue; }
+      out += escapeHtml(safe.slice(last, m.index)) + '<mark class="search-hit">' + escapeHtml(m[0]) + '</mark>';
+      last = m.index + m[0].length;
+    }
+    out += escapeHtml(safe.slice(last));
+    return out;
+  }
+
+  // Walk text nodes inside an element and wrap matches in <mark>
+  function highlightInElement(root, matcher) {
+    if (!matcher || !root) return;
+    const skipTags = { SCRIPT: 1, STYLE: 1, MARK: 1 };
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (node) {
+        if (!node.nodeValue || !node.parentNode) return NodeFilter.FILTER_REJECT;
+        if (skipTags[node.parentNode.nodeName]) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    const nodes = [];
+    let n;
+    while ((n = walker.nextNode())) nodes.push(n);
+
+    const g = new RegExp(matcher.source, matcher.flags.indexOf('g') === -1 ? matcher.flags + 'g' : matcher.flags);
+    nodes.forEach(node => {
+      const text = node.nodeValue;
+      g.lastIndex = 0;
+      if (!g.test(text)) return;
+      g.lastIndex = 0;
+      const frag = document.createDocumentFragment();
+      let last = 0;
+      let m;
+      while ((m = g.exec(text)) !== null) {
+        if (m[0].length === 0) { g.lastIndex++; continue; }
+        if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+        const mark = document.createElement('mark');
+        mark.className = 'search-hit';
+        mark.textContent = m[0];
+        frag.appendChild(mark);
+        last = m.index + m[0].length;
+      }
+      if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+    });
   }
 
   // Render sidebar
@@ -197,7 +298,7 @@
         item.innerHTML = `
           <span class="level-dot ${q.level}"></span>
           <span class="q-number">Q${q.id}.</span>
-          ${truncate(q.question, 40)}
+          ${highlightText(truncate(q.question, 40), currentMatcher)}
           ${isBookmarked ? '<i class="fas fa-bookmark bookmarked-icon"></i>' : ''}
         `;
         item.addEventListener('click', () => showQuestion(q));
@@ -238,6 +339,9 @@
       { topic: 'javascript', level: 'beginner', label: 'JS - Beginner (0-1 yr)' },
       { topic: 'javascript', level: 'intermediate', label: 'JS - Intermediate (1-2 yr)' },
       { topic: 'javascript', level: 'advanced', label: 'JS - Advanced (2+ yr)' },
+      { topic: 'typescript', level: 'beginner', label: 'TS - Beginner (0-1 yr)' },
+      { topic: 'typescript', level: 'intermediate', label: 'TS - Intermediate (1-2 yr)' },
+      { topic: 'typescript', level: 'advanced', label: 'TS - Advanced (2+ yr)' },
       { topic: 'angular', level: 'beginner', label: 'Angular - Beginner (0-1 yr)' },
       { topic: 'angular', level: 'intermediate', label: 'Angular - Intermediate (1-2 yr)' },
       { topic: 'angular', level: 'advanced', label: 'Angular - Advanced (2+ yr)' },
@@ -256,15 +360,17 @@
     currentQuestion = q;
     qaDisplay.style.display = 'block';
 
-    qaBadge.textContent = q.topic === 'javascript' ? 'JavaScript' : 'Angular';
+    const topicLabels = { javascript: 'JavaScript', typescript: 'TypeScript', angular: 'Angular' };
+    qaBadge.textContent = topicLabels[q.topic] || q.topic;
     qaBadge.className = 'qa-badge ' + q.topic;
 
     const levelLabels = { beginner: 'Beginner', intermediate: 'Intermediate', advanced: 'Advanced' };
     qaLevel.textContent = levelLabels[q.level];
     qaLevel.className = 'qa-level ' + q.level;
 
-    qaQuestion.textContent = 'Q' + q.id + '. ' + q.question;
+    qaQuestion.innerHTML = 'Q' + q.id + '. ' + highlightText(q.question, currentMatcher);
     qaAnswer.innerHTML = q.answer;
+    highlightInElement(qaAnswer, currentMatcher);
 
     updateBookmarkButton();
     updateNavButtons();
