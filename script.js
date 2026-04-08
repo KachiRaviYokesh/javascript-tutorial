@@ -229,6 +229,36 @@
     return out;
   }
 
+  // Lightweight syntax highlighter for <pre><code> blocks (JS/TS/Angular-friendly)
+  const CODE_TOKEN_RE = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)|(`(?:\\[\s\S]|[^`\\])*`|"(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*')|\b(var|let|const|function|return|if|else|for|while|do|switch|case|break|continue|new|class|extends|super|this|typeof|instanceof|in|of|null|undefined|true|false|try|catch|finally|throw|async|await|yield|import|export|from|as|default|void|delete|interface|type|enum|public|private|protected|readonly|static|implements|namespace|declare|abstract|keyof|infer|never|unknown|any|number|string|boolean|symbol|bigint|object)\b|\b(\d+(?:\.\d+)?)\b|([A-Za-z_$][\w$]*)(?=\s*\()/g;
+
+  function tokenizeCode(src) {
+    let out = '';
+    let last = 0;
+    let m;
+    CODE_TOKEN_RE.lastIndex = 0;
+    while ((m = CODE_TOKEN_RE.exec(src)) !== null) {
+      if (m.index > last) out += escapeHtml(src.slice(last, m.index));
+      let cls;
+      if (m[1]) cls = 'tok-comment';
+      else if (m[2]) cls = 'tok-string';
+      else if (m[3]) cls = 'tok-keyword';
+      else if (m[4]) cls = 'tok-number';
+      else cls = 'tok-fn';
+      out += '<span class="' + cls + '">' + escapeHtml(m[0]) + '</span>';
+      last = m.index + m[0].length;
+    }
+    out += escapeHtml(src.slice(last));
+    return out;
+  }
+
+  function highlightCodeBlocks(root) {
+    if (!root) return;
+    root.querySelectorAll('pre code').forEach(block => {
+      block.innerHTML = tokenizeCode(block.textContent);
+    });
+  }
+
   // Walk text nodes inside an element and wrap matches in <mark>
   function highlightInElement(root, matcher) {
     if (!matcher || !root) return;
@@ -370,6 +400,7 @@
 
     qaQuestion.innerHTML = 'Q' + q.id + '. ' + highlightText(q.question, currentMatcher);
     qaAnswer.innerHTML = q.answer;
+    highlightCodeBlocks(qaAnswer);
     highlightInElement(qaAnswer, currentMatcher);
 
     updateBookmarkButton();

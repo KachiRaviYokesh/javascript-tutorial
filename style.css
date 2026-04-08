@@ -511,6 +511,13 @@ mark.search-hit {
   font-size: inherit;
 }
 
+/* Syntax highlighting tokens */
+.qa-answer pre .tok-keyword { color: #c084fc; font-weight: 600; }
+.qa-answer pre .tok-string  { color: #86efac; }
+.qa-answer pre .tok-number  { color: #fbbf24; }
+.qa-answer pre .tok-comment { color: #64748b; font-style: italic; }
+.qa-answer pre .tok-fn      { color: #60a5fa; }
+
 .qa-answer ul,
 .qa-answer ol {
   padding-left: 16px;
@@ -523,7 +530,11 @@ mark.search-hit {
 .qa-nav {
   display: flex;
   justify-content: space-between;
-  margin-top: 14px;
+  gap: 12px;
+  flex-shrink: 0;
+  padding: 12px 24px;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
 }
 
 .btn-nav {
