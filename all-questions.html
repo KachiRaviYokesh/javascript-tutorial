@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Interview Q&A</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --bg: #0f172a;
+      --bg-light: #1e293b;
+      --card-bg: #1e293b;
+      --text: #e2e8f0;
+      --text-dim: #94a3b8;
+      --text-muted: #64748b;
+      --border: #334155;
+      --beginner: #22c55e;
+      --intermediate: #f59e0b;
+      --advanced: #ef4444;
+      --js-badge: #ca8a04;
+      --ts-badge: #2563eb;
+      --ng-badge: #dc2626;
+    }
+
+    body {
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ===== STICKY HEADER ===== */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-light);
+      border-bottom: 1px solid var(--border);
+      padding: 6px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .filter-group label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .filter-group select {
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 12px;
+      font-family: inherit;
+      outline: none;
+      cursor: pointer;
+      height: 26px;
+    }
+
+    .filter-group select:focus { border-color: var(--primary); }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 160px;
+      max-width: 360px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 4px 28px 4px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 12px;
+      font-family: inherit;
+      outline: none;
+      height: 26px;
+    }
+
+    .search-box input:focus { border-color: var(--primary); }
+
+    .search-box .clear-btn {
+      position: absolute;
+      right: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 13px;
+      display: none;
+      line-height: 1;
+    }
+
+    .search-box .clear-btn.visible { display: block; }
+    .search-box .clear-btn:hover { color: var(--text); }
+
+    /* ===== CONTENT ===== */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 10px 16px 40px;
+    }
+
+    .topic-section { margin-bottom: 14px; }
+
+    .topic-heading {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 4px 0;
+      margin-bottom: 6px;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .topic-heading .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .topic-heading.javascript .dot { background: var(--js-badge); }
+    .topic-heading.typescript .dot { background: var(--ts-badge); }
+    .topic-heading.angular .dot { background: var(--ng-badge); }
+
+    /* ===== QA ITEM ===== */
+    .qa-card {
+      border-bottom: 1px solid var(--border);
+      padding: 6px 0 5px;
+    }
+
+    .qa-card-header {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      padding: 0 0 2px;
+    }
+
+    .qa-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      min-width: 26px;
+    }
+
+    .qa-q {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .qa-badges {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .badge {
+      padding: 1px 6px;
+      border-radius: 8px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .badge.javascript { background: var(--js-badge); color: #fef9c3; }
+    .badge.typescript { background: var(--ts-badge); }
+    .badge.angular { background: var(--ng-badge); }
+    .badge.beginner { background: var(--beginner); }
+    .badge.intermediate { background: var(--intermediate); }
+    .badge.advanced { background: var(--advanced); }
+
+    .qa-answer {
+      padding: 0 0 0 32px;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--text-dim);
+    }
+
+    .qa-answer p { margin-bottom: 4px; }
+    .qa-answer p:last-child { margin-bottom: 0; }
+
+    .qa-answer code {
+      background: #0f172a;
+      padding: 0 4px;
+      border-radius: 3px;
+      font-size: 11px;
+      color: #f472b6;
+      font-family: 'Consolas', 'Monaco', monospace;
+    }
+
+    .qa-answer pre {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: #e2e8f0;
+      padding: 6px 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+      margin: 4px 0;
+      font-size: 11px;
+      line-height: 1.4;
+      font-family: 'Consolas', 'Monaco', monospace;
+    }
+
+    .qa-answer pre code {
+      background: none;
+      color: inherit;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    .qa-answer ul, .qa-answer ol { padding-left: 14px; margin: 3px 0; }
+    .qa-answer li { margin-bottom: 2px; }
+    .qa-answer strong { color: var(--text); }
+
+    mark.hit {
+      background: #facc15;
+      color: #1e293b;
+      padding: 0 1px;
+      border-radius: 2px;
+      font-weight: 600;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 40px 16px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 700px) {
+      .header { padding: 5px 10px; gap: 8px; }
+      .content { padding: 0px 10px 0px; }
+      .qa-card-header { padding: 0 0 2px; }
+      .qa-answer { padding: 0 0 0 28px; }
+      .qa-badges { display: none; }
+      .filter-group label { display: none; }
+      .search-box { min-width: 120px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="filter-group">
+      <label>Topic:</label>
+      <select id="topicFilter">
+        <option value="all" selected>All Topics</option>
+        <option value="javascript">JavaScript</option>
+        <option value="typescript">TypeScript</option>
+        <option value="angular">Angular</option>
+      </select>
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search questions & answers..." />
+      <button class="clear-btn" id="clearBtn">&times;</button>
+    </div>
+  </div>
+
+  <div class="content" id="content"></div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    const ALL_QUESTIONS = [
+      // ===== JAVASCRIPT (150) =====
+      { id:"js-1", q:"What are the differences between var, let, and const in JavaScript?", a:"var is old way to declare variable. It is function scope and can be re-declared and updated. let is block scope and value can be updated but not re-declared in same scope. const is also block scope but value cannot be changed after assign.", topic:"javascript", level:"beginner" },
+      { id:"js-2", q:"What is variable hoisting in JavaScript?", a:"Hoisting means JS moves variable and function declaration to top before execution. var becomes undefined if used before declaration. let and const are also hoisted but cannot be accessed before declaration.", topic:"javascript", level:"beginner" },
+      { id:"js-3", q:"What is the Temporal Dead Zone (TDZ) in JavaScript?", a:"TDZ is the time between variable declaration and initialization. During this time, let and const variables cannot be used. If you try to access, it gives error.", topic:"javascript", level:"beginner" },
+      { id:"js-4", q:"Why is const preferred for declaring variables in modern JavaScript?", a:"const is preferred because it prevents reassignment. It makes code more safe and predictable. Use let only when value needs to change.", topic:"javascript", level:"beginner" },
+      { id:"js-5", q:"What is the difference between block scope and function scope?", a:"Function scope means variable works inside entire function. Block scope means variable works only inside {} block. var is function scope and let, const are block scope.", topic:"javascript", level:"beginner" },
+      { id:"js-6", q:"What are the primitive data types in JavaScript?", a:"Primitive data types are string, number, boolean, null, undefined, symbol and bigint. These store simple values and cannot be changed directly.", topic:"javascript", level:"beginner" },
+      { id:"js-7", q:"What is the difference between primitive and reference types?", a:"Primitive types store actual value. Reference types like object and array store memory reference. Changing one reference value can affect another.", topic:"javascript", level:"beginner" },
+      { id:"js-8", q:"How does the typeof operator work in JavaScript?", a:"typeof is used to check data type of a value. It returns result as string like 'string', 'number' or 'object'. Note that typeof null shows 'object'.", topic:"javascript", level:"beginner" },
+      { id:"js-9", q:"What is type coercion in JavaScript?", a:"Type coercion means automatic type conversion by JS. It happens when different types are used together in operations like + or comparison.", topic:"javascript", level:"beginner" },
+      { id:"js-10", q:"What are truthy and falsy values in JavaScript?", a:"Falsy values are false, 0, empty string, null, undefined and NaN. All other values are considered truthy in JavaScript.", topic:"javascript", level:"beginner" },
+      { id:"js-11", q:"What is the difference between == and === in JavaScript?", a:"== checks only value and allows type conversion. === checks both value and type without conversion. So === is safer and mostly recommended.", topic:"javascript", level:"beginner" },
+      { id:"js-12", q:"How do logical operators (&&, ||, !) work in JavaScript?", a:"&& returns first false value or last true value. || returns first true value. ! is used to reverse boolean value from true to false or false to true.", topic:"javascript", level:"beginner" },
+      { id:"js-13", q:"What is the ternary operator and how do you use it?", a:"Ternary operator is short form of if-else. Syntax is condition ? value1 : value2. It is useful for simple conditions in one line.", topic:"javascript", level:"beginner" },
+      { id:"js-14", q:"What is the nullish coalescing operator (??) in JavaScript?", a:"?? returns right side value only if left side is null or undefined. It does not treat 0 or empty string as false like || operator.", topic:"javascript", level:"beginner" },
+      { id:"js-15", q:"What is the optional chaining operator (?.) in JavaScript?", a:"Optional chaining is used to safely access nested properties. If any value is null or undefined, it stops and returns undefined without error.", topic:"javascript", level:"beginner" },
+      { id:"js-16", q:"What are template literals in JavaScript?", a:"Template literals use backticks (`). They allow multi-line strings and also allow variables inside string using ${}.", topic:"javascript", level:"beginner" },
+      { id:"js-17", q:"What are the most commonly used string methods in JavaScript?", a:"Common string methods are length, toUpperCase, toLowerCase, trim, includes, slice, split and replace. These help to read and modify strings.", topic:"javascript", level:"beginner" },
+      { id:"js-18", q:"How do you convert between strings and other data types?", a:"Use String(), Number() and Boolean() to convert values. parseInt and parseFloat are used to convert string to numbers.", topic:"javascript", level:"beginner" },
+      { id:"js-19", q:"How do you check if a string contains a substring in JavaScript?", a:"Use includes() method to check substring. You can also use indexOf(), startsWith() and endsWith() methods.", topic:"javascript", level:"beginner" },
+      { id:"js-20", q:"What is the difference between slice(), substring(), and substr()?", a:"slice supports negative index and is mostly used. substring does not support negative values. substr is old method and not recommended now.", topic:"javascript", level:"beginner" },
+      { id:"js-21", q:"How do parseInt() and parseFloat() work in JavaScript?", a:"parseInt converts string to integer number. parseFloat converts string to decimal number. Both stop reading when non-number character comes.", topic:"javascript", level:"beginner" },
+      { id:"js-22", q:"What is NaN in JavaScript and how do you check for it?", a:"NaN means Not a Number. It comes when a calculation fails. Use Number.isNaN() to check it because NaN is not equal to itself.", topic:"javascript", level:"beginner" },
+      { id:"js-23", q:"What is Infinity in JavaScript?", a:"Infinity is a special value in JS. It comes when number is too large or when dividing by zero. There is also -Infinity.", topic:"javascript", level:"beginner" },
+      { id:"js-24", q:"What are the commonly used methods of the Math object?", a:"Common methods are Math.max, Math.min, Math.round, Math.floor, Math.ceil, Math.random and Math.sqrt. These are used for calculations.", topic:"javascript", level:"beginner" },
+      { id:"js-25", q:"Why does 0.1 + 0.2 not equal 0.3 in JavaScript?", a:"JS uses floating point numbers. Some decimal values cannot be stored exactly in memory, so small precision error happens.", topic:"javascript", level:"beginner" },
+      { id:"js-26", q:"How do you create arrays in JavaScript?", a:"Arrays can be created using [] or Array constructor. You can also use Array.of() and Array.from() methods.", topic:"javascript", level:"beginner" },
+      { id:"js-27", q:"What are push(), pop(), shift(), and unshift() in JavaScript?", a:"push adds element at end. pop removes last element. unshift adds element at beginning. shift removes first element.", topic:"javascript", level:"beginner" },
+      { id:"js-28", q:"What is the difference between splice() and slice()?", a:"slice returns new array without changing original. splice changes original array by adding or removing elements.", topic:"javascript", level:"beginner" },
+      { id:"js-29", q:"How do concat(), join(), and includes() work on arrays?", a:"concat joins arrays and returns new array. join converts array to string. includes checks if value exists in array.", topic:"javascript", level:"beginner" },
+      { id:"js-30", q:"How do you find the index of an element in an array?", a:"Use indexOf() to find index of value. Use findIndex() when you need to check with condition.", topic:"javascript", level:"beginner" },
+      { id:"js-31", q:"How does the forEach() method work in JavaScript?", a:"forEach runs a function for each element in array. It does not return a new array. It is mainly used for looping.", topic:"javascript", level:"beginner" },
+      { id:"js-32", q:"How does the map() method work in JavaScript?", a:"map creates a new array by applying function to each element. It returns new array with same length.", topic:"javascript", level:"beginner" },
+      { id:"js-33", q:"How does the filter() method work in JavaScript?", a:"filter creates a new array with elements that match a condition. Only values that pass condition are returned.", topic:"javascript", level:"beginner" },
+      { id:"js-34", q:"How does the reduce() method work in JavaScript?", a:"reduce converts array into single value. It uses accumulator to combine values step by step.", topic:"javascript", level:"beginner" },
+      { id:"js-35", q:"How do find() and some()/every() work on arrays?", a:"find returns first matching element. some returns true if at least one value matches. every returns true only if all values match.", topic:"javascript", level:"beginner" },
+      { id:"js-36", q:"How do you create and access properties of objects in JavaScript?", a:"Objects are created using {}. Properties can be accessed using dot notation like obj.name or bracket notation like obj['name'].", topic:"javascript", level:"beginner" },
+      { id:"js-37", q:"What is object destructuring in JavaScript?", a:"Destructuring means taking values from object and assigning to variables easily. It reduces code and improves readability.", topic:"javascript", level:"beginner" },
+      { id:"js-38", q:"How does the spread operator work with objects?", a:"Spread operator (...) is used to copy or merge objects. It creates a shallow copy of object.", topic:"javascript", level:"beginner" },
+      { id:"js-39", q:"What are Object.keys(), Object.values(), and Object.entries()?", a:"Object.keys returns all keys. Object.values returns all values. Object.entries returns key-value pairs as array.", topic:"javascript", level:"beginner" },
+      { id:"js-40", q:"How do Object.assign() and Object.freeze() work?", a:"Object.assign is used to copy properties from one object to another. Object.freeze makes object read-only so values cannot be changed.", topic:"javascript", level:"beginner" },
+      { id:"js-41", q:"What are the different ways to define functions in JavaScript?", a:"Functions can be created using function declaration, function expression and arrow function. Each method has slightly different behavior.", topic:"javascript", level:"beginner" },
+      { id:"js-42", q:"What are arrow functions and how do they differ from regular functions?", a:"Arrow functions have shorter syntax. They do not have their own this value and use parent this. They are useful for small functions.", topic:"javascript", level:"beginner" },
+      { id:"js-43", q:"What are default parameters and rest parameters in functions?", a:"Default parameters give default value if argument is not passed. Rest parameters collect multiple arguments into an array.", topic:"javascript", level:"beginner" },
+      { id:"js-44", q:"What is scope in JavaScript?", a:"Scope defines where variables can be accessed. Types are global scope, function scope and block scope.", topic:"javascript", level:"beginner" },
+      { id:"js-45", q:"What is closure in JavaScript?", a:"Closure means a function can access variables from its outer function even after outer function has finished execution.", topic:"javascript", level:"beginner" },
+      { id:"js-46", q:"What is callback function in JavaScript?", a:"Callback is a function passed as argument to another function. It is used to run code after some operation like async tasks.", topic:"javascript", level:"beginner" },
+      { id:"js-47", q:"What is setTimeout and setInterval in JavaScript?", a:"setTimeout runs a function once after some delay. setInterval runs a function again and again after fixed time.", topic:"javascript", level:"beginner" },
+      { id:"js-48", q:"What is the difference between synchronous and asynchronous code?", a:"Synchronous code runs line by line. Asynchronous code runs in background and does not block execution like API calls.", topic:"javascript", level:"beginner" },
+      { id:"js-49", q:"What is a Promise in JavaScript?", a:"Promise is used to handle async operations. It has three states: pending, fulfilled and rejected.", topic:"javascript", level:"beginner" },
+      { id:"js-50", q:"What is async and await in JavaScript?", a:"async and await are used to write async code in simple way. await pauses execution until promise is resolved.", topic:"javascript", level:"beginner" },
+      { id:"js-51", q:"What is the event loop in JavaScript?", a:"Event loop is a system that handles async tasks in JS. It checks call stack and moves tasks from queue to stack when it is empty.", topic:"javascript", level:"beginner" },
+      { id:"js-52", q:"What is the call stack in JavaScript?", a:"Call stack is where JS keeps track of function calls. It follows LIFO order. When function finishes, it is removed from stack.", topic:"javascript", level:"beginner" },
+      { id:"js-53", q:"What is the callback queue?", a:"Callback queue stores async functions like setTimeout callbacks. Event loop moves them to call stack when it is free.", topic:"javascript", level:"beginner" },
+      { id:"js-54", q:"What is the difference between null and undefined?", a:"undefined means variable is declared but not assigned. null is assigned value that means no value intentionally.", topic:"javascript", level:"beginner" },
+      { id:"js-55", q:"What is the DOM?", a:"DOM means Document Object Model. It represents HTML as objects so JavaScript can read and change content and structure.", topic:"javascript", level:"beginner" },
+      { id:"js-56", q:"How do you select elements in the DOM?", a:"Use methods like getElementById, getElementsByClassName, querySelector and querySelectorAll to select elements.", topic:"javascript", level:"beginner" },
+      { id:"js-57", q:"What is an event in JavaScript?", a:"Event is an action like click, key press or mouse move. JavaScript can listen and respond to these actions.", topic:"javascript", level:"beginner" },
+      { id:"js-58", q:"What is an event listener?", a:"Event listener is used to listen for events. It runs a function when a specific event happens.", topic:"javascript", level:"beginner" },
+      { id:"js-59", q:"What is preventDefault()?", a:"preventDefault is used to stop default browser behavior like form submit or link navigation.", topic:"javascript", level:"beginner" },
+      { id:"js-60", q:"What is stopPropagation()?", a:"stopPropagation is used to stop event from moving to parent elements during bubbling.", topic:"javascript", level:"beginner" },
+      { id:"js-61", q:"What is event bubbling in JavaScript?", a:"Event bubbling means event starts from target element and moves up to parent elements. Child event will trigger parent handlers.", topic:"javascript", level:"beginner" },
+      { id:"js-62", q:"What is event capturing in JavaScript?", a:"Event capturing means event starts from parent and goes down to target element. It is opposite of bubbling.", topic:"javascript", level:"beginner" },
+      { id:"js-63", q:"What is localStorage?", a:"localStorage is used to store data in browser. Data will not be removed even after refresh or closing browser.", topic:"javascript", level:"beginner" },
+      { id:"js-64", q:"What is sessionStorage?", a:"sessionStorage stores data for one tab session. Data is removed when tab is closed.", topic:"javascript", level:"beginner" },
+      { id:"js-65", q:"What is JSON?", a:"JSON stands for JavaScript Object Notation. It is used to store and transfer data in key-value format.", topic:"javascript", level:"beginner" },
+      { id:"js-66", q:"What is JSON.stringify()?", a:"JSON.stringify converts JavaScript object into JSON string. It is used before sending data to server.", topic:"javascript", level:"beginner" },
+      { id:"js-67", q:"What is JSON.parse()?", a:"JSON.parse converts JSON string into JavaScript object. It is used after receiving data from server.", topic:"javascript", level:"beginner" },
+      { id:"js-68", q:"What is the Fetch API?", a:"Fetch API is used to make HTTP requests to server. It returns a promise and is used for API calls.", topic:"javascript", level:"beginner" },
+      { id:"js-69", q:"What is error handling in JavaScript?", a:"Error handling is used to manage errors in code. It is done using try, catch and finally blocks.", topic:"javascript", level:"beginner" },
+      { id:"js-70", q:"What is try-catch in JavaScript?", a:"try block contains code that may give error. catch block handles the error and prevents program crash.", topic:"javascript", level:"beginner" },
+      { id:"js-71", q:"How does async/await work in JavaScript?", a:"async/await is used to handle promises in simple way. async function returns a promise and await waits for the result before moving to next line.", topic:"javascript", level:"intermediate" },
+      { id:"js-72", q:"How do you handle errors with async/await?", a:"Use try and catch block with async/await. If error happens in await, it will go to catch block.", topic:"javascript", level:"intermediate" },
+      { id:"js-73", q:"What is Promise chaining?", a:"Promise chaining means using multiple .then() methods one after another. Each then gets result from previous step.", topic:"javascript", level:"intermediate" },
+      { id:"js-74", q:"What are Promise.resolve() and Promise.reject()?", a:"Promise.resolve creates a resolved promise with value. Promise.reject creates a rejected promise with error.", topic:"javascript", level:"intermediate" },
+      { id:"js-75", q:"What is finally() in Promises?", a:"finally runs after promise is completed. It runs for both success and failure. It is used for cleanup code.", topic:"javascript", level:"intermediate" },
+      { id:"js-76", q:"What is execution order in the event loop?", a:"First synchronous code runs. Then microtasks like promises run. After that macrotasks like setTimeout run.", topic:"javascript", level:"intermediate" },
+      { id:"js-77", q:"What is the difference between microtasks and macrotasks?", a:"Microtasks have higher priority and run first like promise callbacks. Macrotasks run later like setTimeout.", topic:"javascript", level:"intermediate" },
+      { id:"js-78", q:"What is debouncing in JavaScript?", a:"Debouncing delays function execution until user stops action. It is useful for search input and resize events.", topic:"javascript", level:"intermediate" },
+      { id:"js-79", q:"What is throttling in JavaScript?", a:"Throttling limits function execution to fixed time interval. It prevents function from running too many times.", topic:"javascript", level:"intermediate" },
+      { id:"js-80", q:"What are modern DOM selection methods?", a:"querySelector selects first matching element. querySelectorAll selects all matching elements using CSS selectors.", topic:"javascript", level:"intermediate" },
+      { id:"js-81", q:"How do you create, insert, and remove DOM elements?", a:"Use createElement to create element. Use append or prepend to insert into DOM. Use remove or removeChild to delete element.", topic:"javascript", level:"intermediate" },
+      { id:"js-82", q:"What is event delegation and why is it useful?", a:"Event delegation means adding event listener to parent element instead of each child. It improves performance and works for dynamic elements.", topic:"javascript", level:"intermediate" },
+      { id:"js-83", q:"What is classList in JavaScript?", a:"classList is used to add, remove, toggle and check CSS classes of an element. It makes class handling easy.", topic:"javascript", level:"intermediate" },
+      { id:"js-84", q:"What is dataset in JavaScript?", a:"dataset is used to access custom data attributes of HTML elements. Example data-id can be accessed using element.dataset.id.", topic:"javascript", level:"intermediate" },
+      { id:"js-85", q:"What is the difference between innerHTML and textContent?", a:"innerHTML can read and write HTML tags. textContent returns only text. innerHTML can be unsafe if used with user input.", topic:"javascript", level:"intermediate" },
+      { id:"js-86", q:"What is the Browser Object Model (BOM)?", a:"BOM allows JavaScript to interact with browser. It includes objects like window, location, history and navigator.", topic:"javascript", level:"intermediate" },
+      { id:"js-87", q:"What is window object in JavaScript?", a:"window is global object in browser. All global variables and functions are part of window object.", topic:"javascript", level:"intermediate" },
+      { id:"js-88", q:"What is location object in JavaScript?", a:"location object contains information about current URL. It can be used to redirect or reload page.", topic:"javascript", level:"intermediate" },
+      { id:"js-89", q:"What is navigator object in JavaScript?", a:"navigator object gives information about browser and device like user agent, platform and online status.", topic:"javascript", level:"intermediate" },
+      { id:"js-90", q:"What is history object in JavaScript?", a:"history object is used to navigate browser history. Methods like back, forward and go are available.", topic:"javascript", level:"intermediate" },
+      { id:"js-91", q:"What is ES6 in JavaScript?", a:"ES6 is a version of JavaScript released in 2015. It introduced new features like let, const, arrow functions, classes and modules.", topic:"javascript", level:"intermediate" },
+      { id:"js-92", q:"What are modules in JavaScript?", a:"Modules are used to split code into separate files. You can export code from one file and import into another file.", topic:"javascript", level:"intermediate" },
+      { id:"js-93", q:"What is export and import in JavaScript?", a:"export is used to send variables or functions from a file. import is used to bring them into another file.", topic:"javascript", level:"intermediate" },
+      { id:"js-94", q:"What is default export in JavaScript?", a:"Default export allows only one main value to export from a file. It can be imported with any name.", topic:"javascript", level:"intermediate" },
+      { id:"js-95", q:"What is named export in JavaScript?", a:"Named export allows multiple values to export from a file. It must be imported using same name inside {}.", topic:"javascript", level:"intermediate" },
+      { id:"js-96", q:"What is strict mode in JavaScript?", a:"Strict mode is used to run code in strict way. It helps to catch errors and avoid unsafe actions. It is enabled using 'use strict'.", topic:"javascript", level:"intermediate" },
+      { id:"js-97", q:"What is class in JavaScript?", a:"Class is a blueprint to create objects. It contains properties and methods.", topic:"javascript", level:"intermediate" },
+      { id:"js-98", q:"What is constructor in a class?", a:"Constructor is a special method inside class. It runs when object is created and is used to initialize values.", topic:"javascript", level:"intermediate" },
+      { id:"js-99", q:"What is inheritance in JavaScript?", a:"Inheritance means one class can use properties and methods of another class using extends keyword.", topic:"javascript", level:"intermediate" },
+      { id:"js-100", q:"What is super keyword in JavaScript?", a:"super is used to call parent class constructor or methods from child class.", topic:"javascript", level:"intermediate" },
+      { id:"js-101", q:"What is encapsulation in JavaScript?", a:"Encapsulation means keeping data and methods inside a class and controlling access. It helps to protect data from outside changes.", topic:"javascript", level:"intermediate" },
+      { id:"js-102", q:"What is polymorphism in JavaScript?", a:"Polymorphism means same method name can have different behavior. It can be achieved using method overriding.", topic:"javascript", level:"intermediate" },
+      { id:"js-103", q:"What is abstraction in JavaScript?", a:"Abstraction means hiding internal details and showing only important features. It helps to reduce complexity.", topic:"javascript", level:"intermediate" },
+      { id:"js-104", q:"What is prototypal inheritance in JavaScript?", a:"Prototypal inheritance means objects can inherit properties from other objects using prototype chain.", topic:"javascript", level:"intermediate" },
+      { id:"js-105", q:"What is prototype in JavaScript?", a:"Prototype is an object from which other objects can inherit properties and methods.", topic:"javascript", level:"intermediate" },
+      { id:"js-106", q:"What is __proto__ in JavaScript?", a:"__proto__ is a reference to the object's prototype. It is used to access prototype chain.", topic:"javascript", level:"intermediate" },
+      { id:"js-107", q:"What is call(), apply(), and bind() in JavaScript?", a:"call and apply are used to call function with specific this value. bind returns a new function with fixed this value.", topic:"javascript", level:"intermediate" },
+      { id:"js-108", q:"What is currying in JavaScript?", a:"Currying means converting a function with multiple arguments into multiple functions with one argument each.", topic:"javascript", level:"intermediate" },
+      { id:"js-109", q:"What is memoization in JavaScript?", a:"Memoization is optimization technique. It stores result of function calls and reuses them to improve performance.", topic:"javascript", level:"intermediate" },
+      { id:"js-110", q:"What is recursion in JavaScript?", a:"Recursion is when a function calls itself. It is used to solve problems like factorial and tree structures.", topic:"javascript", level:"intermediate" },
+      { id:"js-111", q:"What is a higher-order function in JavaScript?", a:"A higher-order function is a function that takes another function as argument or returns a function. Example is map, filter and reduce.", topic:"javascript", level:"intermediate" },
+      { id:"js-112", q:"What is function composition in JavaScript?", a:"Function composition means combining multiple functions to create a new function. Output of one function becomes input of another.", topic:"javascript", level:"intermediate" },
+      { id:"js-113", q:"What is pure function in JavaScript?", a:"Pure function always returns same output for same input. It does not change external data or have side effects.", topic:"javascript", level:"intermediate" },
+      { id:"js-114", q:"What are side effects in JavaScript?", a:"Side effects are changes outside the function like modifying global variable or DOM. Pure functions avoid side effects.", topic:"javascript", level:"intermediate" },
+      { id:"js-115", q:"What is immutability in JavaScript?", a:"Immutability means data cannot be changed after creation. Instead of modifying, new data is created.", topic:"javascript", level:"intermediate" },
+      { id:"js-116", q:"What is shallow copy and deep copy?", a:"Shallow copy copies only first level. Deep copy copies all nested levels. Changes in deep copy do not affect original.", topic:"javascript", level:"intermediate" },
+      { id:"js-117", q:"What is Object.create()?", a:"Object.create is used to create a new object using an existing object as prototype.", topic:"javascript", level:"intermediate" },
+      { id:"js-118", q:"What is Object.defineProperty()?", a:"Object.defineProperty is used to define or modify properties with control like writable, enumerable and configurable.", topic:"javascript", level:"intermediate" },
+      { id:"js-119", q:"What is Object.seal()?", a:"Object.seal prevents adding or removing properties. But existing properties can still be updated.", topic:"javascript", level:"intermediate" },
+      { id:"js-120", q:"What is Object.is()?", a:"Object.is compares two values strictly. It is similar to === but handles NaN and -0 correctly.", topic:"javascript", level:"intermediate" },
+      { id:"js-121", q:"What is a Set in JavaScript?", a:"Set is a collection of unique values. It does not allow duplicate values and maintains insertion order.", topic:"javascript", level:"intermediate" },
+      { id:"js-122", q:"What is a Map in JavaScript?", a:"Map is a collection of key-value pairs. Keys can be of any data type and it keeps insertion order.", topic:"javascript", level:"intermediate" },
+      { id:"js-123", q:"What is WeakSet in JavaScript?", a:"WeakSet is similar to Set but stores only objects. It does not prevent garbage collection.", topic:"javascript", level:"intermediate" },
+      { id:"js-124", q:"What is WeakMap in JavaScript?", a:"WeakMap is similar to Map but keys must be objects. It allows garbage collection of unused objects.", topic:"javascript", level:"intermediate" },
+      { id:"js-125", q:"What is garbage collection in JavaScript?", a:"Garbage collection is automatic memory cleanup process. It removes unused objects from memory.", topic:"javascript", level:"intermediate" },
+      { id:"js-126", q:"What is memory leak in JavaScript?", a:"Memory leak happens when memory is not released properly. It can slow down application.", topic:"javascript", level:"intermediate" },
+      { id:"js-127", q:"What is a Web Worker?", a:"Web Worker is used to run JavaScript in background thread. It helps to avoid blocking main UI.", topic:"javascript", level:"intermediate" },
+      { id:"js-128", q:"What is a Service Worker?", a:"Service Worker runs in background and is used for caching, offline support and push notifications.", topic:"javascript", level:"intermediate" },
+      { id:"js-129", q:"What is Progressive Web App (PWA)?", a:"PWA is a web application that works like mobile app. It supports offline mode and can be installed on device.", topic:"javascript", level:"intermediate" },
+      { id:"js-130", q:"What is CORS in JavaScript?", a:"CORS means Cross-Origin Resource Sharing. It allows or blocks requests between different domains.", topic:"javascript", level:"intermediate" },
+      { id:"js-131", q:"What is AJAX in JavaScript?", a:"AJAX stands for Asynchronous JavaScript and XML. It is used to send and receive data from server without reloading the page.", topic:"javascript", level:"intermediate" },
+      { id:"js-132", q:"What is the difference between synchronous and asynchronous requests?", a:"Synchronous request blocks execution until response comes. Asynchronous request runs in background and does not block code.", topic:"javascript", level:"intermediate" },
+      { id:"js-133", q:"What is XMLHttpRequest?", a:"XMLHttpRequest is old way to make HTTP requests in JavaScript. It is replaced by fetch API in modern apps.", topic:"javascript", level:"intermediate" },
+      { id:"js-134", q:"What is REST API?", a:"REST API is a way to communicate between client and server using HTTP methods like GET, POST, PUT and DELETE.", topic:"javascript", level:"intermediate" },
+      { id:"js-135", q:"What is GraphQL?", a:"GraphQL is a query language for APIs. It allows client to request only required data instead of full response.", topic:"javascript", level:"intermediate" },
+      { id:"js-136", q:"What is JWT (JSON Web Token)?", a:"JWT is a token used for authentication. It securely transfers user data between client and server.", topic:"javascript", level:"intermediate" },
+      { id:"js-137", q:"What is authentication and authorization?", a:"Authentication checks who the user is. Authorization checks what the user is allowed to do.", topic:"javascript", level:"intermediate" },
+      { id:"js-138", q:"What is HTTPS?", a:"HTTPS is secure version of HTTP. It encrypts data between client and server for safety.", topic:"javascript", level:"intermediate" },
+      { id:"js-139", q:"What is XSS (Cross-Site Scripting)?", a:"XSS is a security attack where attacker injects malicious script into web page. It can steal user data.", topic:"javascript", level:"intermediate" },
+      { id:"js-140", q:"What is CSRF (Cross-Site Request Forgery)?", a:"CSRF is an attack where unauthorized actions are performed on behalf of user without their knowledge.", topic:"javascript", level:"intermediate" },
+      { id:"js-141", q:"What is SEO in web development?", a:"SEO means Search Engine Optimization. It helps website rank better in search results.", topic:"javascript", level:"intermediate" },
+      { id:"js-142", q:"What is performance optimization in JavaScript?", a:"Performance optimization means improving speed and efficiency of application. It includes reducing load time and memory usage.", topic:"javascript", level:"intermediate" },
+      { id:"js-143", q:"What is lazy loading in JavaScript?", a:"Lazy loading means loading resources only when needed. It helps to improve performance and reduce initial load time.", topic:"javascript", level:"intermediate" },
+      { id:"js-144", q:"What is code splitting?", a:"Code splitting means breaking code into smaller parts and loading them when required. It improves performance.", topic:"javascript", level:"intermediate" },
+      { id:"js-145", q:"What is tree shaking?", a:"Tree shaking removes unused code from final bundle. It helps to reduce file size.", topic:"javascript", level:"intermediate" },
+      { id:"js-146", q:"What is bundling in JavaScript?", a:"Bundling means combining multiple files into one file using tools like Webpack or Vite.", topic:"javascript", level:"intermediate" },
+      { id:"js-147", q:"What is transpiling?", a:"Transpiling means converting modern JavaScript code into older version so it can run in all browsers.", topic:"javascript", level:"intermediate" },
+      { id:"js-148", q:"What is Babel?", a:"Babel is a tool used to transpile modern JavaScript into older version for browser compatibility.", topic:"javascript", level:"intermediate" },
+      { id:"js-149", q:"What is Webpack?", a:"Webpack is a module bundler. It bundles JavaScript, CSS and other files into one or more files.", topic:"javascript", level:"intermediate" },
+      { id:"js-150", q:"What is Vite?", a:"Vite is a modern build tool. It provides fast development server and quick build process.", topic:"javascript", level:"intermediate" },
+
+      // ===== TYPESCRIPT (150) =====
+      { id:"ts-1", q:"What is TypeScript?", a:"TypeScript is a superset of JavaScript. It adds types on top of JavaScript and helps to catch errors during development.", topic:"typescript", level:"beginner" },
+      { id:"ts-2", q:"Why do we use TypeScript?", a:"TypeScript is used to write safer and more structured code. It helps to find errors early and improves code readability and maintainability.", topic:"typescript", level:"beginner" },
+      { id:"ts-3", q:"What is the difference between JavaScript and TypeScript?", a:"JavaScript is dynamic and does not have types. TypeScript adds static types and extra features. TypeScript code is compiled into JavaScript.", topic:"typescript", level:"beginner" },
+      { id:"ts-4", q:"How do you install TypeScript?", a:"TypeScript can be installed using npm with command npm install -g typescript. After install, you can use tsc command.", topic:"typescript", level:"beginner" },
+      { id:"ts-5", q:"What is tsc in TypeScript?", a:"tsc is TypeScript compiler. It converts TypeScript code into JavaScript code so it can run in browser or Node.js.", topic:"typescript", level:"beginner" },
+      { id:"ts-6", q:"What is a type in TypeScript?", a:"Type defines what kind of value a variable can store. Example string, number or boolean. It helps to avoid wrong data usage.", topic:"typescript", level:"beginner" },
+      { id:"ts-7", q:"What are basic data types in TypeScript?", a:"Basic types are string, number, boolean, null, undefined, any, unknown and void. These are used to define variable values.", topic:"typescript", level:"beginner" },
+      { id:"ts-8", q:"What is type inference in TypeScript?", a:"Type inference means TypeScript automatically detects type based on value. You do not always need to write type manually.", topic:"typescript", level:"beginner" },
+      { id:"ts-9", q:"What is explicit typing in TypeScript?", a:"Explicit typing means manually defining type of variable. Example let name: string = 'John'. It makes code more clear.", topic:"typescript", level:"beginner" },
+      { id:"ts-10", q:"What is the any type in TypeScript?", a:"any type can store any kind of value. It disables type checking, so it should be avoided when possible.", topic:"typescript", level:"beginner" },
+      { id:"ts-11", q:"What is the unknown type in TypeScript?", a:"unknown type is similar to any but safer. You must check type before using the value. It prevents unsafe operations.", topic:"typescript", level:"beginner" },
+      { id:"ts-12", q:"What is void in TypeScript?", a:"void is used when a function does not return any value. It shows that function completes without returning data.", topic:"typescript", level:"beginner" },
+      { id:"ts-13", q:"What is never type in TypeScript?", a:"never type is used for values that never occur. Example function that always throws error or infinite loop.", topic:"typescript", level:"beginner" },
+      { id:"ts-14", q:"What are arrays in TypeScript?", a:"Arrays store multiple values of same type. Example number[] or Array<number>.", topic:"typescript", level:"beginner" },
+      { id:"ts-15", q:"What are tuples in TypeScript?", a:"Tuples are arrays with fixed number of elements and specific types. Example [string, number].", topic:"typescript", level:"beginner" },
+      { id:"ts-16", q:"What is enum in TypeScript?", a:"Enum is used to define a set of named constants. It improves code readability.", topic:"typescript", level:"beginner" },
+      { id:"ts-17", q:"What is union type in TypeScript?", a:"Union type allows a variable to have multiple types. Example string | number.", topic:"typescript", level:"beginner" },
+      { id:"ts-18", q:"What is intersection type in TypeScript?", a:"Intersection type combines multiple types into one. Example A & B means it has properties of both types.", topic:"typescript", level:"beginner" },
+      { id:"ts-19", q:"What is type alias in TypeScript?", a:"Type alias is used to give a custom name to a type. It helps to reuse types easily.", topic:"typescript", level:"beginner" },
+      { id:"ts-20", q:"What is interface in TypeScript?", a:"Interface defines structure of an object. It describes what properties and types an object should have.", topic:"typescript", level:"beginner" },
+      { id:"ts-21", q:"What is the difference between type and interface in TypeScript?", a:"Both are used to define structure. Interface is mainly used for objects and can be extended. Type is more flexible and can define unions, primitives and other types.", topic:"typescript", level:"beginner" },
+      { id:"ts-22", q:"What is optional property in TypeScript?", a:"Optional property means property is not required. It is defined using ? symbol. Example name?: string.", topic:"typescript", level:"beginner" },
+      { id:"ts-23", q:"What is readonly in TypeScript?", a:"readonly makes a property read-only. Once value is assigned, it cannot be changed.", topic:"typescript", level:"beginner" },
+      { id:"ts-24", q:"What is function type in TypeScript?", a:"Function type defines input parameters and return type of a function. It ensures correct usage of function.", topic:"typescript", level:"beginner" },
+      { id:"ts-25", q:"What are optional parameters in functions?", a:"Optional parameters are not required while calling function. They are defined using ? symbol.", topic:"typescript", level:"beginner" },
+      { id:"ts-26", q:"What are default parameters in TypeScript?", a:"Default parameters have default value if no value is passed. It helps to avoid undefined values.", topic:"typescript", level:"beginner" },
+      { id:"ts-27", q:"What are rest parameters in TypeScript?", a:"Rest parameters allow passing multiple values as array. It is defined using ... syntax.", topic:"typescript", level:"beginner" },
+      { id:"ts-28", q:"What is function overloading in TypeScript?", a:"Function overloading allows multiple function definitions with same name but different parameters.", topic:"typescript", level:"beginner" },
+      { id:"ts-29", q:"What is type assertion in TypeScript?", a:"Type assertion is used to tell TypeScript the exact type of a value. Example value as string.", topic:"typescript", level:"beginner" },
+      { id:"ts-30", q:"What is non-null assertion operator in TypeScript?", a:"Non-null assertion (!) tells TypeScript that value is not null or undefined. It removes null checking.", topic:"typescript", level:"beginner" },
+      { id:"ts-31", q:"What are classes in TypeScript?", a:"Classes are blueprints to create objects. They contain properties and methods and support object-oriented programming.", topic:"typescript", level:"beginner" },
+      { id:"ts-32", q:"What is constructor in a class?", a:"Constructor is a special method in class. It runs when object is created and is used to initialize values.", topic:"typescript", level:"beginner" },
+      { id:"ts-33", q:"What are access modifiers in TypeScript?", a:"Access modifiers control visibility of properties and methods. Types are public, private and protected.", topic:"typescript", level:"beginner" },
+      { id:"ts-34", q:"What is public in TypeScript?", a:"public means property or method can be accessed from anywhere. It is default access modifier.", topic:"typescript", level:"beginner" },
+      { id:"ts-35", q:"What is private in TypeScript?", a:"private means property or method can be accessed only inside the class. It cannot be accessed outside.", topic:"typescript", level:"beginner" },
+      { id:"ts-36", q:"What is protected in TypeScript?", a:"protected means property can be accessed inside class and its child classes, but not outside.", topic:"typescript", level:"beginner" },
+      { id:"ts-37", q:"What is readonly in classes?", a:"readonly property can be assigned only once, usually inside constructor. It cannot be changed later.", topic:"typescript", level:"beginner" },
+      { id:"ts-38", q:"What is inheritance in TypeScript?", a:"Inheritance allows one class to use properties and methods of another class using extends keyword.", topic:"typescript", level:"beginner" },
+      { id:"ts-39", q:"What is method overriding?", a:"Method overriding means child class provides its own implementation of a method from parent class.", topic:"typescript", level:"beginner" },
+      { id:"ts-40", q:"What is super keyword in TypeScript?", a:"super is used to call parent class constructor or methods from child class.", topic:"typescript", level:"beginner" },
+      { id:"ts-41", q:"What are abstract classes in TypeScript?", a:"Abstract classes cannot be instantiated directly. They are used as base classes and can have abstract methods.", topic:"typescript", level:"intermediate" },
+      { id:"ts-42", q:"What is an abstract method?", a:"Abstract method is declared without implementation. Child classes must provide its implementation.", topic:"typescript", level:"intermediate" },
+      { id:"ts-43", q:"What is interface implementation in classes?", a:"Classes can implement interfaces using implements keyword. It ensures class follows the structure defined in interface.", topic:"typescript", level:"intermediate" },
+      { id:"ts-44", q:"What is static keyword in TypeScript?", a:"static members belong to class, not to objects. They can be accessed using class name.", topic:"typescript", level:"intermediate" },
+      { id:"ts-45", q:"What is getter and setter in TypeScript?", a:"Getter is used to get value and setter is used to set value of a property. They provide controlled access.", topic:"typescript", level:"intermediate" },
+      { id:"ts-46", q:"What is namespace in TypeScript?", a:"Namespace is used to group related code. It helps to avoid naming conflicts.", topic:"typescript", level:"intermediate" },
+      { id:"ts-47", q:"What are modules in TypeScript?", a:"Modules are used to split code into separate files. They use export and import for sharing code.", topic:"typescript", level:"intermediate" },
+      { id:"ts-48", q:"What is export and import in TypeScript?", a:"export is used to share code from one file. import is used to use that code in another file.", topic:"typescript", level:"intermediate" },
+      { id:"ts-49", q:"What is default export in TypeScript?", a:"Default export allows one main value to export from a file. It can be imported with any name.", topic:"typescript", level:"intermediate" },
+      { id:"ts-50", q:"What is named export in TypeScript?", a:"Named export allows multiple values to export. They must be imported using same names inside {}.", topic:"typescript", level:"intermediate" },
+      { id:"ts-51", q:"What are generics in TypeScript?", a:"Generics allow you to write reusable code that works with different types. It keeps type safety while being flexible.", topic:"typescript", level:"intermediate" },
+      { id:"ts-52", q:"Why do we use generics?", a:"Generics are used to make functions and classes reusable. They avoid using any type and keep strong typing.", topic:"typescript", level:"intermediate" },
+      { id:"ts-53", q:"How do you define generics in functions?", a:"Generics are defined using angle brackets like <T>. Example function identity<T>(value: T): T.", topic:"typescript", level:"intermediate" },
+      { id:"ts-54", q:"How do you use generics with interfaces?", a:"Interfaces can use generics to define flexible structure. Example interface Box<T> { value: T }.", topic:"typescript", level:"intermediate" },
+      { id:"ts-55", q:"How do you use generics with classes?", a:"Classes can also use generics to work with different types. Example class Data<T> {}.", topic:"typescript", level:"intermediate" },
+      { id:"ts-56", q:"What are generic constraints?", a:"Generic constraints restrict the type that can be used. Example <T extends number> means only number type allowed.", topic:"typescript", level:"intermediate" },
+      { id:"ts-57", q:"What is keyof in TypeScript?", a:"keyof is used to get all keys of an object type. It returns union of property names.", topic:"typescript", level:"intermediate" },
+      { id:"ts-58", q:"What is typeof in TypeScript?", a:"typeof is used to get type of a variable or object. It helps to reuse existing types.", topic:"typescript", level:"intermediate" },
+      { id:"ts-59", q:"What is indexed access type?", a:"Indexed access type is used to get type of a specific property from object type. Example Person['name'].", topic:"typescript", level:"intermediate" },
+      { id:"ts-60", q:"What is mapped type in TypeScript?", a:"Mapped types are used to create new types by transforming existing types. Example making all properties readonly.", topic:"typescript", level:"intermediate" },
+      { id:"ts-61", q:"What is conditional type in TypeScript?", a:"Conditional type is used to define type based on a condition. It uses syntax like T extends U ? X : Y.", topic:"typescript", level:"intermediate" },
+      { id:"ts-62", q:"What is infer keyword in TypeScript?", a:"infer is used inside conditional types to extract type from another type. It helps to get inner type values.", topic:"typescript", level:"intermediate" },
+      { id:"ts-63", q:"What is utility types in TypeScript?", a:"Utility types are built-in types that help to transform types easily. Examples are Partial, Required, Readonly.", topic:"typescript", level:"intermediate" },
+      { id:"ts-64", q:"What is Partial type?", a:"Partial makes all properties optional in a type. It is useful when you do not need all properties.", topic:"typescript", level:"intermediate" },
+      { id:"ts-65", q:"What is Required type?", a:"Required makes all properties mandatory in a type. Opposite of Partial.", topic:"typescript", level:"intermediate" },
+      { id:"ts-66", q:"What is Readonly type?", a:"Readonly makes all properties read-only. Values cannot be changed after assignment.", topic:"typescript", level:"intermediate" },
+      { id:"ts-67", q:"What is Pick type?", a:"Pick is used to select specific properties from a type. Example Pick<User, 'name'>.", topic:"typescript", level:"intermediate" },
+      { id:"ts-68", q:"What is Omit type?", a:"Omit is used to remove specific properties from a type. Example Omit<User, 'age'>.", topic:"typescript", level:"intermediate" },
+      { id:"ts-69", q:"What is Record type?", a:"Record is used to create an object type with specific keys and values. Example Record<string, number>.", topic:"typescript", level:"intermediate" },
+      { id:"ts-70", q:"What is Exclude type?", a:"Exclude removes certain types from a union type. Example Exclude<string | number, number> gives string.", topic:"typescript", level:"intermediate" },
+      { id:"ts-71", q:"What is Extract type in TypeScript?", a:"Extract is used to get common types from a union. Example Extract<string | number, string> gives string.", topic:"typescript", level:"intermediate" },
+      { id:"ts-72", q:"What is NonNullable type in TypeScript?", a:"NonNullable removes null and undefined from a type. It ensures value is always defined.", topic:"typescript", level:"intermediate" },
+      { id:"ts-73", q:"What is ReturnType in TypeScript?", a:"ReturnType gets return type of a function. It helps to reuse function return types.", topic:"typescript", level:"intermediate" },
+      { id:"ts-74", q:"What is Parameters type in TypeScript?", a:"Parameters gets parameter types of a function as a tuple. It helps to reuse function arguments.", topic:"typescript", level:"intermediate" },
+      { id:"ts-75", q:"What is ConstructorParameters in TypeScript?", a:"ConstructorParameters gets parameter types of a class constructor. It returns them as tuple.", topic:"typescript", level:"intermediate" },
+      { id:"ts-76", q:"What is InstanceType in TypeScript?", a:"InstanceType gets type of class instance. It helps to get object type from class.", topic:"typescript", level:"intermediate" },
+      { id:"ts-77", q:"What is ThisType in TypeScript?", a:"ThisType is used to define type of this inside object. It is used in advanced type definitions.", topic:"typescript", level:"intermediate" },
+      { id:"ts-78", q:"What is declaration merging in TypeScript?", a:"Declaration merging means combining multiple declarations with same name into one. It is common with interfaces.", topic:"typescript", level:"intermediate" },
+      { id:"ts-79", q:"What is ambient declaration in TypeScript?", a:"Ambient declaration is used to define types for external libraries. It is written using declare keyword.", topic:"typescript", level:"intermediate" },
+      { id:"ts-80", q:"What is .d.ts file in TypeScript?", a:".d.ts file is declaration file. It contains type definitions without implementation.", topic:"typescript", level:"intermediate" },
+      { id:"ts-81", q:"What is tsconfig.json in TypeScript?", a:"tsconfig.json is configuration file for TypeScript. It defines compiler options like target, module and strict mode.", topic:"typescript", level:"intermediate" },
+      { id:"ts-82", q:"What is target option in tsconfig?", a:"target defines which JavaScript version TypeScript should compile to. Example ES5, ES6.", topic:"typescript", level:"intermediate" },
+      { id:"ts-83", q:"What is module option in tsconfig?", a:"module defines module system to use like commonjs, esnext. It controls how code is exported and imported.", topic:"typescript", level:"intermediate" },
+      { id:"ts-84", q:"What is strict mode in TypeScript?", a:"strict mode enables strict type checking. It helps to catch more errors during development.", topic:"typescript", level:"intermediate" },
+      { id:"ts-85", q:"What is noImplicitAny in TypeScript?", a:"noImplicitAny prevents variables from having implicit any type. It forces you to define types clearly.", topic:"typescript", level:"intermediate" },
+      { id:"ts-86", q:"What is strictNullChecks in TypeScript?", a:"strictNullChecks ensures null and undefined are handled properly. It prevents using null values without checks.", topic:"typescript", level:"intermediate" },
+      { id:"ts-87", q:"What is outDir in tsconfig?", a:"outDir defines output folder for compiled JavaScript files. Example ./dist.", topic:"typescript", level:"intermediate" },
+      { id:"ts-88", q:"What is rootDir in tsconfig?", a:"rootDir defines root folder of TypeScript files. It helps compiler know where source files are.", topic:"typescript", level:"intermediate" },
+      { id:"ts-89", q:"What is sourceMap in TypeScript?", a:"sourceMap generates map files. It helps to debug TypeScript code in browser by mapping to original TS file.", topic:"typescript", level:"intermediate" },
+      { id:"ts-90", q:"What is declaration option in tsconfig?", a:"declaration generates .d.ts files for your code. It is useful for libraries.", topic:"typescript", level:"intermediate" },
+      { id:"ts-91", q:"What is incremental compilation in TypeScript?", a:"Incremental compilation compiles only changed files instead of full project. It improves build performance.", topic:"typescript", level:"intermediate" },
+      { id:"ts-92", q:"What is watch mode in TypeScript?", a:"Watch mode automatically recompiles code when file changes. It is enabled using tsc --watch.", topic:"typescript", level:"intermediate" },
+      { id:"ts-93", q:"What is type compatibility in TypeScript?", a:"Type compatibility checks whether one type can be assigned to another. It is based on structure, not name.", topic:"typescript", level:"intermediate" },
+      { id:"ts-94", q:"What is structural typing?", a:"Structural typing means types are compared based on structure. If properties match, types are compatible.", topic:"typescript", level:"intermediate" },
+      { id:"ts-95", q:"What is duck typing in TypeScript?", a:"Duck typing means if object looks like required type, it is accepted. It follows structure, not exact type name.", topic:"typescript", level:"intermediate" },
+      { id:"ts-96", q:"What is type narrowing in TypeScript?", a:"Type narrowing reduces type to more specific type using conditions like typeof or instanceof.", topic:"typescript", level:"intermediate" },
+      { id:"ts-97", q:"What is type guard in TypeScript?", a:"Type guard is a condition that checks type of variable at runtime. It helps in safe type narrowing.", topic:"typescript", level:"intermediate" },
+      { id:"ts-98", q:"What is instanceof in TypeScript?", a:"instanceof checks whether object is instance of a class. It is used for type checking.", topic:"typescript", level:"intermediate" },
+      { id:"ts-99", q:"What is typeof type guard?", a:"typeof is used to check basic types like string, number, boolean. It helps to narrow type.", topic:"typescript", level:"intermediate" },
+      { id:"ts-100", q:"What is discriminated union in TypeScript?", a:"Discriminated union uses a common property to differentiate types. It helps to safely handle multiple types.", topic:"typescript", level:"intermediate" },
+      { id:"ts-101", q:"What is decorators in TypeScript?", a:"Decorators are special functions used to modify classes, methods or properties. They are written using @ symbol.", topic:"typescript", level:"advanced" },
+      { id:"ts-102", q:"What are class decorators?", a:"Class decorators are applied on classes. They can modify or add behavior to a class.", topic:"typescript", level:"advanced" },
+      { id:"ts-103", q:"What are method decorators?", a:"Method decorators are applied on methods. They can change or control method behavior.", topic:"typescript", level:"advanced" },
+      { id:"ts-104", q:"What are property decorators?", a:"Property decorators are applied on class properties. They are used to add metadata or modify behavior.", topic:"typescript", level:"advanced" },
+      { id:"ts-105", q:"What are parameter decorators?", a:"Parameter decorators are applied on method parameters. They are used to track or modify parameter behavior.", topic:"typescript", level:"advanced" },
+      { id:"ts-106", q:"What is reflect-metadata in TypeScript?", a:"reflect-metadata is a library used with decorators. It helps to store and read metadata at runtime.", topic:"typescript", level:"advanced" },
+      { id:"ts-107", q:"What is mixin in TypeScript?", a:"Mixin is a way to combine multiple classes into one. It helps to reuse code across classes.", topic:"typescript", level:"advanced" },
+      { id:"ts-108", q:"What is declaration file in TypeScript?", a:"Declaration file (.d.ts) contains only type definitions. It is used for external libraries.", topic:"typescript", level:"advanced" },
+      { id:"ts-109", q:"What is triple slash directive in TypeScript?", a:"Triple slash directive is used to include additional files or type definitions. It is written using ///.", topic:"typescript", level:"advanced" },
+      { id:"ts-110", q:"What is module resolution in TypeScript?", a:"Module resolution defines how TypeScript finds modules. It follows rules to locate imported files.", topic:"typescript", level:"advanced" },
+      { id:"ts-111", q:"What is path mapping in TypeScript?", a:"Path mapping is used to define custom paths for imports. It is configured in tsconfig using baseUrl and paths.", topic:"typescript", level:"advanced" },
+      { id:"ts-112", q:"What is baseUrl in tsconfig?", a:"baseUrl defines base directory for module resolution. It helps to use short import paths.", topic:"typescript", level:"advanced" },
+      { id:"ts-113", q:"What is paths in tsconfig?", a:"paths is used to map custom module paths. It helps to avoid long relative paths in imports.", topic:"typescript", level:"advanced" },
+      { id:"ts-114", q:"What is esModuleInterop in TypeScript?", a:"esModuleInterop allows default imports from CommonJS modules. It improves compatibility with older libraries.", topic:"typescript", level:"advanced" },
+      { id:"ts-115", q:"What is allowJs in TypeScript?", a:"allowJs allows JavaScript files in TypeScript project. It helps to migrate from JS to TS slowly.", topic:"typescript", level:"advanced" },
+      { id:"ts-116", q:"What is checkJs in TypeScript?", a:"checkJs enables type checking in JavaScript files. It helps to find errors even in JS files.", topic:"typescript", level:"advanced" },
+      { id:"ts-117", q:"What is skipLibCheck in TypeScript?", a:"skipLibCheck skips type checking of declaration files. It improves compilation speed.", topic:"typescript", level:"advanced" },
+      { id:"ts-118", q:"What is strictPropertyInitialization?", a:"strictPropertyInitialization ensures class properties are initialized properly. It avoids undefined values.", topic:"typescript", level:"advanced" },
+      { id:"ts-119", q:"What is noUnusedLocals in TypeScript?", a:"noUnusedLocals gives error if variables are declared but not used. It helps to keep code clean.", topic:"typescript", level:"advanced" },
+      { id:"ts-120", q:"What is noUnusedParameters in TypeScript?", a:"noUnusedParameters gives error if function parameters are not used. It helps to remove unnecessary code.", topic:"typescript", level:"advanced" },
+      { id:"ts-121", q:"What is noImplicitReturns in TypeScript?", a:"noImplicitReturns ensures every code path in a function returns a value. It helps to avoid missing return statements.", topic:"typescript", level:"advanced" },
+      { id:"ts-122", q:"What is noFallthroughCasesInSwitch?", a:"noFallthroughCasesInSwitch prevents fall-through in switch cases. Each case must have break or return.", topic:"typescript", level:"advanced" },
+      { id:"ts-123", q:"What is strictBindCallApply?", a:"strictBindCallApply improves type checking for bind, call and apply methods. It ensures correct arguments.", topic:"typescript", level:"advanced" },
+      { id:"ts-124", q:"What is strictFunctionTypes?", a:"strictFunctionTypes checks function parameter types strictly. It avoids unsafe assignments.", topic:"typescript", level:"advanced" },
+      { id:"ts-125", q:"What is strictPropertyInitialization option?", a:"It ensures all class properties are initialized in constructor or defined properly.", topic:"typescript", level:"advanced" },
+      { id:"ts-126", q:"What is strictNullChecks option?", a:"It ensures null and undefined are handled properly and not assigned incorrectly.", topic:"typescript", level:"advanced" },
+      { id:"ts-127", q:"What is exactOptionalPropertyTypes?", a:"exactOptionalPropertyTypes makes optional properties behave strictly. It differentiates between undefined and missing.", topic:"typescript", level:"advanced" },
+      { id:"ts-128", q:"What is useUnknownInCatchVariables?", a:"useUnknownInCatchVariables sets catch error variable type as unknown instead of any for safety.", topic:"typescript", level:"advanced" },
+      { id:"ts-129", q:"What is noImplicitOverride?", a:"noImplicitOverride ensures methods overriding parent class are marked with override keyword.", topic:"typescript", level:"advanced" },
+      { id:"ts-130", q:"What is moduleDetection in TypeScript?", a:"moduleDetection controls how TypeScript decides if a file is a module or script.", topic:"typescript", level:"advanced" },
+      { id:"ts-131", q:"What is module in TypeScript?", a:"Module is a file that contains code with export or import. It helps to organize code into separate files.", topic:"typescript", level:"advanced" },
+      { id:"ts-132", q:"What is CommonJS module?", a:"CommonJS is module system used in Node.js. It uses require and module.exports.", topic:"typescript", level:"advanced" },
+      { id:"ts-133", q:"What is ES module?", a:"ES module is modern module system. It uses import and export keywords.", topic:"typescript", level:"advanced" },
+      { id:"ts-134", q:"What is difference between CommonJS and ES module?", a:"CommonJS uses require and works synchronously. ES module uses import and works asynchronously and is modern standard.", topic:"typescript", level:"advanced" },
+      { id:"ts-135", q:"What is dynamic import in TypeScript?", a:"Dynamic import allows loading modules at runtime using import(). It helps in lazy loading.", topic:"typescript", level:"advanced" },
+      { id:"ts-136", q:"What is top-level await in TypeScript?", a:"Top-level await allows using await outside async function in modules. It works in modern environments.", topic:"typescript", level:"advanced" },
+      { id:"ts-137", q:"What is ts-node?", a:"ts-node is a tool to run TypeScript files directly without compiling to JavaScript manually.", topic:"typescript", level:"advanced" },
+      { id:"ts-138", q:"What is difference between ts-node and tsc?", a:"ts-node runs TypeScript directly. tsc compiles TypeScript into JavaScript files.", topic:"typescript", level:"advanced" },
+      { id:"ts-139", q:"What is linting in TypeScript?", a:"Linting checks code for errors and style issues. Tools like ESLint are used for this.", topic:"typescript", level:"advanced" },
+      { id:"ts-140", q:"What is formatting in TypeScript?", a:"Formatting means arranging code in clean and consistent style. Tools like Prettier are used.", topic:"typescript", level:"advanced" },
+      { id:"ts-141", q:"What is testing in TypeScript?", a:"Testing means checking code works correctly. Tools like Jest or Mocha are used for testing.", topic:"typescript", level:"advanced" },
+      { id:"ts-142", q:"What is unit testing?", a:"Unit testing tests small parts of code like functions individually to ensure correctness.", topic:"typescript", level:"advanced" },
+      { id:"ts-143", q:"What is integration testing?", a:"Integration testing checks how different parts of application work together.", topic:"typescript", level:"advanced" },
+      { id:"ts-144", q:"What is end-to-end testing?", a:"End-to-end testing checks full application flow from start to end like real user usage.", topic:"typescript", level:"advanced" },
+      { id:"ts-145", q:"What is CI/CD in development?", a:"CI/CD means Continuous Integration and Continuous Deployment. It automates build, test and deployment process.", topic:"typescript", level:"advanced" },
+      { id:"ts-146", q:"What is version control?", a:"Version control tracks code changes over time. Git is commonly used version control system.", topic:"typescript", level:"advanced" },
+      { id:"ts-147", q:"What is Git?", a:"Git is a distributed version control system. It helps developers track and manage code changes.", topic:"typescript", level:"advanced" },
+      { id:"ts-148", q:"What is GitHub?", a:"GitHub is a platform to host Git repositories online. It helps to collaborate with other developers.", topic:"typescript", level:"advanced" },
+      { id:"ts-149", q:"What is package.json?", a:"package.json is a file that contains project information and dependencies in Node.js projects.", topic:"typescript", level:"advanced" },
+      { id:"ts-150", q:"What is node_modules folder?", a:"node_modules folder contains all installed packages and dependencies used in project.", topic:"typescript", level:"advanced" },
+
+      // ===== ANGULAR (80) =====
+      { id:"ng-1", q:"What is Angular?", a:"Angular is a front-end framework used to build web applications. It is developed by Google and uses TypeScript.", topic:"angular", level:"beginner" },
+      { id:"ng-2", q:"What are the features of Angular?", a:"Angular features include components, modules, data binding, dependency injection, routing and forms.", topic:"angular", level:"beginner" },
+      { id:"ng-3", q:"What is TypeScript and why Angular uses it?", a:"TypeScript is a typed version of JavaScript. Angular uses it for better error checking and structured code.", topic:"angular", level:"beginner" },
+      { id:"ng-4", q:"What is a component in Angular?", a:"Component is a basic building block of Angular. It controls a part of UI and contains HTML, CSS and logic.", topic:"angular", level:"beginner" },
+      { id:"ng-5", q:"What is a module in Angular?", a:"Module is a container that groups related components, directives and services together.", topic:"angular", level:"beginner" },
+      { id:"ng-6", q:"What is NgModule?", a:"NgModule is a decorator used to define a module. It contains declarations, imports, providers and bootstrap.", topic:"angular", level:"beginner" },
+      { id:"ng-7", q:"What is a directive in Angular?", a:"Directive is used to change the behavior or appearance of DOM elements.", topic:"angular", level:"beginner" },
+      { id:"ng-8", q:"What are types of directives?", a:"There are three types: component directives, structural directives and attribute directives.", topic:"angular", level:"beginner" },
+      { id:"ng-9", q:"What is a service in Angular?", a:"Service is used to share data and logic across components. It is reusable and helps in separation of concerns.", topic:"angular", level:"beginner" },
+      { id:"ng-10", q:"What is dependency injection in Angular?", a:"Dependency injection is a design pattern. Angular automatically provides required services to components.", topic:"angular", level:"beginner" },
+      { id:"ng-11", q:"What is data binding in Angular?", a:"Data binding is used to connect component data with HTML template. It keeps UI and data in sync.", topic:"angular", level:"beginner" },
+      { id:"ng-12", q:"What are types of data binding?", a:"There are four types: interpolation, property binding, event binding and two-way binding.", topic:"angular", level:"beginner" },
+      { id:"ng-13", q:"What is interpolation in Angular?", a:"Interpolation is used to display data in HTML using double curly braces {{ }}.", topic:"angular", level:"beginner" },
+      { id:"ng-14", q:"What is property binding?", a:"Property binding is used to bind data to HTML element properties using [] syntax.", topic:"angular", level:"beginner" },
+      { id:"ng-15", q:"What is event binding?", a:"Event binding is used to handle user actions like click using () syntax.", topic:"angular", level:"beginner" },
+      { id:"ng-16", q:"What is two-way data binding?", a:"Two-way binding combines property and event binding. It uses [(ngModel)] to sync data both ways.", topic:"angular", level:"beginner" },
+      { id:"ng-17", q:"What is ngModel in Angular?", a:"ngModel is a directive used for two-way data binding. It connects input fields with component data.", topic:"angular", level:"beginner" },
+      { id:"ng-18", q:"What is a template in Angular?", a:"Template is the HTML part of a component. It defines how UI looks.", topic:"angular", level:"beginner" },
+      { id:"ng-19", q:"What is template expression?", a:"Template expression is used inside HTML to display or calculate values using component data.", topic:"angular", level:"beginner" },
+      { id:"ng-20", q:"What is template reference variable?", a:"Template reference variable is used to access DOM element in template. It is defined using # symbol.", topic:"angular", level:"beginner" },
+      { id:"ng-21", q:"What is *ngIf in Angular?", a:"*ngIf is a structural directive used to show or hide elements based on condition.", topic:"angular", level:"beginner" },
+      { id:"ng-22", q:"What is *ngFor in Angular?", a:"*ngFor is used to loop through list and display items in template.", topic:"angular", level:"beginner" },
+      { id:"ng-23", q:"What is *ngSwitch in Angular?", a:"*ngSwitch is used to show different elements based on condition, similar to switch case.", topic:"angular", level:"beginner" },
+      { id:"ng-24", q:"What is attribute directive?", a:"Attribute directive is used to change appearance or behavior of element. Example ngClass and ngStyle.", topic:"angular", level:"beginner" },
+      { id:"ng-25", q:"What is ngClass?", a:"ngClass is used to add or remove CSS classes dynamically based on condition.", topic:"angular", level:"beginner" },
+      { id:"ng-26", q:"What is ngStyle?", a:"ngStyle is used to apply styles dynamically to elements.", topic:"angular", level:"beginner" },
+      { id:"ng-27", q:"What is pipe in Angular?", a:"Pipe is used to transform data in template. Example date pipe, uppercase pipe.", topic:"angular", level:"beginner" },
+      { id:"ng-28", q:"What are built-in pipes?", a:"Built-in pipes are default pipes provided by Angular like date, currency, uppercase and lowercase.", topic:"angular", level:"beginner" },
+      { id:"ng-29", q:"What is custom pipe?", a:"Custom pipe is user-defined pipe used to create custom data transformation.", topic:"angular", level:"beginner" },
+      { id:"ng-30", q:"What is pure and impure pipe?", a:"Pure pipe runs only when input changes. Impure pipe runs on every change detection cycle.", topic:"angular", level:"beginner" },
+      { id:"ng-31", q:"What is lifecycle hook in Angular?", a:"Lifecycle hooks are methods that run at different stages of component life like creation, update and destroy.", topic:"angular", level:"beginner" },
+      { id:"ng-32", q:"What is ngOnInit?", a:"ngOnInit runs after component is initialized. It is used to load data or perform setup tasks.", topic:"angular", level:"beginner" },
+      { id:"ng-33", q:"What is ngOnChanges?", a:"ngOnChanges runs when input properties change. It receives current and previous values.", topic:"angular", level:"beginner" },
+      { id:"ng-34", q:"What is ngDoCheck?", a:"ngDoCheck is used for custom change detection. It runs during every change detection cycle.", topic:"angular", level:"beginner" },
+      { id:"ng-35", q:"What is ngAfterViewInit?", a:"ngAfterViewInit runs after component view is initialized. It is used to access child components or DOM.", topic:"angular", level:"beginner" },
+      { id:"ng-36", q:"What is ngOnDestroy?", a:"ngOnDestroy runs before component is destroyed. It is used to clean up resources like subscriptions.", topic:"angular", level:"beginner" },
+      { id:"ng-37", q:"What is change detection in Angular?", a:"Change detection checks for changes in data and updates the UI automatically.", topic:"angular", level:"beginner" },
+      { id:"ng-38", q:"What is zone.js in Angular?", a:"zone.js is a library used by Angular to detect async operations and trigger change detection.", topic:"angular", level:"beginner" },
+      { id:"ng-39", q:"What is OnPush change detection?", a:"OnPush is a strategy that improves performance. It updates UI only when input data changes.", topic:"angular", level:"beginner" },
+      { id:"ng-40", q:"What is ChangeDetectorRef?", a:"ChangeDetectorRef is used to manually control change detection like detectChanges or markForCheck.", topic:"angular", level:"beginner" },
+      { id:"ng-41", q:"What is routing in Angular?", a:"Routing is used to navigate between different pages or components in Angular application.", topic:"angular", level:"intermediate" },
+      { id:"ng-42", q:"What is RouterModule?", a:"RouterModule is used to configure routing in Angular. It provides router services and directives.", topic:"angular", level:"intermediate" },
+      { id:"ng-43", q:"What is routerLink?", a:"routerLink is a directive used in template to navigate between routes.", topic:"angular", level:"intermediate" },
+      { id:"ng-44", q:"What is router-outlet?", a:"router-outlet is a placeholder where routed components are displayed.", topic:"angular", level:"intermediate" },
+      { id:"ng-45", q:"What is route parameter?", a:"Route parameter is used to pass dynamic values in URL. Example /user/:id.", topic:"angular", level:"intermediate" },
+      { id:"ng-46", q:"What is query parameter?", a:"Query parameter is used to pass optional data in URL using ?key=value format.", topic:"angular", level:"intermediate" },
+      { id:"ng-47", q:"What is lazy loading in Angular?", a:"Lazy loading loads modules only when needed. It improves performance and reduces initial load time.", topic:"angular", level:"intermediate" },
+      { id:"ng-48", q:"What is preloading in Angular?", a:"Preloading loads lazy modules in background after app is loaded. It improves navigation speed.", topic:"angular", level:"intermediate" },
+      { id:"ng-49", q:"What is route guard in Angular?", a:"Route guard is used to control access to routes. It can allow or block navigation.", topic:"angular", level:"intermediate" },
+      { id:"ng-50", q:"What are types of route guards?", a:"Types are CanActivate, CanDeactivate, CanLoad and Resolve. They control routing behavior.", topic:"angular", level:"intermediate" },
+      { id:"ng-51", q:"What is Reactive Forms in Angular?", a:"Reactive forms are model-driven forms. Form structure is defined in component using FormControl and FormGroup.", topic:"angular", level:"intermediate" },
+      { id:"ng-52", q:"What is Template-driven Forms?", a:"Template-driven forms are defined in HTML template using directives like ngModel.", topic:"angular", level:"intermediate" },
+      { id:"ng-53", q:"What is FormControl?", a:"FormControl represents a single form field. It tracks value and validation state.", topic:"angular", level:"intermediate" },
+      { id:"ng-54", q:"What is FormGroup?", a:"FormGroup is a collection of FormControls. It represents a complete form.", topic:"angular", level:"intermediate" },
+      { id:"ng-55", q:"What is FormArray?", a:"FormArray is used to manage multiple form controls dynamically in an array format.", topic:"angular", level:"intermediate" },
+      { id:"ng-56", q:"What is validation in Angular forms?", a:"Validation is used to check user input. It ensures correct data is entered.", topic:"angular", level:"intermediate" },
+      { id:"ng-57", q:"What are built-in validators?", a:"Built-in validators are predefined validation functions like required, minlength, maxlength and pattern.", topic:"angular", level:"intermediate" },
+      { id:"ng-58", q:"What is custom validator?", a:"Custom validator is user-defined function to create custom validation logic.", topic:"angular", level:"intermediate" },
+      { id:"ng-59", q:"What is async validator?", a:"Async validator is used for validation that requires server call like checking username availability.", topic:"angular", level:"intermediate" },
+      { id:"ng-60", q:"What is form submission in Angular?", a:"Form submission is handled using (ngSubmit) event. It triggers method in component when form is submitted.", topic:"angular", level:"intermediate" },
+      { id:"ng-61", q:"What is HttpClient in Angular?", a:"HttpClient is used to make HTTP requests like GET, POST, PUT and DELETE to communicate with server.", topic:"angular", level:"intermediate" },
+      { id:"ng-62", q:"What is HttpClientModule?", a:"HttpClientModule is required to use HttpClient. It must be imported in module.", topic:"angular", level:"intermediate" },
+      { id:"ng-63", q:"What is Observable in Angular?", a:"Observable is used to handle asynchronous data like API responses. It comes from RxJS.", topic:"angular", level:"intermediate" },
+      { id:"ng-64", q:"What is subscribe in Angular?", a:"subscribe is used to get data from observable. Without subscribe, observable will not execute.", topic:"angular", level:"intermediate" },
+      { id:"ng-65", q:"What is pipe in RxJS?", a:"pipe is used to combine multiple operators in observable. It helps to transform data.", topic:"angular", level:"intermediate" },
+      { id:"ng-66", q:"What are RxJS operators?", a:"Operators are functions used to modify observable data. Examples are map, filter, switchMap.", topic:"angular", level:"intermediate" },
+      { id:"ng-67", q:"What is switchMap?", a:"switchMap cancels previous observable and switches to new one. It is useful in API calls.", topic:"angular", level:"intermediate" },
+      { id:"ng-68", q:"What is mergeMap?", a:"mergeMap runs multiple observables in parallel and combines results.", topic:"angular", level:"intermediate" },
+      { id:"ng-69", q:"What is concatMap?", a:"concatMap executes observables one by one in order.", topic:"angular", level:"intermediate" },
+      { id:"ng-70", q:"What is forkJoin?", a:"forkJoin is used to run multiple API calls and get all results together when all are completed.", topic:"angular", level:"intermediate" },
+      { id:"ng-71", q:"What is Subject in RxJS?", a:"Subject is both observable and observer. It is used to share data between multiple components.", topic:"angular", level:"intermediate" },
+      { id:"ng-72", q:"What is BehaviorSubject?", a:"BehaviorSubject stores latest value and sends it to new subscribers immediately.", topic:"angular", level:"intermediate" },
+      { id:"ng-73", q:"What is ReplaySubject?", a:"ReplaySubject stores multiple previous values and sends them to new subscribers.", topic:"angular", level:"intermediate" },
+      { id:"ng-74", q:"What is AsyncSubject?", a:"AsyncSubject sends only last value when observable completes.", topic:"angular", level:"intermediate" },
+      { id:"ng-75", q:"What is difference between Subject and BehaviorSubject?", a:"Subject does not store value. BehaviorSubject stores latest value and sends to new subscribers.", topic:"angular", level:"intermediate" },
+      { id:"ng-76", q:"What is unsubscribe in Angular?", a:"unsubscribe is used to stop observable execution. It prevents memory leaks.", topic:"angular", level:"intermediate" },
+      { id:"ng-77", q:"What is takeUntil in RxJS?", a:"takeUntil is used to automatically unsubscribe when a condition or signal is emitted.", topic:"angular", level:"intermediate" },
+      { id:"ng-78", q:"What is async pipe?", a:"async pipe automatically subscribes and unsubscribes observables in template.", topic:"angular", level:"intermediate" },
+      { id:"ng-79", q:"What is error handling in Angular HTTP?", a:"Error handling is done using catchError operator in RxJS. It handles API errors properly.", topic:"angular", level:"intermediate" },
+      { id:"ng-80", q:"What is interceptor in Angular?", a:"Interceptor is used to modify HTTP requests and responses globally like adding headers or logging.", topic:"angular", level:"intermediate" },
+    ];
+
+    const TOTAL = ALL_QUESTIONS.length;
+    const TOPIC_LABELS = { javascript: 'JavaScript', typescript: 'TypeScript', angular: 'Angular' };
+    const LEVEL_LABELS = { beginner: 'Beginner', intermediate: 'Intermediate', advanced: 'Advanced' };
+    const TOPIC_ORDER = ['javascript', 'typescript', 'angular'];
+
+    const topicFilter = document.getElementById('topicFilter');
+    const searchInput = document.getElementById('searchInput');
+    const clearBtn = document.getElementById('clearBtn');
+    const content = document.getElementById('content');
+
+    let debounceTimer;
+
+    topicFilter.addEventListener('change', render);
+    searchInput.addEventListener('input', () => {
+      clearBtn.classList.toggle('visible', searchInput.value.length > 0);
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(render, 200);
+    });
+    clearBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      clearBtn.classList.remove('visible');
+      searchInput.focus();
+      render();
+    });
+
+    function escapeHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function highlightText(text, re) {
+      if (!re) return escapeHtml(text);
+      const g = new RegExp(re.source, re.flags.includes('g') ? re.flags : re.flags + 'g');
+      let out = '', last = 0, m;
+      while ((m = g.exec(text)) !== null) {
+        if (!m[0].length) { g.lastIndex++; continue; }
+        out += escapeHtml(text.slice(last, m.index)) + '<mark class="hit">' + escapeHtml(m[0]) + '</mark>';
+        last = m.index + m[0].length;
+      }
+      return out + escapeHtml(text.slice(last));
+    }
+
+    function render() {
+      const topic = topicFilter.value;
+      const raw = searchInput.value.trim();
+      let matcher = null;
+      if (raw) {
+        try { matcher = new RegExp(raw.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'i'); } catch(e) {}
+      }
+
+      let filtered = ALL_QUESTIONS;
+      if (topic !== 'all') filtered = filtered.filter(q => q.topic === topic);
+      if (matcher) filtered = filtered.filter(q => matcher.test(q.q) || matcher.test(q.a));
+
+      content.innerHTML = '';
+
+      if (!filtered.length) {
+        content.innerHTML = '<div class="no-results">No questions match your filters.</div>';
+        return;
+      }
+
+      const groups = {};
+      filtered.forEach(q => {
+        const key = q.topic;
+        if (!groups[key]) groups[key] = [];
+        groups[key].push(q);
+      });
+
+      let num = 0;
+      TOPIC_ORDER.forEach(t => {
+        if (!groups[t]) return;
+        const section = document.createElement('div');
+        section.className = 'topic-section';
+
+        const heading = document.createElement('div');
+        heading.className = 'topic-heading ' + t;
+        heading.innerHTML = '<span class="dot"></span> ' + TOPIC_LABELS[t] + ' (' + groups[t].length + ')';
+        section.appendChild(heading);
+
+        groups[t].forEach(q => {
+          num++;
+          const card = document.createElement('div');
+          card.className = 'qa-card';
+
+          const header = document.createElement('div');
+          header.className = 'qa-card-header';
+          header.innerHTML =
+            '<span class="qa-num">' + num + '.</span>' +
+            '<span class="qa-q">' + highlightText(q.q, matcher) + '</span>' +
+            '<span class="qa-badges">' +
+              '<span class="badge ' + q.level + '">' + LEVEL_LABELS[q.level] + '</span>' +
+            '</span>' +
+            '';
+
+          const answer = document.createElement('div');
+          answer.className = 'qa-answer';
+          answer.innerHTML = highlightText(q.a, matcher);
+
+          card.appendChild(header);
+          card.appendChild(answer);
+          section.appendChild(card);
+        });
+
+        content.appendChild(section);
+      });
+    }
+
+    render();
+  })();
+  </script>
+</body>
+</html>
