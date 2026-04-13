@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Q&A</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            background: #121212;
+            color: #e0e0e0;
+            max-width: 100vw
+        }
+
+        .header {
+            background: #1e1e1e;
+            border-bottom: 1px solid #2a2a2a;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            height: 42px;
+            display: flex;
+            align-items: center
+        }
+
+        .header-inner {
+            max-width: 880px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0
+        }
+
+        .header input {
+            flex: 1;
+            padding: 6px 12px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            font-size: .88rem;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            background: #2a2a2a;
+            color: #e0e0e0;
+            min-width: 0
+        }
+
+        .header input::placeholder {
+            color: #777
+        }
+
+        .header input:focus {
+            border-color: #555
+        }
+
+        .header select {
+            padding: 6px 8px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            font-size: .88rem;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            background: #2a2a2a;
+            color: #e0e0e0;
+            cursor: pointer;
+            width: 180px;
+        }
+
+        .content {
+            position: fixed;
+            top: 42px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 10px
+        }
+
+        .content::-webkit-scrollbar {
+            width: 6px
+        }
+
+        .content::-webkit-scrollbar-track {
+            background: #1a1a1a
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 3px
+        }
+
+        .content-inner {
+            max-width: 880px;
+            margin: 0 auto;
+            overflow: hidden
+        }
+
+        .qa-card {
+            padding: 14px 0;
+            border-bottom: 1px solid #2a2a2a
+        }
+
+        .qa-card:last-child {
+            border-bottom: none
+        }
+
+        .question {
+            font-weight: 600;
+            font-size: .95rem;
+            margin-bottom: 5px;
+            color: #fff
+        }
+
+        .answer {
+            font-size: .88rem;
+            color: #aaa;
+            line-height: 1.65
+        }
+
+        .answer pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 12px 14px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-top: 5px;
+            font-size: .82rem;
+            line-height: 1.6;
+            border: 1px solid #2a2a2a;
+            font-family: 'Consolas', 'Courier New', monospace;
+            max-width: 100%;
+            box-sizing: border-box
+        }
+
+        .answer pre .kw {
+            color: #569cd6
+        }
+
+        .answer pre .fn {
+            color: #dcdcaa
+        }
+
+        .answer pre .str {
+            color: #ce9178
+        }
+
+        .answer pre .num {
+            color: #b5cea8
+        }
+
+        .answer pre .cmt {
+            color: #6a9955;
+            font-style: italic
+        }
+
+        .answer pre .type {
+            color: #4ec9b0
+        }
+
+        .answer pre .dec {
+            color: #c586c0
+        }
+
+        .answer pre .op {
+            color: #d4d4d4
+        }
+
+        .answer pre .param {
+            color: #9cdcfe
+        }
+
+        .answer pre .prop {
+            color: #9cdcfe
+        }
+
+        .answer pre .tag {
+            color: #808080
+        }
+
+        .answer pre .attr {
+            color: #92d3f5
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+            font-size: 1rem
+        }
+
+        mark {
+            background: #665500;
+            color: #ffe066;
+            padding: 0 2px;
+            border-radius: 2px
+        }
+
+        @media(max-width:600px) {
+            .header {
+                padding: 5px 6px;
+                gap: 6px;
+                height: 38px
+            }
+
+            .header input,
+            .header select {
+                font-size: .75rem;
+                padding: 5px 8px
+            }
+
+            .header select {
+                width: 150px
+            }
+
+            .content {
+                top: 38px;
+                padding: 0px
+            }
+
+            .qa-card {
+                padding: 8px 12px
+            }
+
+            .question {
+                font-size: .82rem;
+                margin-bottom: 3px
+            }
+
+            .answer {
+                font-size: .76rem;
+                line-height: 1.55
+            }
+
+            .answer pre {
+                font-size: .68rem;
+                padding: 8px 10px;
+                line-height: 1.5;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                overflow-x: hidden;
+                max-width: 100%
+            }
+
+            .no-results {
+                font-size: .85rem
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="header-inner">
+            <input type="text" id="searchBox" placeholder="Search...">
+            <select id="filterSelect">
+                <option value="all">All</option>
+                <option value="js">JavaScript</option>
+                <option value="ts">TypeScript</option>
+                <option value="ng">Angular</option>
+                <option value="rxjs">RxJS</option>
+                <option value="sm">State Management</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="content-inner" id="container"></div>
+    </div>
+
+    <script>
+        const jsData = [
+            { q: "1. What is JavaScript?", a: `JavaScript is a high level programming language used to create interactive web pages. It runs inside the browser and helps to handle user actions, update UI dynamically, and communicate with backend services using APIs.\n<pre>console.log("Hello JavaScript");</pre>` },
+            { q: "2. What are variables?", a: `Variables are containers used to store data values in memory. They help to reuse and manage data throughout the program and make the code more readable and maintainable.\n<pre>let name = "Ram";</pre>` },
+            { q: "3. Difference between var, let and const?", a: `var is function scoped and can be redeclared, which may create issues. let is block scoped and safer. const is also block scoped but cannot be reassigned after initial value.\n<pre>let a = 10; const b = 20;</pre>` },
+            { q: "4. What is data type?", a: `Data type defines the type of value stored in a variable like number, string, boolean, object or undefined. It helps JavaScript understand how to process that value properly.\n<pre>let num = 10; let str = "hi";</pre>` },
+            { q: "5. What is typeof operator?", a: `typeof is used to check the data type of a variable at runtime. It is useful during debugging and validation of values before performing operations.\n<pre>typeof 10; // number</pre>` },
+            { q: "6. What is a function?", a: `Function is a reusable block of code that performs a specific task. It helps reduce code duplication and improves readability and maintainability.\n<pre>function greet(){ return "Hello"; }</pre>` },
+            { q: "7. What is arrow function?", a: `Arrow function is a shorter way to write functions. It is useful for small functions and does not have its own this keyword, which avoids confusion.\n<pre>const add = (a,b)=>a+b;</pre>` },
+            { q: "8. What is array?", a: `Array is a collection of multiple values stored in a single variable. It is useful when working with lists like numbers, users, or items.\n<pre>let arr = [1,2,3];</pre>` },
+            { q: "9. What is object?", a: `Object is a collection of key-value pairs used to store structured data. It helps represent real-world entities like user, product or settings.\n<pre>let user = {name:"Ram"};</pre>` },
+            { q: "10. What is undefined?", a: `Undefined means a variable is declared but not assigned any value. It is the default value given by JavaScript engine when no value is set.\n<pre>let a; console.log(a);</pre>` },
+            { q: "11. What is null?", a: `Null is an assigned value which represents empty or no value. It is used when we want to intentionally clear or reset a variable.\n<pre>let a = null;</pre>` },
+            { q: "12. What is NaN?", a: `NaN means Not a Number and appears when a mathematical operation fails or is invalid. It is still considered a number type in JavaScript.\n<pre>console.log("a"*2);</pre>` },
+            { q: "13. Difference between == and ===?", a: `Double equals checks only values with type conversion, while triple equals checks both value and type. It is always better to use === to avoid unexpected results.\n<pre>10 == "10"; // true\n10 === "10"; // false</pre>` },
+            { q: "14. What is loop?", a: `Loop is used to execute a block of code multiple times based on a condition. It reduces repetition and helps in working with arrays and data sets.\n<pre>for(let i=0;i<3;i++){ console.log(i); }</pre>` },
+            { q: "15. Types of loops?", a: `Common loops in JavaScript are for, while, and do-while. Each loop is used based on requirement and readability of the code logic.\n<pre>let i=0; while(i<2){ i++; }</pre>` },
+            { q: "16. What is if-else?", a: `If-else statement is used for decision making in programs. It executes different blocks of code based on given condition.\n<pre>if(a>10){ console.log("big"); }</pre>` },
+            { q: "17. What is callback function?", a: `Callback is a function passed as argument to another function and executed later. It is commonly used in asynchronous operations like events and API calls.\n<pre>function test(fn){ fn(); }</pre>` },
+            { q: "18. What is closure?", a: `Closure is when an inner function can access variables from its outer function even after the outer function execution is completed.\n<pre>function outer(){ let a=1; return ()=>a; }</pre>` },
+            { q: "19. What is hoisting?", a: `Hoisting is JavaScript behavior where variable and function declarations are moved to top of scope before execution. Only declarations are hoisted, not values.\n<pre>console.log(a); var a=5;</pre>` },
+            { q: "20. What is scope?", a: `Scope defines where a variable can be accessed in the code. It helps control visibility and lifetime of variables.\n<pre>let a=1;</pre>` },
+            { q: "21. What is global scope?", a: `Global scope variables can be accessed anywhere in the program. Overusing global variables may create conflicts in large applications.\n<pre>var a=10;</pre>` },
+            { q: "22. What is local scope?", a: `Local scope variables are accessible only inside a function or block. It helps protect data and avoid unwanted access.\n<pre>function x(){ let a=5; }</pre>` },
+            { q: "23. What is DOM?", a: `DOM is Document Object Model which represents HTML structure as a tree. JavaScript uses DOM to access and update content dynamically.\n<pre>document.title = "JS";</pre>` },
+            { q: "24. What is event?", a: `Event is an action like click, input or scroll performed by user or browser. JavaScript can listen and respond to these events.\n<pre>button.onclick=()=>{};</pre>` },
+            { q: "25. What is event listener?", a: `Event listener is used to attach a function to an event so that it executes when the event happens. It supports multiple handlers.\n<pre>btn.addEventListener("click",fn);</pre>` },
+            {
+                q: "26. What is addEventListener?", a: `addEventListener is used to attach an event to an HTML element. It allows multiple event handlers and gives better control compared to inline events.\n<pre>btn.addEventListener(
+  "click",
+  ()=>console.log("clicked"));</pre>`},
+            { q: "27. What is this keyword?", a: `this keyword refers to the current object depending on how the function is called. In global scope, it refers to window object in browser.\n<pre>console.log(this);</pre>` },
+            { q: "28. What is strict mode?", a: `Strict mode is used to write safer JavaScript code. It prevents common mistakes like using undeclared variables and improves debugging.\n<pre>"use strict";</pre>` },
+            { q: "29. What is JSON?", a: `JSON stands for JavaScript Object Notation. It is a simple format used to store and transfer data between client and server.\n<pre>let obj = {"name":"Ram"};</pre>` },
+            { q: "30. What is JSON.parse?", a: `JSON.parse converts JSON string into JavaScript object. It is used when receiving data from server.\n<pre>JSON.parse('{"a":1}');</pre>` },
+            { q: "31. What is JSON.stringify?", a: `JSON.stringify converts JavaScript object into JSON string. It is used when sending data to server.\n<pre>JSON.stringify({a:1});</pre>` },
+            { q: "32. What is Promise?", a: `Promise is used to handle asynchronous operations. It represents a value that will be available now, later, or never.\n<pre>new Promise((res)=>res());</pre>` },
+            { q: "33. What is async function?", a: `Async function is used to write asynchronous code in a simple way. It always returns a promise automatically.\n<pre>async function test(){ return 1; }</pre>` },
+            { q: "34. What is await?", a: `await is used inside async function to wait for promise result. It makes code look like synchronous.\n<pre>await fetch(url);</pre>` },
+            { q: "35. What is setTimeout?", a: `setTimeout is used to execute a function after a delay in milliseconds. It runs only once after delay.\n<pre>setTimeout(()=>console.log("hi"),1000);</pre>` },
+            { q: "36. What is setInterval?", a: `setInterval is used to execute a function repeatedly after a fixed time interval until stopped.\n<pre>setInterval(()=>console.log("run"),1000);</pre>` },
+            {
+                q: "37. What is clearTimeout?", a: `clearTimeout is used to cancel a timeout set by setTimeout before it executes.\n<pre>let id=setTimeout(()=>{},1000);
+clearTimeout(id);</pre>`},
+            {
+                q: "38. What is clearInterval?", a: `clearInterval is used to stop the repeated execution started by setInterval function.\n<pre>let id=setInterval(()=>{},1000);
+clearInterval(id);</pre>`},
+            { q: "39. What is fetch API?", a: `Fetch API is used to make HTTP requests to get or send data to server. It returns a promise.\n<pre>fetch(url).then(res=>res.json());</pre>` },
+            { q: "40. What is try catch?", a: `try catch is used to handle runtime errors in JavaScript. It prevents program crash and handles errors gracefully.\n<pre>try{} catch(e){ console.log(e); }</pre>` },
+            { q: "41. What is localStorage?", a: `localStorage is used to store data in browser permanently. Data remains even after page reload or browser restart.\n<pre>localStorage.setItem("a",1);</pre>` },
+            { q: "42. What is sessionStorage?", a: `sessionStorage stores data temporarily for a single tab session. Data is cleared when tab is closed.\n<pre>sessionStorage.setItem("a",1);</pre>` },
+            { q: "43. What is map()?", a: `map method creates a new array by modifying each element of original array. It does not change original array.\n<pre>[1,2].map(x=>x*2);</pre>` },
+            { q: "44. What is filter()?", a: `filter method returns a new array with elements that match a condition. It is useful for selecting data.\n<pre>[1,2,3].filter(x=>x>1);</pre>` },
+            { q: "45. What is reduce()?", a: `reduce method converts array into single value using accumulator logic. It is useful for calculations.\n<pre>[1,2].reduce((a,b)=>a+b);</pre>` },
+            { q: "46. What is forEach()?", a: `forEach is used to loop through array elements. It executes function for each item but does not return new array.\n<pre>[1,2].forEach(x=>console.log(x));</pre>` },
+            { q: "47. What is spread operator?", a: `Spread operator is used to expand array or object values. It is useful for copying and merging data.\n<pre>let b=[...a];</pre>` },
+            { q: "48. What is rest operator?", a: `Rest operator collects multiple values into a single array parameter in function arguments.\n<pre>function x(...a){}</pre>` },
+            { q: "49. What is destructuring?", a: `Destructuring is used to extract values from arrays or objects into variables in simple way.\n<pre>let {a}={a:1};</pre>` },
+            { q: "50. What is template literal?", a: "Template literal is used to create strings using backticks and allows variable interpolation inside string.\n<pre>`Hello ${name}`</pre>" },
+            { q: "51. What is execution context?", a: `Execution context is the environment where JavaScript code runs. It contains variables, functions, and scope information. There are global and function execution contexts created during program execution.\n<pre>console.log("Execution starts");</pre>` },
+            { q: "52. What is call stack?", a: `Call stack is a data structure which keeps track of function calls. It follows Last In First Out order, meaning the last function added is executed first.\n<pre>function a(){b()} function b(){} a();</pre>` },
+            { q: "53. What is event loop?", a: `Event loop is responsible for handling asynchronous operations. It continuously checks call stack and callback queue and pushes tasks to stack when it is empty.\n<pre>setTimeout(()=>console.log("hi"),0);</pre>` },
+            { q: "54. What is callback queue?", a: `Callback queue stores functions from asynchronous operations like setTimeout. Event loop pushes these callbacks into call stack when it is free.\n<pre>setTimeout(()=>{},1000);</pre>` },
+            { q: "55. What is microtask queue?", a: `Microtask queue stores promise callbacks and has higher priority than callback queue. It executes before moving to next event loop cycle.\n<pre>Promise.resolve().then(()=>{});</pre>` },
+            {
+                q: "56. What is closure in real usage?", a: `Closure helps to maintain private variables and state. It is used in scenarios like data hiding and function factories in real applications.\n<pre>function counter(){let c=0;
+return ()=>++c;}</pre>`},
+            { q: "57. What is hoisting in detail?", a: `Hoisting moves variable and function declarations to top of scope. var is hoisted with undefined, while let and const are hoisted but not initialized.\n<pre>console.log(a); var a=5;</pre>` },
+            { q: "58. What is temporal dead zone?", a: `Temporal Dead Zone is the time between variable declaration and initialization where accessing let or const variables throws error.\n<pre>console.log(a); let a=5;</pre>` },
+            { q: "59. What is shallow copy?", a: `Shallow copy copies only first level properties and nested objects are still referenced. Changes in nested objects affect original object.\n<pre>let b={...a};</pre>` },
+            { q: "60. What is deep copy?", a: `Deep copy creates completely independent copy including nested objects. Changes in copied object will not affect original object.\n<pre>JSON.parse(JSON.stringify(obj));</pre>` },
+            { q: "61. What is prototype?", a: `Prototype is an object from which other objects inherit properties. Every JavaScript object has a prototype chain internally.\n<pre>obj.__proto__;</pre>` },
+            { q: "62. What is prototype chain?", a: `Prototype chain is the process of looking up properties in parent objects if not found in current object.\n<pre>obj.toString();</pre>` },
+            { q: "63. What is bind() method?", a: `bind method returns a new function with fixed this value. It does not execute immediately but can be called later.\n<pre>fn.bind(obj);</pre>` },
+            { q: "64. What is call() method?", a: `call method invokes function immediately and sets this value. Arguments are passed individually.\n<pre>fn.call(obj);</pre>` },
+            { q: "65. What is apply() method?", a: `apply method is similar to call but arguments are passed as array. It is useful when arguments are dynamic.\n<pre>fn.apply(obj,[1,2]);</pre>` },
+            { q: "66. What is currying?", a: `Currying converts a function with multiple arguments into multiple functions with single argument. It improves reusability.\n<pre>const add=a=>b=>a+b;</pre>` },
+            { q: "67. What is IIFE?", a: `Immediately Invoked Function Expression executes immediately after creation. It is used to avoid global scope pollution.\n<pre>(function(){})();</pre>` },
+            { q: "68. What is pure function?", a: `Pure function always returns same output for same input and does not change external state. It makes code predictable.\n<pre>a=>a*2;</pre>` },
+            { q: "69. What is impure function?", a: `Impure function depends on external variables or modifies state. It may return different outputs for same input.\n<pre>count++;</pre>` },
+            { q: "70. What is higher order function?", a: `Higher order function takes another function as argument or returns a function. It is widely used in functional programming.\n<pre>arr.map(x=>x);</pre>` },
+            { q: "71. What is debouncing?", a: `Debouncing delays execution until user stops triggering event. It is useful in search input to reduce API calls.\n<pre>setTimeout(fn,300);</pre>` },
+            { q: "72. What is throttling?", a: `Throttling limits function execution to once in given interval. It is useful in scroll and resize events.\n<pre>if(!flag){fn();}</pre>` },
+            { q: "73. What is event delegation?", a: `Event delegation uses parent element to handle events for child elements. It improves performance and reduces memory usage.\n<pre>parent.onclick=fn;</pre>` },
+            { q: "74. What is preventDefault?", a: `preventDefault stops default browser behavior like form submit or link navigation. It is used in form handling.\n<pre>e.preventDefault();</pre>` },
+            { q: "75. What is stopPropagation?", a: `stopPropagation stops event from bubbling to parent elements. It controls event flow in DOM tree.\n<pre>e.stopPropagation();</pre>` },
+            { q: "76. What is event bubbling?", a: `Event bubbling is a process where event starts from target element and moves up to parent elements. It is default behavior in JavaScript event handling system.\n<pre>div.onclick=()=>console.log("parent");</pre>` },
+            { q: "77. What is event capturing?", a: `Event capturing is opposite of bubbling where event travels from parent to child element. It happens before bubbling phase when enabled.\n<pre>addEventListener("click",fn,true);</pre>` },
+            { q: "78. Difference between bubbling and capturing?", a: `Bubbling moves from child to parent, capturing moves from parent to child. By default, JavaScript uses bubbling unless capturing is explicitly enabled.\n<pre>addEventListener("click",fn,true);</pre>` },
+            {
+                q: "79. What is once event listener?", a: `Once event listener runs only one time and then automatically removes itself. It is useful for one-time actions like initial setup.\n<pre>btn.addEventListener(
+  "click", fn,
+  {once:true});</pre>`},
+            {
+                q: "80. What is passive event listener?", a: `Passive event listener improves performance by telling browser that event will not call preventDefault. It is useful for scroll events.\n<pre>addEventListener(
+  "scroll", fn,
+  {passive:true});</pre>`},
+            { q: "81. What is object.freeze()?", a: `Object.freeze makes an object immutable. It prevents adding, deleting, or modifying properties, but nested objects can still be changed.\n<pre>Object.freeze(obj);</pre>` },
+            { q: "82. What is Object.seal()?", a: `Object.seal prevents adding or deleting properties but allows modification of existing properties in the object.\n<pre>Object.seal(obj);</pre>` },
+            { q: "83. Difference between freeze and seal?", a: `freeze completely locks object, while seal allows modifying existing properties but does not allow adding or removing properties.\n<pre>Object.freeze(obj);</pre>` },
+            { q: "84. What is optional chaining?", a: `Optional chaining allows safe access of nested object properties without throwing error if property is undefined or null.\n<pre>obj?.a?.b;</pre>` },
+            { q: "85. What is nullish coalescing operator?", a: `Nullish coalescing returns right side value only when left side is null or undefined. It is safer than logical OR in some cases.\n<pre>a ?? b;</pre>` },
+            { q: "86. What is short circuiting?", a: `Short circuiting means logical operators stop evaluating when result is determined. It is commonly used for default values.\n<pre>a && console.log(a);</pre>` },
+            { q: "87. What is type coercion?", a: `Type coercion is automatic conversion of one data type to another during operations. It can lead to unexpected results if not handled carefully.\n<pre>"5" + 1;</pre>` },
+            { q: "88. What is implicit coercion?", a: `Implicit coercion happens automatically when JavaScript converts types during operations like comparison or addition.\n<pre>"5" + 1; // "51"</pre>` },
+            { q: "89. What is explicit coercion?", a: `Explicit coercion is manual conversion of data types using functions like Number, String, or Boolean.\n<pre>Number("5");</pre>` },
+            { q: "90. What is array destructuring?", a: `Array destructuring allows extracting values from array into variables in a simple and readable way.\n<pre>let [a,b]=[1,2];</pre>` },
+            { q: "91. What is object destructuring default value?", a: `Object destructuring allows assigning default values if property is not present in object.\n<pre>let {a=10} = {};</pre>` },
+            { q: "92. What is computed property name?", a: `Computed property allows using dynamic values as object keys using square brackets.\n<pre>let obj = {[key]:"value"};</pre>` },
+            { q: "93. What is Symbol data type?", a: `Symbol is a unique and immutable data type used as object keys. It helps avoid property name conflicts.\n<pre>let id = Symbol("id");</pre>` },
+            { q: "94. What is BigInt?", a: `BigInt is used to store very large numbers beyond safe integer limit of JavaScript numbers.\n<pre>let n = 12345678901234567890n;</pre>` },
+            { q: "95. What is Array.isArray()?", a: `Array.isArray checks whether a given value is an array. It is more reliable than typeof for arrays.\n<pre>Array.isArray([]);</pre>` },
+            { q: "96. What is find() method?", a: `find method returns first element in array that matches condition. If no match found, it returns undefined.\n<pre>[1,2,3].find(x=>x>1);</pre>` },
+            { q: "97. What is some() method?", a: `some method checks if at least one element satisfies condition and returns true or false.\n<pre>[1,2].some(x=>x>1);</pre>` },
+            { q: "98. What is every() method?", a: `every method checks if all elements satisfy condition. It returns true only if all elements match.\n<pre>[1,2].every(x=>x>0);</pre>` },
+            { q: "99. What is includes() method?", a: `includes method checks whether array contains a specific value and returns true or false.\n<pre>[1,2,3].includes(2);</pre>` },
+            { q: "100. What is flat() method?", a: `flat method is used to flatten nested arrays into single level array. Depth can be specified if needed.\n<pre>[1,[2,3]].flat();</pre>` },
+            {
+                q: "101. What is event loop in depth?", a: `Event loop manages execution of synchronous and asynchronous code. It continuously checks call stack and moves tasks from microtask and callback queue when stack is empty. Microtasks are executed before macrotasks for better priority handling.\n<pre>Promise.resolve()
+  .then(()=>
+    console.log("micro")
+  );</pre>`},
+            { q: "102. Difference between microtask and macrotask?", a: `Microtasks include promises and run before rendering, while macrotasks include setTimeout and run after rendering. Microtasks have higher priority and execute immediately after current task completes.\n<pre>setTimeout(()=>{},0);</pre>` },
+            { q: "103. What is repaint and reflow?", a: `Reflow recalculates layout when DOM structure changes, while repaint updates visual styles like color. Reflow is expensive and should be minimized for better performance.\n<pre>el.style.width="100px";</pre>` },
+            { q: "104. What is memory leak?", a: `Memory leak happens when unused objects are not garbage collected, causing memory usage to increase continuously. It can slow down application and crash browser.\n<pre>let arr=[];</pre>` },
+            { q: "105. How to avoid memory leaks?", a: `Avoid memory leaks by removing unused references, clearing timers, removing event listeners, and not storing unnecessary global variables.\n<pre>clearInterval(id);</pre>` },
+            { q: "106. What is garbage collection?", a: `Garbage collection automatically removes unused objects from memory. JavaScript uses mark and sweep algorithm to identify unreachable objects.\n<pre>let obj = {a:1};\nobj = null; // now eligible for GC</pre>` },
+            {
+                q: "107. What is debouncing vs throttling?", a: `Debouncing delays execution until user stops action, while throttling limits execution to fixed intervals. Both improve performance in frequent events.\n<pre>// debounce\nlet timer;\ninput.oninput
+//  = () => {\n  clearTimeout(timer);\n  timer = setTimeout(search, 300);\n};</pre>`},
+            { q: "108. What is requestAnimationFrame?", a: `requestAnimationFrame is used for smooth animations by syncing with browser repaint cycle. It improves performance compared to setInterval.\n<pre>requestAnimationFrame(fn);</pre>` },
+            { q: "109. What is IntersectionObserver?", a: `IntersectionObserver detects visibility of elements in viewport. It is used for lazy loading images and infinite scrolling.\n<pre>new IntersectionObserver(()=>{});</pre>` },
+            { q: "110. What is MutationObserver?", a: `MutationObserver watches changes in DOM like element addition or attribute change. It helps track dynamic updates efficiently.\n<pre>new MutationObserver(()=>{});</pre>` },
+            { q: "111. What is Proxy object?", a: `Proxy allows intercepting operations like get and set on objects. It is useful for validation, logging, and reactive programming.\n<pre>new Proxy(obj,{});</pre>` },
+            { q: "112. What is Reflect API?", a: `Reflect provides methods for object operations like get, set, and apply. It works with Proxy for better control of object behavior.\n<pre>Reflect.get(obj,"a");</pre>` },
+            { q: "113. What is currying real use case?", a: `Currying helps create reusable and configurable functions. It is used in functional programming and libraries for partial application.\n<pre>const sum=a=>b=>a+b;</pre>` },
+            {
+                q: "114. What is composition vs inheritance?", a: `Composition combines multiple functions to build features, while inheritance extends classes. Composition is more flexible and preferred in modern JavaScript.\n<pre>const canWalk = (obj) => ({
+  walk: () => obj.name + " walks"
+});\nconst person = canWalk({
+  name: "Ram"
+});\nperson.walk();</pre>`},
+            {
+                q: "115. What is SOLID principles in JS?", a: `SOLID principles help write maintainable and scalable code. They include single responsibility, open closed, and dependency inversion principles.\n<pre>// Single Responsibility\nclass UserAuth {
+  login(){} logout(){}
+}\nclass UserProfile {
+  getProfile(){}
+}</pre>`},
+            {
+                q: "116. What is DRY principle?", a: `DRY means Do Not Repeat Yourself. It encourages code reuse and avoids duplication which improves maintainability.\n<pre>function formatName(name) {\n  return name.trim().toLowerCase();\n}\nformatName("Ram");
+formatName("Sita");</pre>`},
+            {
+                q: "117. What is KISS principle?", a: `KISS means Keep It Simple and Straightforward. It avoids unnecessary complexity and makes code easy to understand.\n<pre>// Simple and clear\nconst isEven = n
+//  => n % 2 === 0;</pre>`},
+            {
+                q: "118. What is YAGNI principle?", a: `YAGNI means You Are Not Gonna Need It. Do not add features until they are actually required.\n<pre>// Build only what is needed
+//  now\nfunction getUser(id) {\n  return fetch("/api/user/" + id);\n}</pre>`},
+            { q: "119. What is lazy loading?", a: `Lazy loading loads resources only when needed. It improves performance and reduces initial load time.\n<pre>import('module');</pre>` },
+            { q: "120. What is code splitting?", a: `Code splitting divides large bundles into smaller chunks. It helps load only required parts of application.\n<pre>const Home = React.lazy(() => import('./Home'));\n// or in webpack\nimport(/* webpackChunkName: "home" */ './Home');</pre>` },
+            {
+                q: "121. What is tree shaking?", a: `Tree shaking removes unused code during build process to reduce bundle size and improve performance.\n<pre>// only used export is included in
+//  bundle\nimport {
+  add
+} from './math';\nadd(1, 2); // multiply is removed</pre>`},
+            {
+                q: "122. What is bundler?", a: `Bundler combines multiple JavaScript files into one or few optimized files. Examples include Webpack and Vite.\n<pre>// vite.config.js\nexport default {
+  build: {
+  outDir: 'dist'
+}
+};</pre>`},
+            {
+                q: "123. What is transpiler?", a: `Transpiler converts modern JavaScript code into older version for browser compatibility. Example is Babel.\n<pre>// ES6 input: const fn = () => 1;\n//
+//  ES5 output: var fn = function() {
+  return 1;
+};</pre>`},
+            { q: "124. What is CORS?", a: `CORS is security feature that restricts API requests from different domains. Server must allow access using headers.\n<pre>fetch(url);</pre>` },
+            {
+                q: "125. What is same origin policy?", a: `Same origin policy restricts access between different domains to protect user data and prevent attacks.\n<pre>// Same origin: http://site.com/page1
+//  and /page2\n// Different origin: http://site.com vs http://other.com</pre>`},
+            {
+                q: "126. What is XSS?", a: `Cross Site Scripting is a security attack where malicious scripts are injected into web pages. It can steal user data and cookies.\n<pre>// Dangerous: innerHTML =
+//  userInput;\n// Safe: textContent = userInput;</pre>`},
+            {
+                q: "127. What is CSRF?", a: `CSRF tricks user into performing unwanted actions on authenticated websites without their knowledge.\n<pre>// Protection: use CSRF
+//  token\nfetch('/api', {\n  headers: {
+  'X-CSRF-Token': token
+}\n});</pre>`},
+            { q: "128. What is sanitization?", a: `Sanitization removes unsafe user input to prevent security issues like XSS. Always validate and clean inputs.\n<pre>function sanitize(str) {\n  return str.replace(/&lt;/g, '&amp;lt;').replace(/>/g, '&amp;gt;');\n}</pre>` },
+            {
+                q: "129. What is CSP?", a: `Content Security Policy is used to prevent XSS by restricting which resources can be loaded on page.\n<pre>// HTTP Header\nContent-Security-Policy:
+  default-src 'self';\nscript-src 'self' cdn.example.com;</pre>`},
+            {
+                q: "130. What is SSR?", a: `Server Side Rendering generates HTML on server and sends it to browser. It improves SEO and initial load performance.\n<pre>// Server sends full
+//  HTML\napp.get('/', (req, res) => {\n  res.send(renderToString(&lt;App /&gt;));\n});</pre>`},
+            {
+                q: "131. What is CSR?", a: `Client Side Rendering renders content in browser using JavaScript. It is used in single page applications.\n<pre>// index.html loads JS, JS renders
+//  UI\n&lt;div id="root"&gt;&lt;/div&gt;\n&lt;script src="app.js"&gt;&lt;/script&gt;</pre>`},
+            {
+                q: "132. What is hydration?", a: `Hydration attaches event listeners to server rendered HTML on client side to make it interactive.\n<pre>// React hydration\nReactDOM.hydrate(&lt;App /&gt;, document.getElementById(
+  'root'));</pre>`},
+            {
+                q: "133. What is PWA?", a: `Progressive Web App provides app like experience using web technologies including offline support and installability.\n<pre>// manifest.json\n{
+  "name": "MyApp", "start_url": "/",\n  "display": "standalone"
+}</pre>`},
+            { q: "134. What is service worker?", a: `Service worker runs in background and handles caching, offline support, and push notifications.\n<pre>navigator.serviceWorker.register('sw.js');</pre>` },
+            { q: "135. What is WebSocket?", a: `WebSocket provides real time two way communication between client and server.\n<pre>new WebSocket(url);</pre>` },
+            { q: "136. What is long polling?", a: `Long polling keeps request open until server responds. It is used for near real time updates.\n<pre>async function poll() {\n  const res = await fetch('/updates');\n  const data = await res.json();\n  poll(); // call again\n}</pre>` },
+            { q: "137. What is SSE?", a: `Server Sent Events allow server to push updates to client over HTTP connection.\n<pre>new EventSource(url);</pre>` },
+            {
+                q: "138. What is CDN?", a: `CDN delivers static content from nearest server to user for faster loading.\n<pre>&lt;script
+  src="https://cdn.example.com/
+    lib.min.js"
+&gt;&lt;/script&gt;</pre>`},
+            {
+                q: "139. What is caching strategies?", a: `Caching strategies store responses to reduce network calls and improve performance.\n<pre>caches.open('v1')
+  .then(cache => {\n  cache.addAll(['/index.html', '/app.js']);\n});</pre>`},
+            {
+                q: "140. What is stale-while-revalidate?", a: `It serves cached data first and updates it in background to keep UI fast and fresh.\n<pre>self.addEventListener(
+  'fetch',
+  e => {\n  e.respondWith(caches.match(e.request)\n    .then(res => res || fetch(e.request)));\n});</pre>`},
+            {
+                q: "141. What is edge computing?", a: `Edge computing processes data closer to user location to reduce latency.\n<pre>// Cloudflare Worker
+//  example\naddEventListener(
+  'fetch',
+  event => {\n  event.respondWith(handleRequest(event.request));\n});</pre>`},
+            {
+                q: "142. What is performance optimization?", a: `Performance optimization improves speed using techniques like lazy loading, caching, and minimizing DOM operations.\n<pre>const img = document.querySelector(
+  'img');\nimg.loading = 'lazy'; // native lazy load</pre>`},
+            {
+                q: "143. What is critical rendering path?", a: `Critical rendering path defines steps browser takes to render page. Optimizing it improves load time.\n<pre>// Inline critical CSS in head\n&lt;style&gt;
+body{margin:0} &lt;/style&gt;\n// Defer non-critical JS\n&lt;script defer src="app.js"&gt;&lt;/script&gt;</pre>`},
+            {
+                q: "144. What is web vitals?", a: `Web vitals measure performance like loading speed, interactivity and layout stability.\n<pre>import {
+  getCLS, getLCP, getFID
+} from 'web-vitals';\ngetCLS(console.log);\ngetLCP(console.log);</pre>`},
+            {
+                q: "145. What is LCP?", a: `Largest Contentful Paint measures loading performance of main content on page.\n<pre>new PerformanceObserver((list) => {\n  list.getEntries()
+  .forEach(e => console.log(e));\n}).observe({type: 'largest-contentful-paint'});</pre>`},
+            {
+                q: "146. What is CLS?", a: `Cumulative Layout Shift measures visual stability of page during load.\n<pre>// Fix CLS: always set width and
+//  height\n&lt;img src="pic.jpg" width="300" height="200"&gt;</pre>`},
+            {
+                q: "147. What is FID?", a: `First Input Delay measures time taken for page to respond to user interaction.\n<pre>new PerformanceObserver((list) => {\n  list.getEntries()
+  .forEach(e => console.log(e));\n}).observe({type: 'first-input'});</pre>`},
+            {
+                q: "148. What is code minification?", a: `Minification removes unnecessary characters from code to reduce file size.\n<pre>// Before: function add(a, b) {
+  return a + b;
+}\n// After:  function add(a,b){return a+b}</pre>`},
+            {
+                q: "149. What is lazy hydration?", a: `Lazy hydration delays attaching event listeners until needed to improve performance.\n<pre>// Load component only when
+//  visible\nconst el = document.querySelector(
+  '#widget');\nobserver.observe(el); // hydrate on intersect</pre>`},
+            {
+                q: "150. What is bundle optimization?", a: `Bundle optimization reduces file size and improves load time using techniques like splitting and compression.\n<pre>// webpack.config.js\noptimization:
+//  {\n  splitChunks: {
+  chunks: 'all'
+},\n  minimize: true\n}</pre>`},
+        ];
+        const ngData = [
+            { q: "1. What is Angular?", a: `Angular is a frontend framework developed by Google used to build single page applications. It provides structure, components, and tools to build scalable web applications easily.\n<pre>ng new my-app\ncd my-app\nng serve</pre>` },
+            {
+                q: "2. What is SPA?", a: `SPA means Single Page Application where page loads once and updates content dynamically without refreshing entire page, improving user experience.\n<pre>// Single HTML page, JS handles
+//  routing\n&lt;router-outlet&gt;&lt;/router-outlet&gt;</pre>`},
+            { q: "3. What is a component in Angular?", a: `Component is the basic building block of Angular application. It controls a part of UI with HTML template, CSS, and TypeScript logic.\n<pre>@Component({selector:'app-root'})</pre>` },
+            { q: "4. What is module in Angular?", a: `Module groups related components, directives and services together. Root module is AppModule which bootstraps the application.\n<pre>@NgModule({})</pre>` },
+            { q: "5. What is Angular CLI?", a: `Angular CLI is a command line tool used to create, build, and manage Angular applications easily.\n<pre>ng new my-app</pre>` },
+            { q: "6. What is data binding?", a: `Data binding connects component data with UI. It keeps data in sync between template and TypeScript file.\n<pre>{{name}}</pre>` },
+            { q: "7. Types of data binding?", a: `There are four types: interpolation, property binding, event binding, and two-way binding used for different scenarios.\n<pre>{{value}}</pre>` },
+            { q: "8. What is interpolation?", a: `Interpolation is used to display data from component to template using double curly braces.\n<pre>{{title}}</pre>` },
+            { q: "9. What is property binding?", a: `Property binding is used to bind data from component to HTML element properties.\n<pre>[value]="name"</pre>` },
+            { q: "10. What is event binding?", a: `Event binding is used to handle user events like click, input and call component methods.\n<pre>(click)="onClick()"</pre>` },
+            { q: "11. What is two-way binding?", a: `Two-way binding updates both component and UI automatically. It uses ngModel directive.\n<pre>[(ngModel)]="name"</pre>` },
+            { q: "12. What is directive?", a: `Directive is used to modify DOM behavior. It adds or removes elements or changes appearance.\n<pre>*ngIf</pre>` },
+            { q: "13. Types of directives?", a: `There are three types: structural, attribute, and component directives used for different purposes.\n<pre>*ngFor</pre>` },
+            { q: "14. What is *ngIf?", a: `*ngIf is structural directive used to show or hide elements based on condition.\n<pre>*ngIf="isVisible"</pre>` },
+            { q: "15. What is *ngFor?", a: `*ngFor is used to loop through arrays and display list of items in template.\n<pre>*ngFor="let item of items"</pre>` },
+            { q: "16. What is *ngSwitch?", a: `*ngSwitch is used to display elements based on multiple conditions similar to switch case.\n<pre>[ngSwitch]="val"</pre>` },
+            { q: "17. What is service in Angular?", a: `Service is used to share data and logic across components. It helps keep code reusable and maintainable.\n<pre>@Injectable()</pre>` },
+            { q: "18. What is dependency injection?", a: `Dependency injection is design pattern where dependencies are provided instead of creating manually. Angular uses it for services.\n<pre>constructor(service:DataService)</pre>` },
+            { q: "19. What is routing?", a: `Routing is used to navigate between different pages or components without reloading page.\n<pre>RouterModule.forRoot([])</pre>` },
+            { q: "20. What is router-outlet?", a: `router-outlet is a directive where routed components are displayed.\n<pre>&lt;router-outlet&gt;&lt;/router-outlet&gt;</pre>` },
+            { q: "21. What is routerLink?", a: `routerLink is used to navigate between routes in template.\n<pre>&lt;a routerLink="/home"&gt;&lt;/a&gt;</pre>` },
+            { q: "22. What is lazy loading?", a: `Lazy loading loads modules only when required, improving performance and reducing initial load time.\n<pre>loadChildren:()=>import()</pre>` },
+            { q: "23. What is HttpClient?", a: `HttpClient is used to make HTTP requests to APIs and handle responses.\n<pre>this.http.get(url)</pre>` },
+            { q: "24. What is observable?", a: `Observable is used to handle asynchronous data streams like API responses. It is part of RxJS library.\n<pre>this.http.get().subscribe()</pre>` },
+            { q: "25. What is subscribe()?", a: `subscribe method is used to get data from observable and handle response or error.\n<pre>.subscribe(res=>{})</pre>` },
+            { q: "26. What is pipe?", a: `Pipe is used to transform data in template like formatting date or uppercase text.\n<pre>{{name | uppercase}}</pre>` },
+            { q: "27. What is built-in pipes?", a: `Built-in pipes are provided by Angular like date, uppercase, lowercase, currency etc.\n<pre>{{date | date}}</pre>` },
+            { q: "28. What is custom pipe?", a: `Custom pipe is user defined pipe used to transform data based on custom logic.\n<pre>@Pipe()</pre>` },
+            { q: "29. What is lifecycle hook?", a: `Lifecycle hooks are methods that run at different stages of component lifecycle.\n<pre>ngOnInit()</pre>` },
+            { q: "30. What is ngOnInit?", a: `ngOnInit is lifecycle hook called after component initialization. It is used for API calls or setup logic.\n<pre>ngOnInit(){}</pre>` },
+            { q: "31. What is ngOnDestroy?", a: `ngOnDestroy is called when component is destroyed. It is used for cleanup like unsubscribing observables.\n<pre>ngOnDestroy(){}</pre>` },
+            { q: "32. What is template?", a: `Template is HTML part of component which defines UI structure and bindings.\n<pre>templateUrl:'app.html'</pre>` },
+            { q: "33. What is decorator?", a: `Decorator is special function used to add metadata to classes like @Component and @Injectable.\n<pre>@Component()</pre>` },
+            { q: "34. What is selector?", a: `Selector defines how component is used in HTML as a custom tag.\n<pre>selector:'app-root'</pre>` },
+            { q: "35. What is Angular forms?", a: `Angular forms are used to handle user input. There are template-driven and reactive forms.\n<pre>FormsModule</pre>` },
+            { q: "36. What is template-driven form?", a: `Template-driven form is simple form handled in template using ngModel directive.\n<pre>[(ngModel)]</pre>` },
+            { q: "37. What is reactive form?", a: `Reactive form is form controlled in TypeScript using FormGroup and FormControl for better control.\n<pre>new FormGroup()</pre>` },
+            { q: "38. What is FormControl?", a: `FormControl is used to track value and validation of individual form field.\n<pre>new FormControl()</pre>` },
+            { q: "39. What is FormGroup?", a: `FormGroup is collection of FormControls grouped together to manage form.\n<pre>new FormGroup({})</pre>` },
+            { q: "40. What is validation?", a: `Validation ensures user input is correct before submission using required, minlength and custom rules.\n<pre>Validators.required</pre>` },
+            { q: "41. What is ngClass?", a: `ngClass is used to apply dynamic CSS classes based on conditions.\n<pre>[ngClass]="{'active':true}"</pre>` },
+            { q: "42. What is ngStyle?", a: `ngStyle is used to apply dynamic styles to elements.\n<pre>[ngStyle]="{'color':'red'}"</pre>` },
+            { q: "43. What is Angular pipes async?", a: `Async pipe subscribes to observable automatically and unsubscribes when component is destroyed.\n<pre>{{data | async}}</pre>` },
+            { q: "44. What is environment file?", a: `Environment file stores configuration like API URLs for different environments.\n<pre>environment.ts</pre>` },
+            { q: "45. What is build in Angular?", a: `Build process compiles Angular code into optimized JavaScript files for deployment.\n<pre>ng build</pre>` },
+            { q: "46. What is AOT?", a: `Ahead Of Time compilation compiles code during build time for faster performance.\n<pre>ng build --aot</pre>` },
+            {
+                q: "47. What is JIT?", a: `Just In Time compilation compiles code at runtime during development.\n<pre>// JIT is used in dev mode\nng serve
+//  // compiles at runtime</pre>`},
+            { q: "48. What is Angular folder structure?", a: `Angular project has folders like components, services, modules and assets organized properly.\n<pre>src/app</pre>` },
+            { q: "49. What is main.ts?", a: `main.ts is entry point of Angular application which bootstraps AppModule.\n<pre>platformBrowserDynamic()</pre>` },
+            { q: "50. What is AppModule?", a: `AppModule is root module that bootstraps the application and contains root components.\n<pre>@NgModule()</pre>` },
+            {
+                q: "51. What is change detection in Angular?", a: `Change detection is the process by which Angular checks for updates in component data and reflects changes in the UI automatically. It runs after events, async operations, and user actions.\n<pre>// Angular auto detects and
+//  updates\nthis.name = "Ram"; // UI updates automatically</pre>`},
+            {
+                q: "52. What is ChangeDetectionStrategy?", a: `ChangeDetectionStrategy controls how Angular detects changes. Default checks everything, while OnPush checks only when input reference changes or events occur.\n<pre>changeDetection:
+  ChangeDetectionStrategy.OnPush</pre>`},
+            { q: "53. What is OnPush strategy?", a: `OnPush improves performance by limiting change detection only when input data changes or observable emits new value. It avoids unnecessary checks.\n<pre>@Component({changeDetection:OnPush})</pre>` },
+            { q: "54. What is trackBy in ngFor?", a: `trackBy helps Angular identify items uniquely in list rendering. It improves performance by avoiding re-rendering unchanged elements.\n<pre>*ngFor="let item of list; trackBy:trackFn"</pre>` },
+            { q: "55. What is ViewChild?", a: `ViewChild is used to access child component, directive, or DOM element directly inside parent component after view initialization.\n<pre>@ViewChild('el')</pre>` },
+            { q: "56. What is ContentChild?", a: `ContentChild is used to access projected content inside component using ng-content.\n<pre>@ContentChild()</pre>` },
+            { q: "57. What is ng-content?", a: `ng-content is used for content projection. It allows passing HTML content from parent to child component.\n<pre>&lt;ng-content&gt;&lt;/ng-content&gt;</pre>` },
+            { q: "58. What is lifecycle hook order?", a: `Lifecycle hooks execute in order like ngOnChanges, ngOnInit, ngAfterViewInit, ngOnDestroy. It helps manage component lifecycle properly.\n<pre>ngOnInit(){}</pre>` },
+            { q: "59. What is ngOnChanges?", a: `ngOnChanges runs when input properties change. It receives SimpleChanges object with previous and current values.\n<pre>ngOnChanges(changes){}</pre>` },
+            { q: "60. What is ngAfterViewInit?", a: `ngAfterViewInit runs after component view is initialized. It is used to access DOM or child components.\n<pre>ngAfterViewInit(){}</pre>` },
+            { q: "61. What is ngAfterContentInit?", a: `ngAfterContentInit runs after projected content using ng-content is initialized.\n<pre>ngAfterContentInit(){}</pre>` },
+            { q: "62. What is pipe vs pure pipe?", a: `Pure pipe runs only when input changes, improving performance. Impure pipe runs on every change detection cycle.\n<pre>@Pipe({pure:true})</pre>` },
+            { q: "63. What is async pipe advantage?", a: `Async pipe automatically subscribes and unsubscribes observable, reducing memory leaks and manual subscription handling.\n<pre>{{data | async}}</pre>` },
+            { q: "64. What is Subject in RxJS?", a: `Subject is both observable and observer. It is used to share data between components or services.\n<pre>new Subject()</pre>` },
+            { q: "65. What is BehaviorSubject?", a: `BehaviorSubject stores latest value and emits it to new subscribers immediately. It is useful for state management.\n<pre>new BehaviorSubject(0)</pre>` },
+            { q: "66. What is ReplaySubject?", a: `ReplaySubject emits previous values to new subscribers based on buffer size.\n<pre>new ReplaySubject(2)</pre>` },
+            { q: "67. What is switchMap?", a: `switchMap cancels previous observable and switches to new one. It is useful in API calls like search.\n<pre>obs.pipe(switchMap())</pre>` },
+            { q: "68. What is mergeMap?", a: `mergeMap subscribes to all observables and merges results. It does not cancel previous calls.\n<pre>obs.pipe(mergeMap())</pre>` },
+            { q: "69. What is concatMap?", a: `concatMap executes observables sequentially one after another.\n<pre>obs.pipe(concatMap())</pre>` },
+            { q: "70. What is exhaustMap?", a: `exhaustMap ignores new emissions until current observable completes.\n<pre>obs.pipe(exhaustMap())</pre>` },
+            { q: "71. What is interceptor?", a: `Interceptor is used to modify HTTP requests and responses globally like adding headers or handling errors.\n<pre>HttpInterceptor</pre>` },
+            { q: "72. What is guard in Angular?", a: `Guards control route access based on conditions like authentication.\n<pre>CanActivate</pre>` },
+            { q: "73. Types of route guards?", a: `Common guards are CanActivate, CanDeactivate, Resolve, CanLoad used for different routing scenarios.\n<pre>canActivate:[AuthGuard]</pre>` },
+            { q: "74. What is CanActivate?", a: `CanActivate allows or blocks route navigation based on condition like login status.\n<pre>canActivate()</pre>` },
+            { q: "75. What is CanDeactivate?", a: `CanDeactivate checks before leaving a route, useful for unsaved form warning.\n<pre>canDeactivate()</pre>` },
+            { q: "76. What is resolver?", a: `Resolver fetches data before route loads to ensure component gets data immediately.\n<pre>resolve:{data:Resolver}</pre>` },
+            { q: "77. What is ActivatedRoute?", a: `ActivatedRoute provides information about current route like params and query params.\n<pre>this.route.params</pre>` },
+            { q: "78. What is Router?", a: `Router is used to navigate between routes programmatically.\n<pre>this.router.navigate()</pre>` },
+            { q: "79. What is queryParams?", a: `queryParams are used to pass optional data in URL.\n<pre>?id=1</pre>` },
+            { q: "80. What is params vs queryParams?", a: `Params are required route values, queryParams are optional URL parameters.\n<pre>/user/1?id=2</pre>` },
+            { q: "81. What is formBuilder?", a: `FormBuilder simplifies creating reactive forms with less code.\n<pre>this.fb.group()</pre>` },
+            { q: "82. What is custom validator?", a: `Custom validator is user defined function to validate form fields.\n<pre>control=>null</pre>` },
+            { q: "83. What is async validator?", a: `Async validator is used for server-side validation like checking username availability.\n<pre>return observable</pre>` },
+            { q: "84. What is patchValue vs setValue?", a: `setValue requires all fields, patchValue updates only required fields.\n<pre>form.patchValue()</pre>` },
+            { q: "85. What is FormArray?", a: `FormArray is used to manage dynamic form controls like multiple inputs.\n<pre>new FormArray([])</pre>` },
+            { q: "86. What is standalone component?", a: `Standalone component works without module and simplifies Angular structure.\n<pre>standalone:true</pre>` },
+            { q: "87. What is signals in Angular?", a: `Signals are reactive primitives for state management introduced in Angular latest versions.\n<pre>signal(0)</pre>` },
+            { q: "88. What is computed signal?", a: `Computed signal derives value from other signals and updates automatically.\n<pre>computed(()=>x())</pre>` },
+            { q: "89. What is effect in signals?", a: `Effect runs side effects when signal value changes.\n<pre>effect(()=>{})</pre>` },
+            {
+                q: "90. What is zone.js?", a: `zone.js tracks async operations and triggers change detection automatically.\n<pre>// zone.js wraps async
+//  APIs\nsetTimeout(() => {\n  this.data = 'updated'; // zone triggers CD\n}, 1000);</pre>`},
+            { q: "91. What is ngZone?", a: `ngZone allows running code inside or outside Angular zone to control change detection.\n<pre>ngZone.run()</pre>` },
+            {
+                q: "92. What is track performance issues?", a: `Performance issues can be tracked using Angular DevTools and Chrome DevTools.\n<pre>// Enable Angular
+//  profiler\nng.profiler.timeChangeDetection();\n// Chrome DevTools > Performance tab</pre>`},
+            { q: "93. What is lazy module loading benefit?", a: `Lazy loading improves performance by loading modules only when needed.\n<pre>loadChildren</pre>` },
+            { q: "94. What is preloading strategy?", a: `Preloading loads lazy modules in background after app load.\n<pre>PreloadAllModules</pre>` },
+            { q: "95. What is shared module?", a: `Shared module contains reusable components and pipes used across application.\n<pre>SharedModule</pre>` },
+            { q: "96. What is core module?", a: `Core module contains singleton services used across entire app.\n<pre>CoreModule</pre>` },
+            { q: "97. What is barrel file?", a: `Barrel file groups exports in single file for easy imports.\n<pre>index.ts</pre>` },
+            { q: "98. What is environment based build?", a: `Different builds for dev and prod using environment files.\n<pre>ng build --prod</pre>` },
+            { q: "99. What is production build?", a: `Production build optimizes code using minification and AOT compilation.\n<pre>ng build --configuration production</pre>` },
+            { q: "100. What is debugging Angular app?", a: `Debugging is done using browser dev tools, console logs and Angular DevTools extension.\n<pre>console.log()</pre>` },
+            {
+                q: "101. What is Angular architecture overview?", a: `Angular architecture consists of modules, components, templates, services, and dependency injection. It follows component-based structure where each feature is modular and reusable for scalable application design.\n<pre>// Module -> Component ->
+//  Template\n@NgModule({
+  declarations: [AppComponent]
+})\nexport class AppModule {}</pre>`},
+            { q: "102. What is smart vs dumb component?", a: `Smart components handle business logic and data fetching, while dumb components focus only on UI rendering using inputs and outputs.\n<pre>@Input() data;</pre>` },
+            { q: "103. What is state management in Angular?", a: `State management handles application data in centralized way using services or libraries like NgRx or signals for predictable data flow.\n<pre>BehaviorSubject</pre>` },
+            { q: "104. What is NgRx?", a: `NgRx is a state management library based on Redux pattern. It uses store, actions, reducers, and effects to manage application state.\n<pre>StoreModule.forRoot()</pre>` },
+            { q: "105. What is store in NgRx?", a: `Store is a centralized place to keep application state. Components select data from store instead of directly calling services.\n<pre>this.store.select()</pre>` },
+            { q: "106. What is action in NgRx?", a: `Action describes what happened in application. It is dispatched to trigger state changes in reducers.\n<pre>createAction()</pre>` },
+            { q: "107. What is reducer?", a: `Reducer is a pure function that takes current state and action and returns new state.\n<pre>createReducer()</pre>` },
+            { q: "108. What is effect?", a: `Effect handles side effects like API calls and dispatches new actions after response.\n<pre>createEffect()</pre>` },
+            { q: "109. What is selector?", a: `Selector is used to get specific data from store efficiently.\n<pre>createSelector()</pre>` },
+            {
+                q: "110. What is facade pattern?", a: `Facade pattern hides complex logic behind simple interface. It is used with NgRx to simplify component interaction.\n<pre>class UserFacade {\n  constructor(private store: Store) {}\n  loadUsers() {
+  this.store.dispatch(loadUsers());
+}\n  users$ = this.store.select(selectUsers);\n}</pre>`},
+            { q: "111. What is signal based state management?", a: `Signal based state uses Angular signals to manage reactive data without RxJS complexity. It provides simpler and faster updates.\n<pre>signal(0)</pre>` },
+            { q: "112. Difference between signals and RxJS?", a: `Signals are synchronous and simple, while RxJS is asynchronous and powerful for streams. Signals are easier for state, RxJS for events.\n<pre>signal vs observable</pre>` },
+            { q: "113. What is computed signal deep?", a: `Computed signal derives value from other signals and automatically recalculates when dependencies change.\n<pre>computed(()=>count()*2)</pre>` },
+            { q: "114. What is effect deep in signals?", a: `Effect runs side effects automatically when signal value changes. It is used for logging, API calls or DOM updates.\n<pre>effect(()=>console.log(count()))</pre>` },
+            { q: "115. What is signal vs BehaviorSubject?", a: `Signal is simpler and synchronous, while BehaviorSubject is async and part of RxJS. Signals reduce boilerplate code.\n<pre>signal(0)</pre>` },
+            { q: "116. What is zone-less Angular?", a: `Zone-less Angular removes zone.js and uses manual change detection or signals for better performance.\n<pre>bootstrapApplication()</pre>` },
+            { q: "117. What is manual change detection?", a: `Manual change detection uses ChangeDetectorRef to trigger updates manually when needed.\n<pre>cdr.detectChanges()</pre>` },
+            { q: "118. What is detach and reattach?", a: `detach stops change detection for component, reattach resumes it. It improves performance in heavy UI.\n<pre>cdr.detach()</pre>` },
+            { q: "119. What is markForCheck?", a: `markForCheck triggers change detection for OnPush components.\n<pre>cdr.markForCheck()</pre>` },
+            { q: "120. What is dynamic component loading?", a: `Dynamic component loading creates components at runtime instead of template.\n<pre>ViewContainerRef.createComponent()</pre>` },
+            { q: "121. What is standalone API deep?", a: `Standalone API removes need for modules and simplifies app structure using standalone components, directives, and pipes.\n<pre>standalone:true</pre>` },
+            { q: "122. What is inject() function?", a: `inject function is used to get dependencies without constructor injection.\n<pre>const service = inject(Service);</pre>` },
+            { q: "123. What is environment injector?", a: `Environment injector provides dependency injection context for standalone APIs.\n<pre>EnvironmentInjector</pre>` },
+            { q: "124. What is advanced routing?", a: `Advanced routing includes lazy loading, guards, resolvers, and nested routes for complex navigation.\n<pre>children:[]</pre>` },
+            { q: "125. What is route reuse strategy?", a: `Route reuse strategy controls caching and reuse of routes for performance optimization.\n<pre>RouteReuseStrategy</pre>` },
+            { q: "126. What is preloading strategy deep?", a: `Preloading strategy decides how lazy modules are loaded in background after app load.\n<pre>PreloadAllModules</pre>` },
+            {
+                q: "127. What is module federation?", a: `Module federation allows sharing modules between multiple applications dynamically.\n<pre>// webpack.config.js\nnew
+//  ModuleFederationPlugin({\n  name: 'app1',\n  remotes: {
+  app2: 'app2@http://localhost:3001'
+}\n});</pre>`},
+            {
+                q: "128. What is micro frontend?", a: `Micro frontend splits frontend into smaller independent apps that work together.\n<pre>// Shell app loads remote
+//  apps\n&lt;app-header&gt;&lt;/app-header&gt;
+ // Team A\n&lt;app-products&gt;&lt;/app-products&gt; // Team B</pre>`},
+            { q: "129. What is SSR in Angular?", a: `Server Side Rendering renders Angular app on server using Angular Universal for better SEO.\n<pre>ng add @nguniversal</pre>` },
+            { q: "130. What is hydration in Angular?", a: `Hydration attaches event listeners to SSR content on client side.\n<pre>// main.ts\nbootstrapApplication(AppComponent, {\n  providers: [provideClientHydration()]\n});</pre>` },
+            { q: "131. What is transfer state?", a: `Transfer state passes data from server to client to avoid duplicate API calls in SSR.\n<pre>TransferState</pre>` },
+            { q: "132. What is performance optimization techniques?", a: `Techniques include OnPush, lazy loading, trackBy, signals, and avoiding unnecessary DOM updates.\n<pre>@Component({\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\n// use trackBy in *ngFor</pre>` },
+            { q: "133. What is Web Worker?", a: `Web worker runs heavy computations in background thread to avoid blocking UI.\n<pre>new Worker()</pre>` },
+            { q: "134. What is Angular Elements?", a: `Angular Elements converts Angular components into custom elements usable in any framework.\n<pre>createCustomElement()</pre>` },
+            { q: "135. What is custom renderer?", a: `Custom renderer allows rendering UI in different environments using Renderer2.\n<pre>renderer.setStyle()</pre>` },
+            { q: "136. What is Renderer2?", a: `Renderer2 provides safe way to manipulate DOM without directly accessing native elements.\n<pre>renderer.createElement()</pre>` },
+            { q: "137. What is security in Angular?", a: `Angular provides built-in security like XSS protection and sanitization.\n<pre>DomSanitizer</pre>` },
+            { q: "138. What is DomSanitizer?", a: `DomSanitizer is used to safely bind dynamic content like HTML and URLs.\n<pre>bypassSecurityTrustHtml()</pre>` },
+            { q: "139. What is i18n?", a: `i18n supports multiple languages in Angular applications.\n<pre>ng extract-i18n</pre>` },
+            { q: "140. What is accessibility?", a: `Accessibility ensures application is usable by all users including disabled users.\n<pre>aria-label</pre>` },
+            { q: "141. What is testing in Angular?", a: `Testing includes unit testing with Jasmine and Karma and end-to-end testing.\n<pre>ng test</pre>` },
+            { q: "142. What is TestBed?", a: `TestBed is Angular testing utility to configure testing module.\n<pre>TestBed.configureTestingModule()</pre>` },
+            { q: "143. What is mocking?", a: `Mocking replaces real dependencies with fake ones for testing.\n<pre>spyOn()</pre>` },
+            {
+                q: "144. What is end-to-end testing?", a: `E2E testing tests full application flow using tools like Cypress.\n<pre>// cypress test\nit('should login', ()
+//  => {\n  cy.visit('/login');\n  cy.get('#email').type('test@mail.com');\n  cy.get('#submit').click();\n});</pre>`},
+            {
+                q: "145. What is CI/CD?", a: `CI/CD automates build, test and deployment process.\n<pre>// .github/workflows/ci.yml\nsteps:\n 
+//  - run: npm install\n  - run: ng test --watch=false\n  - run: ng build --prod</pre>`},
+            { q: "146. What is linting?", a: `Linting checks code quality and enforces coding standards.\n<pre>ng lint</pre>` },
+            {
+                q: "147. What is formatting?", a: `Formatting ensures consistent code style using tools like Prettier.\n<pre>// .prettierrc\n{
+  "singleQuote": true, "semi": true
+}\n// run: npx prettier --write .</pre>`},
+            { q: "148. What is version upgrade strategy?", a: `Upgrade strategy includes checking breaking changes and updating dependencies step by step.\n<pre>ng update</pre>` },
+            { q: "149. What is monorepo?", a: `Monorepo stores multiple projects in single repository for better code sharing.\n<pre>nx workspace</pre>` },
+            {
+                q: "150. What is best practices in Angular?", a: `Best practices include modular design, reusable components, clean code, and performance optimization techniques.\n<pre>// Use OnPush, lazy loading,
+//  standalone\n@Component({\n  standalone: true,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})</pre>`},
+        ];
+        const tsData = [
+            { q: "1. What is TypeScript?", a: `TypeScript is a superset of JavaScript that adds static typing. It helps developers catch errors during development and write more structured and maintainable code.\n<pre>let a: number = 10;</pre>` },
+            { q: "2. Why use TypeScript?", a: `TypeScript improves code quality by adding types, better tooling, and early error detection. It is very useful for large scale applications.\n<pre>let name: string = "Ram";</pre>` },
+            { q: "3. What is static typing?", a: `Static typing means defining variable types at compile time. It helps catch errors before running the program.\n<pre>let age: number = 25;</pre>` },
+            { q: "4. What are basic types in TypeScript?", a: `Basic types include number, string, boolean, null, undefined, any, and void. These are used to define variable data types.\n<pre>let isDone: boolean = true;</pre>` },
+            { q: "5. What is any type?", a: `any type allows variable to hold any type of value. It disables type checking, so it should be used carefully.\n<pre>let a: any = 10;</pre>` },
+            { q: "6. What is unknown type?", a: `unknown is safer than any because it requires type checking before usage. It ensures better type safety.\n<pre>let val: unknown;</pre>` },
+            { q: "7. What is void type?", a: `void is used when a function does not return any value. It indicates absence of return value.\n<pre>function log(): void {}</pre>` },
+            { q: "8. What is never type?", a: `never type represents values that never occur. It is used for functions that throw errors or infinite loops.\n<pre>function err(): never { throw Error(); }</pre>` },
+            { q: "9. What is array type?", a: `Array type defines list of values of same type. It ensures all elements follow same data type.\n<pre>let arr: number[] = [1,2];</pre>` },
+            { q: "10. What is tuple?", a: `Tuple is a fixed length array with different types. It allows storing multiple types in one array.\n<pre>let t: [string, number] = ["Ram",1];</pre>` },
+            { q: "11. What is enum?", a: `Enum defines a set of named constants. It improves readability and avoids using hardcoded values.\n<pre>enum Role {Admin, User}</pre>` },
+            { q: "12. What is type inference?", a: `Type inference automatically detects variable type based on assigned value without explicit annotation.\n<pre>let x = 10;</pre>` },
+            { q: "13. What is type assertion?", a: `Type assertion tells compiler about variable type when developer knows more than TypeScript.\n<pre>let val = x as string;</pre>` },
+            { q: "14. What is interface?", a: `Interface defines structure of an object. It ensures object follows specific properties and types.\n<pre>interface User {name:string}</pre>` },
+            { q: "15. What is optional property?", a: `Optional property is defined using ? and may or may not be present in object.\n<pre>name?: string;</pre>` },
+            { q: "16. What is readonly property?", a: `Readonly property cannot be modified after assignment. It ensures data safety.\n<pre>readonly id:number;</pre>` },
+            { q: "17. What is function type?", a: `Function type defines input parameters and return type of a function.\n<pre>(a:number)=>number</pre>` },
+            { q: "18. What is union type?", a: `Union type allows variable to have multiple possible types using | operator.\n<pre>let id: number | string;</pre>` },
+            { q: "19. What is intersection type?", a: `Intersection type combines multiple types into one using & operator.\n<pre>type A = B & C;</pre>` },
+            { q: "20. What is literal type?", a: `Literal type restricts variable to specific values only.\n<pre>let dir: "left" | "right";</pre>` },
+            { q: "21. What is type alias?", a: `Type alias creates a custom name for a type. It improves readability.\n<pre>type ID = number;</pre>` },
+            { q: "22. Difference between interface and type?", a: `Interface is mainly for object structure, while type is more flexible and can represent unions and primitives also.\n<pre>type A = string | number;</pre>` },
+            { q: "23. What is class in TypeScript?", a: `Class is blueprint to create objects with properties and methods. TypeScript supports OOP concepts.\n<pre>class A {}</pre>` },
+            { q: "24. What is constructor?", a: `Constructor is special method used to initialize object properties when instance is created.\n<pre>constructor() {}</pre>` },
+            { q: "25. What is access modifier?", a: `Access modifiers control visibility of class members. Types are public, private, and protected.\n<pre>private a:number;</pre>` },
+            { q: "26. What is public?", a: `Public members are accessible from anywhere in the application.\n<pre>public name:string;</pre>` },
+            { q: "27. What is private?", a: `Private members are accessible only within the class. It ensures data hiding.\n<pre>private id:number;</pre>` },
+            { q: "28. What is protected?", a: `Protected members are accessible within class and its subclasses.\n<pre>protected val:number;</pre>` },
+            { q: "29. What is inheritance?", a: `Inheritance allows one class to extend another class and reuse its properties and methods.\n<pre>class B extends A {}</pre>` },
+            { q: "30. What is abstract class?", a: `Abstract class cannot be instantiated and is used as base class for other classes.\n<pre>abstract class A {}</pre>` },
+            { q: "31. What is method overriding?", a: `Method overriding allows child class to provide specific implementation of parent class method.\n<pre>override method</pre>` },
+            { q: "32. What is encapsulation?", a: `Encapsulation hides internal details and exposes only required functionality.\n<pre>private data</pre>` },
+            { q: "33. What is generics?", a: `Generics allow creating reusable components that work with different data types.\n<pre>function fn&lt;T&gt;(a:T){}</pre>` },
+            { q: "34. What is generic interface?", a: `Generic interface works with different data types using type parameter.\n<pre>interface A&lt;T&gt;{}</pre>` },
+            { q: "35. What is generic class?", a: `Generic class allows class to work with multiple types dynamically.\n<pre>class A&lt;T&gt;{}</pre>` },
+            { q: "36. What is keyof?", a: `keyof returns union of keys of an object type.\n<pre>keyof User</pre>` },
+            { q: "37. What is typeof in TS?", a: `typeof is used to get type of variable or object in TypeScript.\n<pre>typeof obj</pre>` },
+            { q: "38. What is module in TS?", a: `Module is a file that contains code and exports it for reuse.\n<pre>export const a=1;</pre>` },
+            { q: "39. What is export?", a: `export is used to make variables or functions available outside file.\n<pre>export function fn(){}</pre>` },
+            { q: "40. What is import?", a: `import is used to use exported code from another file.\n<pre>import {a} from './a';</pre>` },
+            { q: "41. What is namespace?", a: `Namespace is used to group related code and avoid name conflicts.\n<pre>namespace A {}</pre>` },
+            { q: "42. What is declaration file?", a: `Declaration file defines types for JavaScript libraries.\n<pre>.d.ts</pre>` },
+            {
+                q: "43. What is tsconfig.json?", a: `tsconfig.json contains compiler settings for TypeScript project.\n<pre>{\n  "compilerOptions": {\n    "target": "ES6",\n    "strict": true,\n    "outDir": "./dist"\n 
+}\n}</pre>`},
+            { q: "44. What is strict mode in TS?", a: `Strict mode enables strict type checking options to improve code quality.\n<pre>"strict": true</pre>` },
+            { q: "45. What is optional chaining in TS?", a: `Optional chaining safely accesses nested properties without error.\n<pre>obj?.a?.b</pre>` },
+            { q: "46. What is nullish coalescing?", a: `Nullish coalescing returns fallback value only when value is null or undefined.\n<pre>a ?? b</pre>` },
+            { q: "47. What is decorators in TS?", a: `Decorators are special functions used to modify classes or properties. Common in Angular.\n<pre>@Component()</pre>` },
+            { q: "48. What is utility types?", a: `Utility types are built-in helpers like Partial, Required, Readonly.\n<pre>Partial&lt;User&gt;</pre>` },
+            { q: "49. What is Partial?", a: `Partial makes all properties optional in a type.\n<pre>Partial&lt;User&gt;</pre>` },
+            { q: "50. What is Readonly?", a: `Readonly makes all properties immutable.\n<pre>Readonly&lt;User&gt;</pre>` },
+            { q: "51. What is advanced type in TypeScript?", a: `Advanced types include union, intersection, mapped types, conditional types and generics. They help create flexible and reusable type definitions for real applications.\n<pre>type A = string | number;</pre>` },
+            { q: "52. What is union vs intersection?", a: `Union allows multiple possible types, while intersection combines multiple types into one. Union is flexible, intersection is strict combination.\n<pre>type A = B | C;</pre>` },
+            { q: "53. What is type narrowing?", a: `Type narrowing reduces type possibilities using conditions like typeof or instanceof. It helps TypeScript understand exact type in block.\n<pre>if(typeof x==='string'){}</pre>` },
+            { q: "54. What is type guard?", a: `Type guard is a technique to check variable type at runtime. It improves type safety using custom functions or conditions.\n<pre>function isStr(x:any): x is string {}</pre>` },
+            { q: "55. What is discriminated union?", a: `Discriminated union uses common property to differentiate types in union. It helps in safe type checking.\n<pre>type A={type:'a'}|{type:'b'}</pre>` },
+            { q: "56. What is mapped type?", a: `Mapped type creates new types by transforming properties of existing types. It is useful for modifying all fields.\n<pre>type T = { [K in keyof U]: U[K] }</pre>` },
+            { q: "57. What is conditional type?", a: `Conditional type applies logic to types using extends keyword. It allows dynamic type creation.\n<pre>T extends string ? A : B</pre>` },
+            { q: "58. What is infer keyword?", a: "Infer is used inside conditional types to extract type information dynamically.\n<pre>T extends Promise&lt;infer U&gt; ? U : T</pre>" },
+            { q: "59. What is utility type Pick?", a: `Pick creates a new type by selecting specific properties from existing type.\n<pre>Pick&lt;User,'name'&gt;</pre>` },
+            { q: "60. What is utility type Omit?", a: `Omit removes specific properties from a type and creates new type.\n<pre>Omit&lt;User,'id'&gt;</pre>` },
+            { q: "61. What is Record type?", a: `Record creates object type with specific keys and value types.\n<pre>Record&lt;string,number&gt;</pre>` },
+            { q: "62. What is Exclude type?", a: `Exclude removes types from union type.\n<pre>Exclude&lt;'a'|'b','a'&gt;</pre>` },
+            { q: "63. What is Extract type?", a: `Extract selects specific types from union.\n<pre>Extract&lt;'a'|'b','a'&gt;</pre>` },
+            { q: "64. What is NonNullable?", a: `NonNullable removes null and undefined from type.\n<pre>NonNullable&lt;string|null&gt;</pre>` },
+            { q: "65. What is ReturnType?", a: `ReturnType extracts return type of function.\n<pre>ReturnType&lt;typeof fn&gt;</pre>` },
+            { q: "66. What is Parameters type?", a: `Parameters extracts function parameter types as tuple.\n<pre>Parameters&lt;typeof fn&gt;</pre>` },
+            { q: "67. What is keyof usage?", a: `keyof returns keys of type and is used for safe property access.\n<pre>keyof User</pre>` },
+            { q: "68. What is indexed access type?", a: `Indexed access type gets type of specific property from object type.\n<pre>User['name']</pre>` },
+            { q: "69. What is template literal type?", a: "Template literal type builds string types dynamically using template syntax.\n<pre>type A = `user_${string}`</pre>" },
+            { q: "70. What is function overloading?", a: `Function overloading defines multiple function signatures for same function.\n<pre>function fn(a:string):void;</pre>` },
+            { q: "71. What is declaration merging?", a: `Declaration merging combines multiple declarations into one. Common in interfaces.\n<pre>interface A {}</pre>` },
+            { q: "72. What is module augmentation?", a: `Module augmentation extends existing module types without modifying original code.\n<pre>declare module 'x'</pre>` },
+            { q: "73. What is strictNullChecks?", a: `strictNullChecks ensures null and undefined are handled explicitly.\n<pre>"strictNullChecks":true</pre>` },
+            { q: "74. What is noImplicitAny?", a: `noImplicitAny prevents variables from having implicit any type.\n<pre>"noImplicitAny":true</pre>` },
+            { q: "75. What is type compatibility?", a: `Type compatibility checks whether types can be assigned based on structure.\n<pre>let a:User</pre>` },
+            { q: "76. What is structural typing?", a: `TypeScript uses structural typing where compatibility depends on shape, not name.\n<pre>{name:string}</pre>` },
+            { q: "77. What is nominal typing workaround?", a: `Nominal typing can be simulated using branding technique to enforce strict types.\n<pre>type ID = string & {brand:'id'}</pre>` },
+            { q: "78. What is readonly array?", a: `Readonly array prevents modification of array elements.\n<pre>readonly number[]</pre>` },
+            { q: "79. What is as const?", a: `as const makes values readonly and literal types.\n<pre>const a = [1,2] as const;</pre>` },
+            {
+                q: "80. What is deep readonly?", a: `Deep readonly makes nested properties also readonly using mapped types.\n<pre>type DeepReadonly&lt;T&gt;
+= {\n  readonly [K in keyof T]: DeepReadonly&lt;T[K]&gt;\n};</pre>`},
+            { q: "81. What is Partial deep usage?", a: `Partial is used to update only some properties in objects like forms or APIs.\n<pre>Partial&lt;User&gt;</pre>` },
+            { q: "82. What is Required type?", a: `Required makes all optional properties mandatory.\n<pre>Required&lt;User&gt;</pre>` },
+            { q: "83. What is mutable type?", a: `Mutable type removes readonly properties using mapped types.\n<pre>-readonly</pre>` },
+            { q: "84. What is tuple rest type?", a: `Tuple rest allows flexible number of elements in tuple.\n<pre>[string,...number[]]</pre>` },
+            { q: "85. What is variadic tuple?", a: `Variadic tuple allows combining multiple tuple types dynamically.\n<pre>[...A,...B]</pre>` },
+            { q: "86. What is function generic constraint?", a: `Generic constraint restricts type parameter using extends keyword.\n<pre>&lt;T extends string&gt;</pre>` },
+            { q: "87. What is default generic type?", a: `Default generic provides fallback type if none is passed.\n<pre>&lt;T=string&gt;</pre>` },
+            { q: "88. What is unknown vs any in real usage?", a: `unknown is safer and requires type checking, while any bypasses all checks.\n<pre>let a:unknown;</pre>` },
+            { q: "89. What is never in union?", a: `never is removed automatically from union types.\n<pre>string | never</pre>` },
+            { q: "90. What is promise type in TS?", a: `Promise type defines asynchronous return value type.\n<pre>Promise&lt;string&gt;</pre>` },
+            { q: "91. What is async function type?", a: `Async functions always return promise type.\n<pre>async():Promise&lt;number&gt;</pre>` },
+            { q: "92. What is type-safe API response?", a: `TypeScript ensures API response structure matches expected type.\n<pre>interface Api{}</pre>` },
+            { q: "93. What is Axios typing?", a: `Axios responses can be strongly typed using generics.\n<pre>axios.get&lt;User&gt;()</pre>` },
+            { q: "94. What is type-safe form?", a: `Forms can be strongly typed using interfaces and generics.\n<pre>FormGroup&lt;User&gt;</pre>` },
+            { q: "95. What is enum vs union?", a: `Enum is runtime object, union is compile time type. Union is more flexible.\n<pre>type A='a'|'b'</pre>` },
+            { q: "96. What is const enum?", a: `const enum is removed at compile time and improves performance.\n<pre>const enum A{}</pre>` },
+            { q: "97. What is type casting risk?", a: `Type casting can bypass safety and cause runtime errors if used incorrectly.\n<pre>x as string</pre>` },
+            { q: "98. What is strict mode benefits?", a: `Strict mode improves type safety and catches more errors.\n<pre>"strict":true</pre>` },
+            {
+                q: "99. What is code maintainability with TS?", a: `TypeScript improves maintainability by clear types and better readability.\n<pre>interface User {
+  id: number;
+name: string;
+}\nfunction getUser(id: number): User {
+  ...
+}</pre>`},
+            {
+                q: "100. What is best practices in TS?", a: `Use strict types, avoid any, use interfaces and generics for scalable code.\n<pre>// Good\nfunction add(a: number, b:
+//  number): number {\n  return a + b;\n}\n// Avoid: function add(a: any, b: any)</pre>`},
+            {
+                q: "101. What is advanced TypeScript architecture usage?", a: `Advanced TypeScript is used to design scalable applications using strict typing, reusable types, and domain models. It helps enforce contracts across large codebases and improves maintainability.\n<pre>interface DomainEntity {
+  id: string;
+}\ninterface User extends DomainEntity {\n  name: string;
+role: Role;\n}</pre>`},
+            { q: "102. What is type-level programming?", a: `Type-level programming means writing logic using types instead of runtime code. It allows validation and transformation at compile time.\n<pre>type A = string extends string ? true : false;</pre>` },
+            {
+                q: "103. What is recursive type?", a: `Recursive type is a type that refers to itself. It is used for nested structures like trees or JSON objects.\n<pre>type Tree = {
+  value:number, children:Tree[]
+}</pre>`},
+            {
+                q: "104. What is deep partial?", a: `Deep partial makes all nested properties optional. It is useful for update operations in APIs.\n<pre>type DeepPartial&lt;T&gt;
+= {\n  [K in keyof T]?: DeepPartial&lt;T[K]&gt;\n};</pre>`},
+            {
+                q: "105. What is deep required?", a: `Deep required ensures all nested properties are mandatory. It is useful for strict data validation.\n<pre>type DeepRequired&lt;T&gt;
+= {\n  [K in keyof T]-?: DeepRequired&lt;T[K]&gt;\n};</pre>`},
+            {
+                q: "106. What is deep readonly?", a: `Deep readonly makes all nested properties immutable. It helps prevent accidental mutations.\n<pre>type DeepReadonly&lt;T&gt;
+= {\n  readonly [K in keyof T]: DeepReadonly&lt;T[K]&gt;\n};</pre>`},
+            { q: "107. What is branded type?", a: `Branded type is used to create nominal typing by adding unique identifiers to types.\n<pre>type ID = string & {brand:'id'}</pre>` },
+            {
+                q: "108. What is opaque type?", a: `Opaque type hides implementation details and prevents misuse of values by restricting direct access.\n<pre>type UserId = string & {
+  readonly __brand: 'UserId'
+};\nfunction createUserId(id: string): UserId {\n  return id as UserId;\n}</pre>`},
+            {
+                q: "109. What is variance in TypeScript?", a: `Variance defines how types behave in subtyping like covariance and contravariance in function parameters and return types.\n<pre>type Getter&lt;T&gt;
+= () => T;
+ // covariant\ntype Setter&lt;T&gt;
+= (val: T) => void; // contravariant</pre>`},
+            { q: "110. What is covariance?", a: `Covariance allows assigning more specific types to general types. It is mainly applied to return types.\n<pre>let getAnimal: () => Animal;\nlet getDog: () => Dog;\ngetAnimal = getDog; // OK, Dog extends Animal</pre>` },
+            { q: "111. What is contravariance?", a: `Contravariance allows assigning general types to specific types. It is applied to function parameters.\n<pre>let handleAnimal: (a: Animal) => void;\nlet handleDog: (d: Dog) => void;\nhandleDog = handleAnimal; // OK with strict</pre>` },
+            {
+                q: "112. What is bivariant?", a: `Bivariant allows both covariance and contravariance, but it may reduce type safety in some cases.\n<pre>// Method shorthand is
+//  bivariant\ninterface Events {\n  onClick(e: MouseEvent): void;\n}</pre>`},
+            { q: "113. What is distributive conditional type?", a: `Conditional types distribute over union types automatically when applied directly.\n<pre>T extends any ? A : B</pre>` },
+            { q: "114. What is infer multiple types?", a: `infer can extract multiple types from complex structures like tuples or functions.\n<pre>T extends [infer A,infer B] ? A : never</pre>` },
+            {
+                q: "115. What is type flattening?", a: `Type flattening converts nested types into simpler structure using conditional and mapped types.\n<pre>type Flatten&lt;T&gt;
+= T extends Array&lt;infer U&gt;
+? U : T;\ntype A = Flatten&lt;string[]&gt;; // string</pre>`},
+            {
+                q: "116. What is union to intersection trick?", a: `Union to intersection converts union types into intersection using conditional types.\n<pre>type UnionToIntersection&lt;U&gt;
+=\n  (U extends any ? (k: U) => void : never) extends\n  (k: infer I) => void ? I : never;</pre>`},
+            { q: "117. What is function composition typing?", a: `Typing function composition ensures output of one function matches input of next.\n<pre>function compose&lt;A,B,C&gt;(\n  f: (b: B) => C, g: (a: A) => B\n): (a: A) => C {\n  return (a) => f(g(a));\n}</pre>` },
+            {
+                q: "118. What is currying typing advanced?", a: `Advanced currying typing allows multiple levels of function arguments with correct types.\n<pre>type Curry&lt;A extends any[], R&gt;
+=\n  A extends [infer F, ...infer Rest]\n  ? (a: F) => Curry&lt;Rest, R&gt;
+: R;</pre>`},
+            {
+                q: "119. What is higher-kinded types simulation?", a: `TypeScript does not support higher-kinded types directly but can simulate using generics.\n<pre>interface Functor&lt;F&gt;
+{\n  map&lt;A, B&gt;(fa: F, fn: (a: A) => B): F;\n}</pre>`},
+            {
+                q: "120. What is type-safe event emitter?", a: `Type-safe event emitter ensures correct event names and payload types using mapped types.\n<pre>interface EventMap {\n  click: MouseEvent;
+submit: FormData;\n}\nfunction on&lt;K extends keyof EventMap&gt;(\n  event: K, handler: (e: EventMap[K]) => void\n) {}</pre>`},
+            {
+                q: "121. What is type-safe Redux pattern?", a: `TypeScript ensures actions, reducers, and state are strongly typed for predictable state management.\n<pre>interface State {
+  count: number;
+}\ntype Action = {
+  type: 'INC'
+} | {
+  type: 'DEC'
+};\nfunction reducer(state: State, action: Action): State {\n  switch(action.type) {
+  case 'INC': ...
+}\n}</pre>`},
+            { q: "122. What is API contract typing?", a: `API contract typing ensures frontend and backend follow same data structure using shared types.\n<pre>interface Api</pre>` },
+            {
+                q: "123. What is schema validation with TS?", a: `Schema validation combines runtime validation with TypeScript types using libraries like Zod.\n<pre>import {
+  z
+} from 'zod';\nconst UserSchema = z.object({\n  name: z.string(), age: z.number()\n});\ntype User = z.infer&lt;typeof UserSchema&gt;;</pre>`},
+            {
+                q: "124. What is runtime vs compile time types?", a: `TypeScript types exist only at compile time, not runtime. Runtime validation still needed for safety.\n<pre>// Compile time only\nlet a: string =
+//  "hi";\n// At runtime, typeof a === "string"\n// but TS interface does not exist</pre>`},
+            {
+                q: "125. What is type erasure?", a: `Type erasure removes all TypeScript types during compilation to JavaScript.\n<pre>// TS: let a: number = 10;\n// JS
+//  output: let a = 10;\n// Types are completely removed</pre>`},
+            { q: "126. What is decorator metadata?", a: `Decorator metadata provides runtime information about types used in decorators.\n<pre>@Reflect.metadata</pre>` },
+            { q: "127. What is reflect-metadata?", a: `reflect-metadata library enables runtime type reflection used in Angular and NestJS.\n<pre>Reflect.getMetadata()</pre>` },
+            { q: "128. What is dependency injection typing?", a: `TypeScript ensures correct types for injected dependencies in frameworks like Angular.\n<pre>constructor(private s:Service)</pre>` },
+            {
+                q: "129. What is mixins in TS?", a: `Mixins allow combining multiple classes into one using functions.\n<pre>function Timestamped&lt;T extends new(...a:any[])=>any&gt;(Base:T){\n  return class extends Base {
+  timestamp = Date.now();
+}\n}\nclass User extends Timestamped(Base) {}</pre>`},
+            {
+                q: "130. What is abstract factory typing?", a: `Abstract factory typing ensures correct creation of related objects using interfaces.\n<pre>interface UIFactory {\n  createButton(): Button;\n  createInput(): Input;\n}\nclass DarkFactory implements UIFactory {
+  ...
+}</pre>`},
+            {
+                q: "131. What is builder pattern typing?", a: `Builder pattern typing helps create complex objects step by step with type safety.\n<pre>class QueryBuilder {\n  select(col: string): this {
+  return this;
+}\n  where(cond: string): this {
+  return this;
+}\n  build(): string {
+  return this.query;
+}\n}</pre>`},
+            { q: "132. What is fluent API typing?", a: `Fluent API allows method chaining with proper type inference.\n<pre>obj.set().get()</pre>` },
+            {
+                q: "133. What is polymorphism in TS?", a: `Polymorphism allows objects to take multiple forms using inheritance or interfaces.\n<pre>class Shape {
+  area(): number {
+  return 0;
+}
+}\nclass Circle extends Shape {\n  constructor(private r: number) {
+  super();
+}\n  area() {
+  return Math.PI * this.r ** 2;
+}\n}</pre>`},
+            { q: "134. What is advanced generic constraints?", a: `Advanced constraints use multiple conditions to restrict types.\n<pre>&lt;T extends keyof U&gt;</pre>` },
+            { q: "135. What is keyof typeof usage?", a: `keyof typeof is used to get keys from object values.\n<pre>keyof typeof obj</pre>` },
+            { q: "136. What is dynamic key typing?", a: `Dynamic key typing allows flexible object keys with type safety.\n<pre>[key:string]:number</pre>` },
+            {
+                q: "137. What is strict function types?", a: `Strict function types ensure correct parameter and return type compatibility.\n<pre>// tsconfig: "strictFunctionTypes":
+//  true\ntype Fn = (a: string) => void;\nlet fn: Fn = (a: string) => console.log(a);</pre>`},
+            { q: "138. What is type-safe configuration object?", a: `Configuration objects are strongly typed to avoid runtime errors.\n<pre>interface Config</pre>` },
+            { q: "139. What is immutability in TS?", a: `Immutability ensures data is not changed after creation using readonly and deep types.\n<pre>readonly</pre>` },
+            {
+                q: "140. What is performance impact of types?", a: `TypeScript types do not affect runtime performance as they are removed during compilation.\n<pre>// TS: let a: number = 10;\n// JS: let
+//  a = 10; // no overhead at runtime</pre>`},
+            { q: "141. What is large scale TS project structure?", a: `Large projects use modular structure with separate types, services, and utilities for maintainability.\n<pre>src/\n  types/     // shared interfaces\n  services/  // API calls\n  utils/     // helper functions\n  components/</pre>` },
+            {
+                q: "142. What is code generation with TS?", a: `Code generation creates types automatically from APIs or schemas.\n<pre>// Generate types from OpenAPI
+//  spec\nnpx openapi-typescript api.yaml -o types.ts</pre>`},
+            {
+                q: "143. What is GraphQL typing?", a: `GraphQL typing ensures query and response types match schema.\n<pre>// codegen generates types from
+//  schema\ninterface GetUserQuery {\n  user: {
+  id: string;
+name: string;
+}\n}</pre>`},
+            {
+                q: "144. What is OpenAPI typing?", a: `OpenAPI typing generates TypeScript types from API specifications.\n<pre>// Generated from
+//  swagger.json\ninterface ApiResponse {\n  data: User[];
+total: number;\n}</pre>`},
+            {
+                q: "145. What is testing with TS?", a: `TypeScript improves testing by ensuring correct types in test cases.\n<pre>// jest with TS\ntest('add numbers',
+//  () => {\n  const result: number = add(1, 2);\n  expect(result).toBe(3);\n});</pre>`},
+            { q: "146. What is error handling typing?", a: `Error handling typing ensures correct error types and improves debugging.\n<pre>try catch</pre>` },
+            {
+                q: "147. What is logging typing?", a: `Logging typing ensures consistent structure of logs.\n<pre>interface LogEntry {\n  level: 'info' | 'warn' | 'error';\n  message: string;
+timestamp: Date;\n}\nfunction log(entry: LogEntry) {
+  ...
+}</pre>`},
+            {
+                q: "148. What is strict architecture benefit?", a: `Strict typing improves scalability, readability and reduces bugs in large applications.\n<pre>// Catch errors at compile
+//  time\nfunction pay(amount: number, currency: 'USD'|'EUR') {\n  // TS prevents: pay("ten", "XYZ")\n}</pre>`},
+            {
+                q: "149. What is migration from JS to TS?", a: `Migration involves gradually adding types and enabling strict mode step by step.\n<pre>// Step 1: rename .js to .ts\n// Step
+//  2: fix type errors\n// Step 3: enable "strict": true\n// tsconfig: "allowJs": true</pre>`},
+            {
+                q: "150. What is best practices in advanced TS?", a: `Use strict mode, avoid any, use generics and utility types, and design scalable type systems.\n<pre>// Use strict, generics, utility
+//  types\nfunction fetch&lt;T&gt;(url: string): Promise&lt;T&gt;
+{
+  ...
+}\ntype UserUpdate = Partial&lt;Omit&lt;User, 'id'&gt;&gt;;</pre>`},
+        ];
+
+        const rxjsData = [
+            { q: "1. What is RxJS?", a: `RxJS stands for Reactive Extensions for JavaScript. It is a library used to handle asynchronous data streams using observables, operators, and subscriptions in a reactive way.\n<pre>import { of } from 'rxjs';</pre>` },
+            { q: "2. What is Observable?", a: `Observable is a stream of data that can emit multiple values over time. It can be asynchronous and is used to handle events, API calls, and data streams.\n<pre>of(1,2,3);</pre>` },
+            { q: "3. What is Observer?", a: `Observer is an object that receives data from observable. It contains next, error, and complete methods.\n<pre>obs.subscribe({next:v=>{}});</pre>` },
+            { q: "4. What is Subscription?", a: `Subscription represents execution of observable. It is used to unsubscribe and stop receiving data.\n<pre>sub.unsubscribe();</pre>` },
+            { q: "5. What is next() method?", a: `next method is used to emit values from observable to subscribers.\n<pre>observer.next(1);</pre>` },
+            { q: "6. What is error() method?", a: `error method is used to send error notification to subscribers and stops execution.\n<pre>observer.error("err");</pre>` },
+            { q: "7. What is complete() method?", a: `complete method notifies that observable has finished sending values.\n<pre>observer.complete();</pre>` },
+            { q: "8. What is cold observable?", a: `Cold observable starts execution for each subscriber separately. Each subscriber gets independent data stream.\n<pre>const cold$ = new Observable(sub => {\n  sub.next(Math.random());\n});</pre>` },
+            { q: "9. What is hot observable?", a: `Hot observable shares same execution among subscribers. Data is shared and not recreated.\n<pre>const hot$ = new Subject();\nhot$.next(1); // all subscribers get 1</pre>` },
+            { q: "10. What is Subject?", a: `Subject is both observable and observer. It is used to multicast data to multiple subscribers.\n<pre>const sub = new Subject();\nsub.subscribe(v => console.log(v));\nsub.next(1);</pre>` },
+            { q: "11. What is BehaviorSubject?", a: `BehaviorSubject stores last emitted value and sends it immediately to new subscribers.\n<pre>const bs = new BehaviorSubject(0);\nbs.subscribe(v => console.log(v)); // 0\nbs.next(1);</pre>` },
+            {
+                q: "12. What is ReplaySubject?", a: `ReplaySubject stores multiple previous values and replays them to new subscribers.\n<pre>const rs = new ReplaySubject(2);\nrs.next(1);
+rs.next(2);
+rs.next(3);\nrs.subscribe(v => {}); // gets 2, 3</pre>`},
+            {
+                q: "13. What is AsyncSubject?", a: `AsyncSubject emits last value only when observable completes.\n<pre>const as = new AsyncSubject();\nas.next(1);
+as.next(2);\nas.complete(); // emits 2</pre>`},
+            { q: "14. What is pipe()?", a: `pipe is used to chain multiple operators together to transform observable data.\n<pre>obs.pipe(\n  filter(x => x > 0),\n  map(x => x * 2)\n);</pre>` },
+            {
+                q: "15. What is operator?", a: `Operator is a function used to transform, filter, or combine observable streams.\n<pre>import {
+  map, filter, tap
+} from 'rxjs/operators';</pre>`},
+            {
+                q: "16. What is map() operator?", a: `map transforms each emitted value from observable into new value.\n<pre>of(1,2,3)
+  .pipe(\n  map(x => x * 10)\n); // 10, 20, 30</pre>`},
+            {
+                q: "17. What is filter() operator?", a: `filter allows only values that satisfy condition to pass through.\n<pre>of(1,2,3,4)
+  .pipe(\n  filter(x => x > 2)\n); // 3, 4</pre>`},
+            { q: "18. What is tap() operator?", a: `tap is used for side effects like logging without modifying data.\n<pre>obs.pipe(\n  tap(x => console.log('value:', x)),\n  map(x => x * 2)\n);</pre>` },
+            { q: "19. What is switchMap()?", a: `switchMap cancels previous observable and switches to new one. Useful for API calls.\n<pre>search$.pipe(\n  switchMap(term => this.http.get('/api?q=' + term))\n);</pre>` },
+            { q: "20. What is mergeMap()?", a: `mergeMap subscribes to all inner observables and merges results.\n<pre>ids$.pipe(\n  mergeMap(id => this.http.get('/api/' + id))\n);</pre>` },
+            { q: "21. What is concatMap()?", a: `concatMap executes inner observables sequentially one by one.\n<pre>actions$.pipe(\n  concatMap(action => this.http.post('/api', action))\n);</pre>` },
+            { q: "22. What is exhaustMap()?", a: `exhaustMap ignores new values until current observable completes.\n<pre>click$.pipe(\n  exhaustMap(() => this.http.post('/submit'))\n);</pre>` },
+            { q: "23. What is debounceTime()?", a: `debounceTime delays emission until no new value comes for given time.\n<pre>input$.pipe(\n  debounceTime(300),\n  switchMap(val => search(val))\n);</pre>` },
+            {
+                q: "24. What is throttleTime()?", a: `throttleTime limits emission to one value per time interval.\n<pre>scroll$.pipe(\n  throttleTime(1000)\n)
+  .subscribe(handleScroll);</pre>`},
+            { q: "25. What is distinctUntilChanged()?", a: `distinctUntilChanged emits only when value changes from previous.\n<pre>input$.pipe(\n  debounceTime(300),\n  distinctUntilChanged()\n);</pre>` },
+            {
+                q: "26. What is take()?", a: `take emits only specified number of values and completes.\n<pre>interval(1000)
+  .pipe(\n  take(5)\n); // emits 0,1,2,3,4 then completes</pre>`},
+            {
+                q: "27. What is takeUntil()?", a: `takeUntil emits values until another observable emits.\n<pre>obs.pipe(\n  takeUntil(this.destroy$)\n)
+  .subscribe();</pre>`},
+            { q: "28. What is skip()?", a: `skip ignores first N values from observable.\n<pre>of(1,2,3,4).pipe(\n  skip(2)\n); // 3, 4</pre>` },
+            {
+                q: "29. What is first()?", a: `first emits first value and completes.\n<pre>obs.pipe(first())
+  .subscribe(val => {\n  console.log('first:', val);\n});</pre>`},
+            { q: "30. What is last()?", a: `last emits last value before completion.\n<pre>of(1,2,3).pipe(last()); // 3</pre>` },
+            {
+                q: "31. What is combineLatest()?", a: `combineLatest combines latest values from multiple observables.\n<pre>combineLatest([name$, age$])
+  .subscribe(\n  ([name, age]) => console.log(name, age)\n);</pre>`},
+            {
+                q: "32. What is forkJoin()?", a: `forkJoin waits for all observables to complete and emits last values.\n<pre>forkJoin([\n  this.http.get('/users'),\n  this.http.get('/roles')\n])
+  .subscribe(([users, roles]) => {});</pre>`},
+            {
+                q: "33. What is zip()?", a: `zip combines values from observables in sequence.\n<pre>zip(a$, b$)
+  .subscribe(\n  ([a, b]) => console.log(a, b)\n);</pre>`},
+            {
+                q: "34. What is withLatestFrom()?", a: `withLatestFrom combines source value with latest value from another observable.\n<pre>click$.pipe(\n  withLatestFrom(user$)\n)
+  .subscribe(([click, user]) => {});</pre>`},
+            {
+                q: "35. What is from()?", a: `from converts array, promise, or iterable into observable.\n<pre>from([1,2,3])
+  .subscribe(v => {});\nfrom(fetch('/api'))
+  .subscribe(res => {});</pre>`},
+            {
+                q: "36. What is of()?", a: `of creates observable from given values.\n<pre>of('a', 'b', 'c')
+  .subscribe(v => {\n  console.log(v); // a, b, c\n});</pre>`},
+            {
+                q: "37. What is interval()?", a: `interval emits values at regular intervals.\n<pre>interval(1000)
+  .pipe(take(3))
+  .subscribe(\n  v => console.log(v) // 0, 1, 2\n);</pre>`},
+            {
+                q: "38. What is timer()?", a: `timer emits value after delay or at intervals.\n<pre>timer(2000)
+  .subscribe(() => {\n  console.log('2 seconds passed');\n});</pre>`},
+            {
+                q: "39. What is catchError()?", a: `catchError handles errors in observable and returns new observable.\n<pre>this.http.get('/api')
+  .pipe(\n  catchError(err => of([]))\n);</pre>`},
+            {
+                q: "40. What is retry()?", a: `retry resubscribes to observable on error specified number of times.\n<pre>this.http.get('/api')
+  .pipe(\n  retry(3),\n  catchError(err => of(null))\n);</pre>`},
+            {
+                q: "41. What is finalize()?", a: `finalize runs cleanup logic when observable completes or errors.\n<pre>this.http.get('/api')
+  .pipe(\n  finalize(() => this.loading = false)\n);</pre>`},
+            {
+                q: "42. What is shareReplay()?", a: `shareReplay shares observable execution and replays last values to new subscribers.\n<pre>const data$ = this.http.get('/api')
+  .pipe(\n  shareReplay(1)\n);</pre>`},
+            { q: "43. What is multicast?", a: `Multicast allows sharing single execution among multiple subscribers.\n<pre>const src$ = obs.pipe(share());\nsrc$.subscribe(a => {});\nsrc$.subscribe(b => {});</pre>` },
+            { q: "44. What is refCount()?", a: `refCount manages subscription automatically based on number of subscribers.\n<pre>obs.pipe(\n  publishReplay(1),\n  refCount()\n);</pre>` },
+            { q: "45. What is switchAll()?", a: `switchAll switches to latest inner observable and cancels previous ones.\n<pre>clicks$.pipe(\n  map(() => interval(1000)),\n  switchAll()\n);</pre>` },
+            { q: "46. What is mergeAll()?", a: `mergeAll merges all inner observables concurrently.\n<pre>obs$.pipe(\n  map(id => getUser(id)),\n  mergeAll()\n);</pre>` },
+            { q: "47. What is concatAll()?", a: `concatAll executes inner observables sequentially.\n<pre>obs$.pipe(\n  map(id => getUser(id)),\n  concatAll()\n);</pre>` },
+            { q: "48. What is exhaustAll()?", a: `exhaustAll ignores new observables until current completes.\n<pre>clicks$.pipe(\n  map(() => saveData()),\n  exhaustAll()\n);</pre>` },
+            {
+                q: "49. What is scheduler?", a: `Scheduler controls execution timing of observable tasks.\n<pre>of(1,2,3, asyncScheduler)
+  .subscribe(\n  v => console.log(v)\n);</pre>`},
+            {
+                q: "50. What is best practice in RxJS?", a: `Use operators properly, unsubscribe to avoid memory leaks, and use async pipe in Angular.\n<pre>// Use async pipe in template\n{{data$
+//  | async}}\n// Use takeUntil for manual subscribe</pre>`},
+            {
+                q: "51. How RxJS is used in Angular HttpClient?", a: `RxJS is used in HttpClient to handle API calls as observables. It allows chaining operators like map, catchError and retry for better control.\n<pre>this.http.get('/api')
+  .pipe(\n  map(res => res.data),\n  catchError(err => of([]))\n);</pre>`},
+            {
+                q: "52. Why subscribe is required?", a: `Observable will not execute until subscribe is called. Subscription triggers the execution and receives data.\n<pre>// Nothing happens without
+//  subscribe\nconst obs = this.http.get('/api');\nobs.subscribe(data => console.log(data));</pre>`},
+            {
+                q: "53. How to avoid multiple subscriptions?", a: `Use shareReplay or async pipe to share single execution. This avoids multiple API calls.\n<pre>const data$ = this.http.get('/api')
+  .pipe(\n  shareReplay(1)\n);\ndata$.subscribe();
+data$.subscribe(); // 1 call</pre>`},
+            { q: "54. What is async pipe in Angular?", a: `Async pipe automatically subscribes and unsubscribes observable in template. It prevents memory leaks.\n<pre>&lt;div *ngFor="let item of items$ | async"&gt;\n  {{item.name}}\n&lt;/div&gt;</pre>` },
+            {
+                q: "55. When to unsubscribe manually?", a: `Manual unsubscribe is needed when using subscribe in component to avoid memory leaks.\n<pre>private sub: Subscription;\nngOnInit() {
+  this.sub = obs.subscribe();
+}\nngOnDestroy() {
+  this.sub.unsubscribe();
+}</pre>`},
+            {
+                q: "56. What is takeUntil pattern?", a: `takeUntil is used to unsubscribe automatically when another observable emits like component destroy.\n<pre>private destroy$ = new Subject&lt;void&gt;();\nobs.pipe(takeUntil(this.destroy$))
+  .subscribe();\nngOnDestroy() {
+  this.destroy$.next();
+}</pre>`},
+            {
+                q: "57. How to handle API errors?", a: `Use catchError operator to handle errors and return fallback observable.\n<pre>this.http.get('/api')
+  .pipe(\n  catchError(err => {\n    console.error(err);\n    return of([]);\n 
+})\n);</pre>`},
+            { q: "58. What is switchMap in API calls?", a: `switchMap cancels previous API request and sends new one. It is useful in search functionality.\n<pre>this.searchInput.valueChanges.pipe(\n  debounceTime(300),\n  switchMap(q => this.http.get('/search?q=' + q))\n);</pre>` },
+            {
+                q: "59. What is mergeMap in API calls?", a: `mergeMap allows multiple API calls in parallel and merges results.\n<pre>this.ids$.pipe(\n  mergeMap(id => this.http.get('/user/' + id))\n)
+  .subscribe(user => this.users.push(user));</pre>`},
+            {
+                q: "60. What is concatMap in API calls?", a: `concatMap ensures API calls execute one by one in sequence.\n<pre>this.items$.pipe(\n  concatMap(item => this.http.post('/save', item))\n)
+  .subscribe();</pre>`},
+            {
+                q: "61. What is exhaustMap in Angular?", a: `exhaustMap ignores new clicks until current API completes. Useful for preventing duplicate requests.\n<pre>fromEvent(btn, 'click')
+  .pipe(\n  exhaustMap(() => this.http.post('/submit', data))\n);</pre>`},
+            { q: "62. Real example of debounceTime?", a: `debounceTime is used in search input to delay API calls until user stops typing.\n<pre>this.search.valueChanges.pipe(\n  debounceTime(300),\n  distinctUntilChanged(),\n  switchMap(term => this.api.search(term))\n);</pre>` },
+            { q: "63. Real example of distinctUntilChanged?", a: `distinctUntilChanged prevents duplicate API calls when input value is same.\n<pre>input$.pipe(\n  debounceTime(300),\n  distinctUntilChanged(),\n  switchMap(v => api(v))\n);</pre>` },
+            {
+                q: "64. How to combine API calls?", a: `Use forkJoin or combineLatest to combine multiple API responses.\n<pre>forkJoin({\n  users: this.http.get('/users'),\n  roles: this.http.get('/roles')\n})
+  .subscribe(({users, roles}) => {});</pre>`},
+            {
+                q: "65. forkJoin vs combineLatest?", a: `forkJoin waits for all to complete, combineLatest emits whenever any observable emits.\n<pre>// forkJoin: all must
+//  complete\nforkJoin([a$, b$]);\n// combineLatest: emits on any change\ncombineLatest([a$, b$]);</pre>`},
+            {
+                q: "66. How to chain API calls?", a: `Use switchMap to chain dependent API calls.\n<pre>this.http.get('/user/1')
+  .pipe(\n  switchMap(user => this.http.get('/posts/' + user.id))\n)
+  .subscribe(posts => {});</pre>`},
+            {
+                q: "67. What is shareReplay in Angular?", a: `shareReplay caches last emitted value and shares among subscribers. It avoids duplicate API calls.\n<pre>users$ = this.http.get('/users')
+  .pipe(\n  shareReplay(1)\n);\n// multiple subscribers, single API call</pre>`},
+            {
+                q: "68. What is cold vs hot in Angular?", a: `HttpClient observables are cold by default. Subjects create hot observables for shared data.\n<pre>// Cold: each subscribe triggers new
+//  request\nthis.http.get('/api');\n// Hot: shared via Subject\nthis.subject$.next(data);</pre>`},
+            {
+                q: "69. How to share data between components?", a: `Use BehaviorSubject in service to share latest data between components.\n<pre>// service\nprivate data$ = new
+//  BehaviorSubject(null);\nsetData(val) {
+  this.data$.next(val);
+}\ngetData() {
+  return this.data$.asObservable();
+}</pre>`},
+            { q: "70. Why BehaviorSubject is preferred?", a: `BehaviorSubject stores last value and emits immediately to new subscribers.\n<pre>const bs = new BehaviorSubject('init');\nbs.next('updated');\nbs.subscribe(v => {}); // gets 'updated' immediately</pre>` },
+            {
+                q: "71. What is ReplaySubject usage?", a: `ReplaySubject is used when multiple previous values are needed for new subscribers.\n<pre>const rs = new ReplaySubject(3); // buffer 3\nrs.next(1);
+rs.next(2);
+rs.next(3);
+rs.next(4);\nrs.subscribe(v => {}); // gets 2, 3, 4</pre>`},
+            {
+                q: "72. What is form valueChanges?", a: `valueChanges is observable that emits form input changes in reactive forms.\n<pre>this.form.get('name').valueChanges.pipe(\n  debounceTime(300)\n)
+  .subscribe(val => console.log(val));</pre>`},
+            {
+                q: "73. How to debounce form input?", a: `Use debounceTime with valueChanges to reduce frequent API calls.\n<pre>this.search.valueChanges.pipe(\n  debounceTime(300),\n  switchMap(val => this.api.search(val))\n)
+  .subscribe();</pre>`},
+            { q: "74. How to filter form values?", a: `Use filter operator to process only valid form values.\n<pre>this.input.valueChanges.pipe(\n  filter(val => val.length > 2),\n  switchMap(val => this.api.search(val))\n);</pre>` },
+            {
+                q: "75. What is switchMap in forms?", a: `switchMap cancels previous API call when new form value is emitted.\n<pre>this.form.valueChanges.pipe(\n  switchMap(val => this.http.post('/save', val))\n)
+  .subscribe();</pre>`},
+            {
+                q: "76. What is take(1) usage?", a: `take(1) is used to get only one value and complete automatically.\n<pre>this.store.select(selectUser)
+  .pipe(\n  take(1)\n)
+  .subscribe(user => this.user = user);</pre>`},
+            { q: "77. What is firstValueFrom?", a: `firstValueFrom converts observable to promise and gets first emitted value.\n<pre>const user = await firstValueFrom(\n  this.http.get('/user/1')\n);</pre>` },
+            { q: "78. What is lastValueFrom?", a: `lastValueFrom returns last emitted value after observable completes.\n<pre>const result = await lastValueFrom(\n  of(1, 2, 3)\n); // 3</pre>` },
+            {
+                q: "79. What is finalize in Angular?", a: `finalize is used to perform cleanup like hiding loader after API completes.\n<pre>this.loading = true;\nthis.http.get('/api')
+  .pipe(\n  finalize(() => this.loading = false)\n)
+  .subscribe();</pre>`},
+            {
+                q: "80. What is retry in API?", a: `retry retries API call on failure for given number of times.\n<pre>this.http.get('/api')
+  .pipe(\n  retry(2),\n  catchError(() => of(null))\n)
+  .subscribe();</pre>`},
+            { q: "81. How to cancel API call?", a: `switchMap automatically cancels previous API calls when new one starts.\n<pre>search$.pipe(\n  switchMap(q => this.http.get('/api?q=' + q))\n); // previous request auto-cancelled</pre>` },
+            {
+                q: "82. What is loading state handling?", a: `Use tap and finalize to manage loading state before and after API call.\n<pre>getData() {\n  this.loading = true;\n  return this.http.get('/api')
+  .pipe(\n    finalize(() => this.loading = false)\n  );\n}</pre>`},
+            {
+                q: "83. What is error handling best practice?", a: `Handle errors in service using catchError and return safe observable.\n<pre>getUsers() {\n  return this.http.get('/users')
+  .pipe(\n    catchError(err => {
+  this.log(err);
+return of([]);
+})\n  );\n}</pre>`},
+            {
+                q: "84. What is service with observable?", a: `Service returns observable to component for better separation of concerns.\n<pre>// service\ngetData(): Observable&lt;User[]&gt;
+{\n  return this.http.get&lt;User[]&gt;('/api/users');\n}</pre>`},
+            {
+                q: "85. What is pipeable operator?", a: `Pipeable operators are used inside pipe function and are tree-shakable.\n<pre>import {
+  map, filter
+} from 'rxjs/operators';\nobs.pipe(filter(x => x > 0), map(x => x * 2));</pre>`},
+            { q: "86. What is memory leak in RxJS?", a: `Memory leak happens when subscriptions are not unsubscribed properly.\n<pre>// BAD: no unsubscribe\nobs.subscribe();\n// GOOD: use takeUntil or async pipe</pre>` },
+            { q: "87. How async pipe prevents leak?", a: `Async pipe auto unsubscribes when component is destroyed.\n<pre>&lt;p&gt;{{user$ | async}}&lt;/p&gt;\n&lt;!-- No manual subscribe/unsubscribe needed --&gt;</pre>` },
+            {
+                q: "88. What is combineLatest real use?", a: `CombineLatest is used to combine multiple form or filter values.\n<pre>combineLatest([\n  this.category$, this.search$\n])
+  .pipe(\n  switchMap(([cat, q]) => this.api.filter(cat, q))\n);</pre>`},
+            { q: "89. What is withLatestFrom use?", a: `withLatestFrom combines latest value from another stream on trigger.\n<pre>this.save$.pipe(\n  withLatestFrom(this.form.valueChanges),\n  switchMap(([_, form]) => this.http.post('/api', form))\n);</pre>` },
+            {
+                q: "90. What is subject as state?", a: `Subject is used as state to emit and listen data across app.\n<pre>// service\nprivate theme$ = new
+//  BehaviorSubject('dark');\nsetTheme(t: string) {
+  this.theme$.next(t);
+}\ngetTheme() {
+  return this.theme$.asObservable();
+}</pre>`},
+            {
+                q: "91. What is scan operator?", a: `scan accumulates values over time similar to reduce.\n<pre>click$.pipe(\n  scan((count) => count + 1, 0)\n)
+  .subscribe(total => console.log(total));</pre>`},
+            {
+                q: "92. What is reduce operator?", a: `reduce emits final accumulated value when observable completes.\n<pre>of(1,2,3,4)
+  .pipe(\n  reduce((acc, val) => acc + val, 0)\n); // emits 10 on complete</pre>`},
+            {
+                q: "93. What is bufferTime?", a: `bufferTime collects values over time and emits array.\n<pre>click$.pipe(\n  bufferTime(2000)\n)
+  .subscribe(clicks => {\n  console.log('clicks in 2s:', clicks.length);\n});</pre>`},
+            {
+                q: "94. What is auditTime?", a: `auditTime emits latest value after time interval.\n<pre>scroll$.pipe(\n  auditTime(500)\n)
+  .subscribe(pos => updateUI(pos));</pre>`},
+            {
+                q: "95. What is pairwise?", a: `pairwise emits previous and current value as pair.\n<pre>route.params.pipe(\n  pairwise()\n)
+  .subscribe(([prev, curr]) => {\n  console.log(prev.id, '->', curr.id);\n});</pre>`},
+            { q: "96. What is startWith?", a: `startWith emits initial value before actual observable values.\n<pre>this.search.valueChanges.pipe(\n  startWith(''),\n  switchMap(q => this.api.search(q))\n);</pre>` },
+            {
+                q: "97. What is endWith?", a: `endWith emits value after observable completes.\n<pre>of(1, 2, 3)
+  .pipe(\n  endWith('done')\n); // 1, 2, 3, 'done'</pre>`},
+            { q: "98. What is share operator?", a: `share shares single subscription among multiple subscribers.\n<pre>const shared$ = source$.pipe(share());\nshared$.subscribe(a => {});\nshared$.subscribe(b => {}); // same execution</pre>` },
+            { q: "99. What is publishReplay?", a: `publishReplay shares and replays values similar to shareReplay.\n<pre>const cached$ = source$.pipe(\n  publishReplay(1),\n  refCount()\n);</pre>` },
+            {
+                q: "100. What is best practices in RxJS Angular?", a: `Use async pipe, avoid nested subscriptions, use switchMap for API calls, and manage unsubscribe properly.\n<pre>// Use async pipe\n{{data$ |
+//  async}}\n// Use takeUntil for cleanup\n// Avoid .subscribe inside .subscribe</pre>`},
+        ];
+        const smData = [
+            {
+                q: "1. What is state management?", a: `State management is a way to store and manage application data in a structured and predictable way. It helps share data between components easily.\n<pre>interface AppState {\n  users: User[];
+loading: boolean;\n}</pre>`},
+            {
+                q: "2. Why state management is needed?", a: `State management helps avoid prop drilling and keeps data consistent across components. It improves maintainability in large applications.\n<pre>// Without: pass data through 5
+//  components\n// With: any component reads from store</pre>`},
+            { q: "3. What is local state?", a: `Local state is data managed inside a single component. It is not shared with other components.\n<pre>@Component({})\nexport class Counter {\n  count = 0; // local state\n}</pre>` },
+            { q: "4. What is global state?", a: `Global state is shared data accessible across multiple components using services or store.\n<pre>@Injectable({providedIn: 'root'})\nexport class AppState {\n  user$ = new BehaviorSubject(null);\n}</pre>` },
+            { q: "5. What is service-based state?", a: `Service-based state uses Angular services with RxJS to share data between components.\n<pre>@Injectable({providedIn:'root'})\nexport class DataService {\n  private data$ = new BehaviorSubject([]);\n}</pre>` },
+            {
+                q: "6. What is BehaviorSubject in state?", a: `BehaviorSubject stores latest value and emits it to all subscribers. It is widely used for state management.\n<pre>private users$ = new BehaviorSubject&lt;User[]&gt;([]);\nsetUsers(u: User[]) {
+  this.users$.next(u);
+}\ngetUsers() {
+  return this.users$.asObservable();
+}</pre>`},
+            { q: "7. Why BehaviorSubject over Subject?", a: `BehaviorSubject provides initial value and last value immediately, while Subject does not store values.\n<pre>const bs = new BehaviorSubject('init');\nbs.subscribe(v => {}); // gets 'init'\nconst s = new Subject();\ns.subscribe(v => {}); // gets nothing until next()</pre>` },
+            {
+                q: "8. What is state immutability?", a: `Immutability means state should not be changed directly. Instead create new copy to update data.\n<pre>// BAD: state.users.push(user);\n//
+//  GOOD:\nstate = {
+  ...state, users: [...state.users, user]
+};</pre>`},
+            {
+                q: "9. Why immutability is important?", a: `Immutability helps in predictable state changes and improves debugging and performance.\n<pre>// OnPush detects new
+//  reference\nthis.items = [...this.items, newItem];</pre>`},
+            {
+                q: "10. What is unidirectional data flow?", a: `Data flows in one direction from state to UI and actions update state. It avoids confusion in large apps.\n<pre>// Action -> Reducer -> State ->
+//  UI\nstore.dispatch(loadUsers());\n// UI reads: store.select(selectUsers)</pre>`},
+            {
+                q: "11. What is NgRx?", a: `NgRx is a state management library based on Redux pattern for Angular applications.\n<pre>import {
+  StoreModule
+} from '@ngrx/store';\n@NgModule({\n  imports: [StoreModule.forRoot({app: reducer})]\n})</pre>`},
+            { q: "12. What is store in NgRx?", a: `Store is centralized place to keep application state and access it from components.\n<pre>constructor(private store: Store) {}\nthis.users$ = this.store.select(selectAllUsers);</pre>` },
+            { q: "13. What is action in NgRx?", a: `Action describes an event that changes state. It is dispatched to store.\n<pre>export const loadUsers = createAction('[User] Load');\nexport const loadUsersSuccess = createAction(\n  '[User] Load Success', props&lt;{users: User[]}&gt;()\n);</pre>` },
+            {
+                q: "14. What is reducer?", a: `Reducer is a pure function that updates state based on action.\n<pre>const userReducer = createReducer(\n  initialState,\n  on(loadUsersSuccess, (state, {users}) => ({\n    ...state, users\n 
+}))\n);</pre>`},
+            {
+                q: "15. What is effect?", a: `Effect handles side effects like API calls and dispatches new actions.\n<pre>loadUsers$ = createEffect(() =>\n  this.actions$.pipe(\n    ofType(loadUsers),\n    switchMap(() => this.api.getUsers()
+  .pipe(\n      map(users => loadUsersSuccess({users}))\n    ))\n  )\n);</pre>`},
+            { q: "16. What is selector?", a: `Selector is used to get specific data from store efficiently.\n<pre>export const selectUsers = createSelector(\n  selectAppState,\n  (state) => state.users\n);</pre>` },
+            { q: "17. What is dispatch?", a: `Dispatch sends action to store to update state.\n<pre>this.store.dispatch(loadUsers());\nthis.store.dispatch(deleteUser({id: 1}));</pre>` },
+            {
+                q: "18. What is facade pattern?", a: `Facade pattern hides store complexity and provides simple interface to components.\n<pre>class UserFacade {\n  users$ = this.store.select(selectUsers);\n  load() {
+  this.store.dispatch(loadUsers());
+}\n  delete(id) {
+  this.store.dispatch(deleteUser({id}));
+}\n}</pre>`},
+            {
+                q: "19. What is state normalization?", a: `State normalization stores data in structured way like database tables for easy updates.\n<pre>// Normalized\n{
+  ids: [1,2], entities: {\n  1: {id:1, name:'Ram'},\n  2: {id:2, name:'Sita'}\n}}</pre>`},
+            { q: "20. What is entity adapter?", a: `Entity adapter helps manage collections in NgRx efficiently.\n<pre>const adapter = createEntityAdapter&lt;User&gt;();\nconst initialState = adapter.getInitialState();\n// adapter.addOne, removeOne, updateOne</pre>` },
+            {
+                q: "21. What is signals in Angular state?", a: `Signals are reactive variables used to manage state without RxJS complexity.\n<pre>count = signal(0);\nincrement() {
+  this.count.update(v => v + 1);
+}</pre>`},
+            { q: "22. What is computed signal?", a: `Computed signal derives value from other signals automatically.\n<pre>count = signal(5);\ndoubled = computed(() => this.count() * 2);\n// doubled() returns 10</pre>` },
+            { q: "23. What is effect in signals?", a: `Effect runs side effects when signal value changes.\n<pre>effect(() => {\n  console.log('Count changed:', this.count());\n  localStorage.setItem('count', this.count());\n});</pre>` },
+            {
+                q: "24. Signals vs RxJS state?", a: `Signals are simple and synchronous, RxJS is powerful for async streams. Both are used based on use case.\n<pre>// Signal: simple local state\ncount =
+//  signal(0);\n// RxJS: async API streams\ndata$ = this.http.get('/api');</pre>`},
+            {
+                q: "25. What is component store?", a: `ComponentStore is lightweight state management for local component state.\n<pre>class MyStore extends ComponentStore&lt;MyState&gt;
+{\n  readonly items$ = this.select(s => s.items);\n  readonly addItem = this.updater((s, item) => ({\n    ...s, items: [...s.items, item]\n 
+}));\n}</pre>`},
+            {
+                q: "26. What is Akita?", a: `Akita is another state management library for Angular with simple API.\n<pre>@StoreConfig({name:'users'})\nclass UsersStore extends EntityStore&lt;UsersState&gt;
+{}\nclass UsersQuery extends QueryEntity&lt;UsersState&gt;
+{}</pre>`},
+            {
+                q: "27. What is NGXS?", a: `NGXS is state management library with simpler syntax than NgRx.\n<pre>@State&lt;UserModel&gt;({\n  name: 'users', defaults: {
+  list: []
+}\n})\n@Action(LoadUsers)\nload(ctx) {
+  ctx.setState({list: data});
+}</pre>`},
+            {
+                q: "28. What is state snapshot?", a: `State snapshot is current value of state at a given time.\n<pre>// BehaviorSubject\nconst current =
+//  this.data$.getValue();\n// NgRx store\nlet val;
+store.select(s=>s)
+  .pipe(take(1))
+  .subscribe(v=>val=v);</pre>`},
+            {
+                q: "29. What is derived state?", a: `Derived state is computed data from existing state.\n<pre>// Using selector\nexport const
+//  selectActiveUsers = createSelector(\n  selectUsers,\n  users => users.filter(u => u.active)\n);</pre>`},
+            { q: "30. What is lazy loaded state?", a: `Lazy loaded state loads only when feature module is loaded.\n<pre>@NgModule({\n  imports: [\n    StoreModule.forFeature('products', productReducer),\n    EffectsModule.forFeature([ProductEffects])\n  ]\n})</pre>` },
+            {
+                q: "31. What is store devtools?", a: `Store devtools help debug state changes in browser.\n<pre>@NgModule({\n  imports: [\n    StoreDevtoolsModule.instrument({\n      maxAge: 25\n   
+})\n  ]\n})</pre>`},
+            { q: "32. What is action flow?", a: `Action flow is sequence: dispatch -> reducer -> state update -> UI update.\n<pre>// 1. Component dispatches\nstore.dispatch(loadUsers());\n// 2. Reducer updates state\n// 3. Selector emits new data\n// 4. UI updates via async pipe</pre>` },
+            { q: "33. What is side effect?", a: `Side effect is external operation like API call handled outside reducer.\n<pre>loadUsers$ = createEffect(() =>\n  this.actions$.pipe(\n    ofType(loadUsers),\n    switchMap(() => this.api.getAll())\n  )\n);</pre>` },
+            {
+                q: "34. Why reducers should be pure?", a: `Reducers should not have side effects and always return new state.\n<pre>// PURE: no API call, no
+//  mutation\non(addUser, (state, {user}) => ({\n  ...state,\n  users: [...state.users, user]\n}))</pre>`},
+            {
+                q: "35. What is store freeze?", a: `Store freeze prevents mutation in development mode.\n<pre>import {
+  storeFreeze
+} from 'ngrx-store-freeze';\nStoreModule.forRoot(reducers, {\n  metaReducers: [storeFreeze]\n});</pre>`},
+            {
+                q: "36. What is selector memoization?", a: `Selectors cache results and avoid recalculating unchanged data.\n<pre>// Only recalculates when users state
+//  changes\nexport const selectActiveCount = createSelector(\n  selectUsers,\n  users => users.filter(u => u.active).length\n);</pre>`},
+            { q: "37. What is performance optimization in state?", a: `Use OnPush, memoized selectors, and avoid unnecessary state updates.\n<pre>@Component({\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\n// Use memoized selectors\nthis.data$ = store.select(selectFiltered);</pre>` },
+            {
+                q: "38. What is action creator?", a: `Action creator simplifies creating actions with type and payload.\n<pre>export const updateUser = createAction(\n  '[User] Update',\n  props&lt;{
+  id: number;
+changes: Partial&lt;User&gt;
+}&gt;()\n);\nstore.dispatch(updateUser({id:1, changes:{name:'Ram'}}));</pre>`},
+            {
+                q: "39. What is feature state?", a: `Feature state is part of global state specific to module.\n<pre>export const userFeatureKey = 'users';\nexport interface UserState {
+  list: User[];
+}\nStoreModule.forFeature(userFeatureKey, userReducer);</pre>`},
+            {
+                q: "40. What is store module?", a: `Store module registers reducers and state in Angular app.\n<pre>@NgModule({\n  imports: [\n    StoreModule.forRoot({
+  app: appReducer
+}),\n    EffectsModule.forRoot([AppEffects])\n  ]\n})</pre>`},
+            { q: "41. What is effects module?", a: `Effects module registers effects for handling side effects.\n<pre>@NgModule({\n  imports: [\n    EffectsModule.forRoot([UserEffects, AuthEffects])\n  ]\n})</pre>` },
+            {
+                q: "42. What is router store?", a: `Router store connects Angular router with NgRx store.\n<pre>import {
+  routerReducer
+} from '@ngrx/router-store';\nStoreModule.forRoot({
+  router: routerReducer
+});\n// Select route params from store</pre>`},
+            {
+                q: "43. What is action payload?", a: `Payload carries data with action to reducer.\n<pre>export const addUser = createAction(\n  '[User] Add',\n  props&lt;{
+  user: User
+}&gt;()\n);\nstore.dispatch(addUser({
+  user: newUser
+}));</pre>`},
+            {
+                q: "44. What is state hydration?", a: `State hydration restores state from storage like localStorage.\n<pre>export function hydrationReducer(reducer) {\n  return (state, action) => {\n    if (!state) {\n      const saved = localStorage.getItem('state');\n      if (saved) return JSON.parse(saved);\n   
+}\n    return reducer(state, action);\n 
+};\n}</pre>`},
+            { q: "45. What is persistence in state?", a: `Persistence stores state data in browser storage for reuse.\n<pre>effect(() => {\n  const state = this.store.selectSnapshot(s => s);\n  localStorage.setItem('appState', JSON.stringify(state));\n});</pre>` },
+            {
+                q: "46. What is optimistic update?", a: `Optimistic update updates UI before server response.\n<pre>// 1. Update state
+//  immediately\nstore.dispatch(deleteUser({id}));\n// 2. Call API\n// 3. If fails, revert state</pre>`},
+            {
+                q: "47. What is pessimistic update?", a: `Pessimistic update waits for server response before updating UI.\n<pre>// 1. Show loading\n// 2. Call
+//  API\nthis.http.delete('/user/1')
+  .subscribe(() => {\n  // 3. Update state after success\n  store.dispatch(deleteUserSuccess({id: 1}));\n});</pre>`},
+            {
+                q: "48. What is error handling in state?", a: `Error handling is done using effects and separate error state.\n<pre>interface AppState {\n  data: any[];
+error: string | null;
+loading: boolean;\n}\non(loadFail, (state, {error}) => ({\n  ...state, error: error.message, loading: false\n}))</pre>`},
+            {
+                q: "49. What is best state structure?", a: `Keep state flat, normalized, and minimal for better performance.\n<pre>// Good structure\n{\n  ids: [1, 2],\n
+//   entities: {
+  1: {...}, 2: {...}
+},\n  loading: false,\n  error: null\n}</pre>`},
+            {
+                q: "50. What is best practice in state management?", a: `Use immutability, avoid duplication, use selectors, and choose proper tool like signals or NgRx.\n<pre>// Immutable update\nstate = {
+  ...state, users: [...state.users, user]
+};\n// Memoized selector\nconst select = createSelector(...);</pre>`},
+            {
+                q: "51. How to decide between local state and global state?", a: `Local state is used for component-specific data, while global state is used when data is shared across multiple components or modules. Decision depends on data usage scope.\n<pre>// Local: form input,
+//  toggle\nthis.isOpen = false;\n// Global: user session, cart\nstore.select(selectUser);</pre>`},
+            {
+                q: "52. When to use service-based state instead of NgRx?", a: `Service-based state is better for small applications or simple data sharing. NgRx is preferred for large applications with complex state and many interactions.\n<pre>// Small app: service +
+//  BehaviorSubject\n// Large app: NgRx with actions, reducers, effects</pre>`},
+            {
+                q: "53. When should we use NgRx in project?", a: `NgRx is used when application has complex state, multiple API calls, and needs predictable data flow with debugging support.\n<pre>// Use NgRx when:\n// - Multiple
+//  components share state\n// - Complex async operations\n// - Need time-travel debugging</pre>`},
+            {
+                q: "54. What are problems without state management?", a: `Without state management, application faces issues like inconsistent data, difficult debugging, and tight coupling between components.\n<pre>// Problems: data mismatch between
+//  components\n// Component A shows old data\n// Component B shows updated data</pre>`},
+            {
+                q: "55. What is smart state organization?", a: `State should be divided into feature-based modules and kept minimal and normalized for better performance and maintainability.\n<pre>// Feature-based state\nauth/  ->
+//  auth.state.ts\nuser/  -> user.state.ts\nproduct/ -> product.state.ts</pre>`},
+            { q: "56. How to structure large NgRx store?", a: `Use feature modules, separate reducers, actions, selectors, and effects into different files for scalability.\n<pre>store/\n  user/\n    user.actions.ts\n    user.reducer.ts\n    user.effects.ts\n    user.selectors.ts</pre>` },
+            {
+                q: "57. What is facade pattern real usage?", a: `Facade pattern hides store logic inside service and exposes simple methods for components, improving readability and maintainability.\n<pre>@Injectable()\nclass UserFacade {\n  users$ = this.store.select(selectUsers);\n  load() {
+  this.store.dispatch(loadUsers());
+}\n}</pre>`},
+            {
+                q: "58. What is container vs presentational component?", a: `Container components handle state and logic, while presentational components handle UI and receive data via inputs.\n<pre>// Container: connects to
+//  store\n@Component({}) class UserList {\n  users$ = this.store.select(selectUsers);\n}\n// Presentational: @Input() users</pre>`},
+            {
+                q: "59. How to handle API state (loading, success, error)?", a: `Maintain separate flags like loading, success, and error in state to handle UI conditions properly.\n<pre>interface State {\n  data: User[];
+loading: boolean;
+error: string;\n}\non(load, s => ({...s, loading: true}));\non(loadOk, (s,{data}) => ({...s, data, loading: false}));\non(loadFail, (s,{err}) => ({...s, error: err, loading: false}));</pre>`},
+            {
+                q: "60. What is normalized state in real app?", a: `Normalized state stores data in flat structure like key-value pairs instead of nested objects for easy updates.\n<pre>// Instead of: users: [{id:1,
+//  posts:[...]}]\n// Use:\nusers: {
+  ids:[1], entities:{1:{id:1,name:'Ram'}}
+}\nposts: {
+  ids:[1], entities:{1:{userId:1,...}}
+}</pre>`},
+            { q: "61. How to avoid duplicate API calls?", a: `Use shareReplay, caching in store, or check state before making API call.\n<pre>loadUsers$ = createEffect(() =>\n  this.actions$.pipe(\n    ofType(loadUsers),\n    withLatestFrom(this.store.select(selectLoaded)),\n    filter(([_, loaded]) => !loaded),\n    switchMap(() => this.api.getUsers())\n  )\n);</pre>` },
+            {
+                q: "62. What is caching strategy in state?", a: `Store API responses in state and reuse them instead of calling API repeatedly.\n<pre>// Check state before API
+//  call\nthis.store.select(selectUsers)
+  .pipe(\n  take(1),\n  switchMap(users => users.length\n    ? of(users)\n    : this.api.getUsers()\n  )\n);</pre>`},
+            {
+                q: "63. What is optimistic update real example?", a: `Update UI immediately after action like delete or like button, then sync with server.\n<pre>// Remove from UI
+//  immediately\nthis.store.dispatch(removeItem({id}));\n// Then call API\nthis.api.delete(id)
+  .pipe(\n  catchError(() => {\n    this.store.dispatch(revertRemove({id}));\n    return EMPTY;\n 
+})\n);</pre>`},
+            {
+                q: "64. What is pessimistic update real example?", a: `Wait for API response before updating UI to ensure data accuracy.\n<pre>this.api.updateUser(data)
+  .pipe(\n  tap(updated => {\n    this.store.dispatch(updateSuccess({user: updated}));\n 
+}),\n  catchError(err => {\n    this.toast.show('Update failed');\n    return EMPTY;\n 
+})\n);</pre>`},
+            {
+                q: "65. How to handle forms with state?", a: `Use reactive forms with valueChanges and sync with state using actions or signals.\n<pre>this.form.valueChanges.pipe(\n  debounceTime(300)\n)
+  .subscribe(val => {\n  this.store.dispatch(updateFormState({val}));\n});</pre>`},
+            {
+                q: "66. What is state synchronization?", a: `State synchronization keeps UI, backend, and store data consistent.\n<pre>// After API success, update
+//  store\nthis.api.save(data)
+  .subscribe(res => {\n  this.store.dispatch(saveSuccess({data: res}));\n});</pre>`},
+            { q: "67. What is feature state separation?", a: `Divide state into feature modules like user, product, auth for better organization.\n<pre>StoreModule.forFeature('auth', authReducer);\nStoreModule.forFeature('product', productReducer);</pre>` },
+            { q: "68. What is global error handling in state?", a: `Use effects to catch API errors and update error state globally.\n<pre>handleError$ = createEffect(() =>\n  this.actions$.pipe(\n    ofType(apiError),\n    tap(({msg}) => this.toast.showError(msg))\n  ), {dispatch: false}\n);</pre>` },
+            {
+                q: "69. How to debug state issues?", a: `Use Redux DevTools to track actions and state changes step by step.\n<pre>// Install Redux DevTools
+//  extension\nStoreDevtoolsModule.instrument({\n  maxAge: 25, logOnly: environment.production\n});\n// See action log and state diff</pre>`},
+            {
+                q: "70. What is performance issue in state?", a: `Frequent unnecessary updates and large state objects can reduce performance.\n<pre>// BAD: selecting entire
+//  state\nstore.select(s => s);\n// GOOD: select only needed slice\nstore.select(selectUserName);</pre>`},
+            {
+                q: "71. How to optimize state performance?", a: `Use memoized selectors, OnPush strategy, and avoid unnecessary updates.\n<pre>// Memoized selector\nexport const
+//  selectTotal = createSelector(\n  selectItems,\n  items => items.reduce((a, b) => a + b.price, 0)\n);</pre>`},
+            { q: "72. What is selector composition?", a: `Selectors can be combined to derive complex data from multiple states.\n<pre>const selectUserWithPosts = createSelector(\n  selectUser,\n  selectPosts,\n  (user, posts) => ({...user, posts: posts.filter(p => p.userId === user.id)})\n);</pre>` },
+            {
+                q: "73. What is state reuse across modules?", a: `Shared modules or global store can be used to reuse state across features.\n<pre>// Global state in
+//  root\nStoreModule.forRoot({auth: authReducer});\n// Any module can select\nstore.select(selectCurrentUser);</pre>`},
+            { q: "74. What is state reset strategy?", a: `Reset state on logout or navigation to avoid stale data.\n<pre>export const logout = createAction('[Auth] Logout');\non(logout, () => initialState); // reset to default</pre>` },
+            {
+                q: "75. What is lazy loaded state real usage?", a: `Load feature state only when module is loaded to reduce initial bundle size.\n<pre>// products.module.ts (lazy
+//  loaded)\n@NgModule({\n  imports: [\n    StoreModule.forFeature('products', reducer)\n  ]\n})</pre>`},
+            {
+                q: "76. What is effect chaining?", a: `One effect can trigger another action which triggers another effect.\n<pre>// Effect 1: login -> loginSuccess\n//
+//  Effect 2: loginSuccess -> loadProfile\nloadProfile$ = createEffect(() =>\n  this.actions$.pipe(\n    ofType(loginSuccess),\n    switchMap(() => this.api.getProfile())\n  )\n);</pre>`},
+            {
+                q: "77. What is side effect isolation?", a: `All side effects like API calls should be handled in effects, not in reducers.\n<pre>// BAD: API call in reducer\n// GOOD:
+//  API call in effect\nloadData$ = createEffect(() =>\n  this.actions$.pipe(\n    ofType(load),\n    switchMap(() => this.api.getData())\n  )\n);</pre>`},
+            { q: "78. What is state hydration real usage?", a: `Load state from localStorage when app initializes.\n<pre>export const hydrate = createAction('[App] Hydrate');\n// On app init, read from localStorage\nconst saved = localStorage.getItem('state');\nif (saved) store.dispatch(hydrate({state: JSON.parse(saved)}));</pre>` },
+            {
+                q: "79. What is state persistence strategy?", a: `Persist important data like user session in localStorage or sessionStorage.\n<pre>// Save on state
+//  change\nstore.select(selectAuth)
+  .subscribe(auth => {\n  localStorage.setItem('auth', JSON.stringify(auth));\n});</pre>`},
+            {
+                q: "80. What is undo/redo in state?", a: `Maintain history of state changes to support undo and redo functionality.\n<pre>interface UndoState {\n  past: State[];
+present: State;
+future: State[];\n}\n// Undo: move present to future, pop past\n// Redo: move present to past, pop future</pre>`},
+            {
+                q: "81. What is signals vs NgRx real decision?", a: `Signals are good for simple state, NgRx is better for complex enterprise apps.\n<pre>// Simple counter: use signal\ncount =
+//  signal(0);\n// Enterprise app with many features: use NgRx\nStoreModule.forRoot(reducers);</pre>`},
+            {
+                q: "82. What is hybrid state management?", a: `Use signals for local state and NgRx for global state in same app.\n<pre>// Local UI state\nisOpen =
+//  signal(false);\n// Global app state\nusers$ = this.store.select(selectUsers);</pre>`},
+            {
+                q: "83. What is component store real usage?", a: `ComponentStore manages local component state with RxJS in structured way.\n<pre>@Injectable()\nclass TodoStore extends ComponentStore&lt;TodoState&gt;
+{\n  todos$ = this.select(s => s.todos);\n  addTodo = this.updater((s, todo: Todo) => ({\n    ...s, todos: [...s.todos, todo]\n 
+}));\n}</pre>`},
+            {
+                q: "84. What is derived data optimization?", a: `Use selectors or computed signals to calculate data instead of storing it.\n<pre>// Don't store derived data\n// BAD:
+//  state.totalPrice\n// GOOD: computed selector\nconst selectTotal = createSelector(\n  selectItems, items => items.reduce((a,b) => a+b.price, 0)\n);</pre>`},
+            {
+                q: "85. What is state coupling issue?", a: `Tightly coupled state makes code hard to maintain and reuse.\n<pre>// BAD: component directly accesses
+//  store internals\nthis.store.select(s => s.user.profile.address.city);\n// GOOD: use facade/selector\nthis.userFacade.city$;</pre>`},
+            {
+                q: "86. How to decouple state?", a: `Use interfaces, services, and facade pattern to separate logic.\n<pre>// Facade hides store details\nclass
+//  CartFacade {\n  items$ = this.store.select(selectCartItems);\n  add(item) {
+  this.store.dispatch(addToCart({item}));
+}\n}</pre>`},
+            {
+                q: "87. What is testing state management?", a: `Test reducers, selectors, and effects separately using unit tests.\n<pre>// Test reducer\nconst result =
+//  userReducer(\n  initialState,\n  loadUsersSuccess({users: mockUsers})\n);\nexpect(result.users).toEqual(mockUsers);</pre>`},
+            { q: "88. What is mocking store?", a: `Mock store is used in testing to simulate state behavior.\n<pre>const store = jasmine.createSpyObj('Store', ['select','dispatch']);\nstore.select.and.returnValue(of(mockData));\nTestBed.configureTestingModule({\n  providers: [{provide: Store, useValue: store}]\n});</pre>` },
+            {
+                q: "89. What is action naming convention?", a: `Use clear action names like [Feature] ActionName for readability.\n<pre>// Good naming\n'[User] Load
+//  Users'\n'[Auth] Login Success'\n'[Cart] Add Item'\n'[Product API] Load Products Failure'</pre>`},
+            { q: "90. What is state versioning?", a: `Maintain version of state for migration during updates.\n<pre>interface AppState {\n  version: number;\n  data: any;\n}\n// On load, check version and migrate if needed</pre>` },
+            {
+                q: "91. What is large data handling in state?", a: `Avoid storing very large data directly, use pagination or caching.\n<pre>interface PaginatedState {\n  items: Item[];
+page: number;\n  pageSize: number;
+total: number;\n}\n// Load only current page data</pre>`},
+            {
+                q: "92. What is memory optimization?", a: `Remove unused state and unsubscribe observables properly.\n<pre>// Clear state when leaving
+//  module\nngOnDestroy() {\n  this.store.dispatch(clearProducts());\n  this.destroy$.next();\n}</pre>`},
+            {
+                q: "93. What is selector performance issue?", a: `Non-memoized selectors can cause unnecessary recalculations.\n<pre>// BAD: new reference every
+//  time\nstore.select(s => s.users.filter(u => u.active));\n// GOOD: memoized\nconst selectActive = createSelector(\n  selectUsers, users => users.filter(u => u.active)\n);</pre>`},
+            {
+                q: "94. What is real-time state updates?", a: `Use WebSocket or polling with RxJS to update state in real-time.\n<pre>const socket$ = webSocket('ws://api');\nsocket$.pipe(\n  tap(msg => store.dispatch(newMessage({msg})))\n)
+  .subscribe();</pre>`},
+            {
+                q: "95. What is multi-tab state sync?", a: `Use storage events or service worker to sync state across tabs.\n<pre>window.addEventListener(
+  'storage',
+  (e) => {\n  if (e.key === 'appState') {\n    store.dispatch(syncState({state: JSON.parse(e.newValue)}));\n 
+}\n});</pre>`},
+            { q: "96. What is role-based state?", a: `State can change based on user roles like admin or user.\n<pre>const selectMenu = createSelector(\n  selectRole,\n  role => role === 'admin'\n    ? adminMenuItems\n    : userMenuItems\n);</pre>` },
+            {
+                q: "97. What is security in state?", a: `Avoid storing sensitive data like passwords in state.\n<pre>// NEVER store in state:\n//
+//  passwords, credit cards, tokens (use httpOnly cookies)\n// SAFE to store: user name, role, preferences</pre>`},
+            {
+                q: "98. What is API pagination with state?", a: `Store current page and data in state for pagination.\n<pre>interface PageState {\n  items: Item[];
+currentPage: number;
+totalPages: number;\n}\non(loadPage, (s, {page}) => ({...s, currentPage: page}));\non(loadPageSuccess, (s, {items}) => ({...s, items}));</pre>`},
+            { q: "99. What is filtering with state?", a: `Store filter values and apply selectors to filter data.\n<pre>const selectFiltered = createSelector(\n  selectProducts, selectFilter,\n  (products, filter) => products.filter(\n    p => p.category === filter.category\n  )\n);</pre>` },
+            {
+                q: "100. What is best architecture for state management?", a: `Use modular structure, facade pattern, immutability, and proper tool selection for scalable applications.\n<pre>// Architecture\n// 1. Feature modules
+//  with lazy state\n// 2. Facade services for components\n// 3. Normalized entity state\n// 4. Memoized selectors\n// 5. Effects for side effects</pre>`},
+        ];
+
+        // Renumber continuously: JS(1-150), TS(151-300), NG(301-450), RxJS(451-550), SM(551-650)
+        function renumber(arr, startNum) {
+            return arr.map((d, i) => ({ ...d, q: d.q.replace(/^\d+\./, (startNum + i) + '.') }));
+        }
+        let offset = 0;
+        const allData = [
+            ...renumber(jsData, offset + 1).map(d => ({ ...d, cat: 'js' })),
+            ...renumber(tsData, (offset += jsData.length) + 1).map(d => ({ ...d, cat: 'ts' })),
+            ...renumber(ngData, (offset += tsData.length) + 1).map(d => ({ ...d, cat: 'ng' })),
+            ...renumber(rxjsData, (offset += ngData.length) + 1).map(d => ({ ...d, cat: 'rxjs' })),
+            ...renumber(smData, (offset += rxjsData.length) + 1).map(d => ({ ...d, cat: 'sm' })),
+        ];
+        let filter = 'all', search = '';
+        function gf() { let r = allData; if (filter !== 'all') r = r.filter(d => d.cat === filter); if (search) { const s = search.toLowerCase(); r = r.filter(d => d.q.toLowerCase().includes(s) || d.a.replace(/<[^>]*>/g, '').toLowerCase().includes(s)); } return r; }
+        function hl(t, s) { if (!s) return t; return t.split(/(<[^>]*>)/g).map(p => p.startsWith('<') ? p : p.replace(new RegExp(`(${s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'), '<mark>$1</mark>')).join(''); }
+
+        function syntaxHL(code) {
+            // Escape only & for safety, keep existing entities
+            let c = code;
+            // Tokenize and colorize using VS Code Dark+ palette
+            const rules = [
+                // Comments (// and /* */)
+                [/(\/\/.*?)$/gm, '<span class="cmt">$1</span>'],
+                [/(\/\*[\s\S]*?\*\/)/g, '<span class="cmt">$1</span>'],
+                // Template literals
+                [/(`[^`]*`)/g, '<span class="str">$1</span>'],
+                // Strings (double and single quotes)
+                [/("(?:[^"\\]|\\.)*")/g, '<span class="str">$1</span>'],
+                [/('(?:[^'\\]|\\.)*')/g, '<span class="str">$1</span>'],
+                // Decorators (@Component etc)
+                [/(@\w+)/g, '<span class="dec">$1</span>'],
+                // Numbers
+                [/\b(\d+\.?\d*n?)\b/g, '<span class="num">$1</span>'],
+                // Keywords (control flow, declarations)
+                [/\b(const|let|var|function|return|if|else|for|while|do|switch|case|break|continue|new|typeof|instanceof|in|of|class|extends|super|import|export|from|default|async|await|yield|try|catch|finally|throw|delete|void|this|static|get|set|abstract|override)\b/g, '<span class="kw">$1</span>'],
+                // Declaration keywords (purple/pink)
+                [/\b(interface|type|enum|namespace|declare|module|implements|readonly|public|private|protected|as|is|keyof|infer)\b/g, '<span class="dec">$1</span>'],
+                // Types and built-ins (teal)
+                [/\b(string|number|boolean|void|never|any|unknown|null|undefined|true|false|Array|Promise|Object|Map|Set|Date|Error|RegExp|console|document|window|Math|JSON|Symbol|BigInt|Reflect|FormGroup|FormControl|FormArray|Validators|Observable|Subject|BehaviorSubject|ReplaySubject|AsyncSubject|Injectable|Component|NgModule|Pipe|Input|Output|ViewChild|ContentChild|EventEmitter|ChangeDetectorRef|ChangeDetectionStrategy|Router|ActivatedRoute|HttpClient|HttpInterceptor|Store|StoreModule|EffectsModule|ComponentStore|Subscription|EMPTY)\b/g, '<span class="type">$1</span>'],
+                // Function calls: word followed by (
+                [/\b([a-zA-Z_$][\w$]*)\s*(?=\()/g, '<span class="fn">$1</span>'],
+                // Property access after dot
+                [/\.([a-zA-Z_$][\w$]*)/g, '.<span class="prop">$1</span>'],
+                // Arrow =>
+                [/(=&gt;|=>)/g, '<span class="kw">$1</span>'],
+                // HTML-like tags in code
+                [/(&lt;\/?[\w-]+&gt;)/g, '<span class="tag">$1</span>'],
+            ];
+            rules.forEach(([regex, rep]) => { c = c.replace(regex, rep); });
+            return c;
+        }
+
+        function render() {
+            const filtered = gf();
+            const c = document.getElementById('container');
+            c.innerHTML = filtered.length ? filtered.map(i => `<div class="qa-card" data-cat="${i.cat}"><div class="question">${hl(i.q, search)}</div><div class="answer">${hl(i.a, search)}</div></div>`).join('') : '<div class="no-results">No results found.</div>';
+            // Apply syntax highlighting to all pre blocks
+            c.querySelectorAll('pre').forEach(pre => {
+                pre.innerHTML = syntaxHL(pre.innerHTML);
+            });
+        }
+        document.getElementById('filterSelect').addEventListener('change', e => { filter = e.target.value; render(); });
+        let dt; document.getElementById('searchBox').addEventListener('input', e => { clearTimeout(dt); dt = setTimeout(() => { search = e.target.value.trim(); render(); }, 200); });
+        render();
+    </script>
+</body>
+
+</html>
