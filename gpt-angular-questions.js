@@ -559,4 +559,494 @@ window.ANGULAR_QUESTIONS = [
   topic: "angular",
   level: "intermediate"
 },
+{
+  id: 81,
+  question: "What is Angular CLI?",
+  answer: "Angular CLI is a command line tool used to create, build and manage Angular projects easily.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 82,
+  question: "What is ng new command?",
+  answer: "ng new is used to create a new Angular project with default setup.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 83,
+  question: "What is ng serve?",
+  answer: "ng serve is used to run Angular application locally with development server.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 84,
+  question: "What is ng build?",
+  answer: "ng build is used to compile Angular project into output files for deployment.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 85,
+  question: "What is ng generate?",
+  answer: "ng generate is used to create components, services, modules and other files quickly.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 86,
+  question: "What is ng add?",
+  answer: "ng add is used to add external libraries or packages into Angular project.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 87,
+  question: "What is ng test?",
+  answer: "ng test is used to run unit tests for Angular application.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 88,
+  question: "What is ng lint?",
+  answer: "ng lint is used to check code quality and style issues in Angular project.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 89,
+  question: "What is environment file in Angular?",
+  answer: "Environment files store configuration for different environments like development and production.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 90,
+  question: "What is angular.json file?",
+  answer: "angular.json contains project configuration like build, serve and file paths.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 91,
+  question: "What is Angular Signals?",
+  answer: "Signals are a new reactive feature in Angular. They track state changes and update UI automatically.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 92,
+  question: "Why Angular Signals are used?",
+  answer: "Signals are used to manage state in simple way. They reduce need of manual change detection and improve performance.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 93,
+  question: "What is signal() function?",
+  answer: "signal() is used to create a reactive value. It stores state and updates UI when value changes.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 94,
+  question: "What is computed() in Angular Signals?",
+  answer: "computed() is used to create derived values from signals. It updates automatically when dependency changes.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 95,
+  question: "What is effect() in Angular Signals?",
+  answer: "effect() runs side effects when signal value changes. It is used for logging or API calls.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 96,
+  question: "What is difference between Signals and RxJS?",
+  answer: "Signals are simple and synchronous. RxJS is powerful and handles complex async streams.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 97,
+  question: "When to use Signals vs RxJS?",
+  answer: "Use Signals for simple state management. Use RxJS for async operations like API calls and streams.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 98,
+  question: "What is standalone component in Angular?",
+  answer: "Standalone component does not need NgModule. It can be used directly with imports array.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 99,
+  question: "What is bootstrapApplication?",
+  answer: "bootstrapApplication is used to start Angular app without NgModule in standalone approach.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 100,
+  question: "What is provideRouter in Angular?",
+  answer: "provideRouter is used to configure routing in standalone applications.",
+  topic: "angular",
+  level: "intermediate"
+},
+{
+  id: 101,
+  question: "What is state management in Angular?",
+  answer: "State management is used to manage and share data across components in a structured way.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 102,
+  question: "What are different state management options in Angular?",
+  answer: "Options include services with RxJS, BehaviorSubject, Signals and libraries like NgRx.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 103,
+  question: "What is NgRx?",
+  answer: "NgRx is a state management library for Angular. It uses Redux pattern with store, actions and reducers.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 104,
+  question: "What is store in NgRx?",
+  answer: "Store holds application state. It is a single source of truth.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 105,
+  question: "What are actions in NgRx?",
+  answer: "Actions are events that describe what happened. They are used to update state.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 106,
+  question: "What are reducers in NgRx?",
+  answer: "Reducers are functions that take current state and action, and return new state.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 107,
+  question: "What are effects in NgRx?",
+  answer: "Effects handle side effects like API calls. They listen to actions and perform async tasks.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 108,
+  question: "What are selectors in NgRx?",
+  answer: "Selectors are used to select specific data from store.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 109,
+  question: "What is Entity in NgRx?",
+  answer: "Entity is used to manage collections of data in efficient way like arrays of objects.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 110,
+  question: "What is SignalStore (NgRx Signals)?",
+  answer: "SignalStore is new approach using Angular signals for state management in NgRx.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 111,
+  question: "What is performance optimization in Angular?",
+  answer: "Performance optimization means improving speed and efficiency of Angular app.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 112,
+  question: "How to improve Angular performance?",
+  answer: "Use OnPush change detection, lazy loading, trackBy in ngFor, pure pipes and avoid unnecessary API calls.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 113,
+  question: "What is trackBy in Angular?",
+  answer: "trackBy is used with ngFor to track items by unique id. It improves performance by reducing DOM updates.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 114,
+  question: "What is Ahead-of-Time (AOT) compilation?",
+  answer: "AOT compiles Angular code during build time. It improves performance and reduces bundle size.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 115,
+  question: "What is Just-in-Time (JIT) compilation?",
+  answer: "JIT compiles code at runtime in browser. It is used in development mode.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 116,
+  question: "What is tree shaking in Angular?",
+  answer: "Tree shaking removes unused code from final bundle to reduce size.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 117,
+  question: "What is bundle size optimization?",
+  answer: "It means reducing size of application files to improve load time.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 118,
+  question: "What is lazy loading modules?",
+  answer: "Lazy loading loads modules only when needed to improve performance.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 119,
+  question: "What is preloading strategy?",
+  answer: "Preloading loads lazy modules in background to improve navigation speed.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 120,
+  question: "What is differential loading?",
+  answer: "Differential loading serves different bundles for modern and older browsers.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 121,
+  question: "What is security in Angular?",
+  answer: "Security in Angular means protecting application from attacks like XSS and CSRF.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 122,
+  question: "How Angular prevents XSS?",
+  answer: "Angular automatically sanitizes data and prevents unsafe scripts from running in templates.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 123,
+  question: "What is DomSanitizer?",
+  answer: "DomSanitizer is used to bypass Angular security for trusted values like HTML or URLs.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 124,
+  question: "What is CSRF protection?",
+  answer: "CSRF protection prevents unauthorized actions by using tokens in requests.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 125,
+  question: "What is Content Security Policy (CSP)?",
+  answer: "CSP is a security feature to control which resources can be loaded in application.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 126,
+  question: "What is authentication in Angular?",
+  answer: "Authentication checks user identity like login process.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 127,
+  question: "What is authorization in Angular?",
+  answer: "Authorization checks what user is allowed to access in application.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 128,
+  question: "What is JWT in Angular?",
+  answer: "JWT is used for secure authentication. It stores user data in token format.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 129,
+  question: "What is role-based access control?",
+  answer: "Role-based access control restricts access based on user roles like admin or user.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 130,
+  question: "What is HTTPS in Angular apps?",
+  answer: "HTTPS ensures secure communication between client and server using encryption.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 131,
+  question: "What is testing in Angular?",
+  answer: "Testing is used to check whether application works correctly. Angular supports unit and integration testing.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 132,
+  question: "What is unit testing in Angular?",
+  answer: "Unit testing tests individual components or services separately.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 133,
+  question: "What is Karma in Angular?",
+  answer: "Karma is a test runner used to run Angular unit tests in browser.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 134,
+  question: "What is Jasmine?",
+  answer: "Jasmine is a testing framework used to write test cases in Angular.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 135,
+  question: "What is TestBed in Angular?",
+  answer: "TestBed is used to configure testing module and create component instances for testing.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 136,
+  question: "What is mocking in Angular testing?",
+  answer: "Mocking means creating fake services or data for testing purpose.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 137,
+  question: "What is e2e testing in Angular?",
+  answer: "End-to-end testing checks complete application flow like real user.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 138,
+  question: "What is Protractor?",
+  answer: "Protractor is an e2e testing tool for Angular applications (now deprecated).",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 139,
+  question: "What is Cypress?",
+  answer: "Cypress is a modern e2e testing tool used for Angular and other web apps.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 140,
+  question: "What is deployment in Angular?",
+  answer: "Deployment means hosting Angular app on server so users can access it.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 141,
+  question: "What is ng build --prod?",
+  answer: "ng build --prod creates optimized production build with minified files.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 142,
+  question: "What is hosting in Angular?",
+  answer: "Hosting means placing built files on server like Firebase, Netlify or AWS.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 143,
+  question: "What is SSR in Angular?",
+  answer: "SSR (Server Side Rendering) renders pages on server before sending to browser. It improves SEO.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 144,
+  question: "What is Angular Universal?",
+  answer: "Angular Universal is used to enable SSR in Angular applications.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 145,
+  question: "What is PWA in Angular?",
+  answer: "PWA (Progressive Web App) makes Angular app work like mobile app with offline support.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 146,
+  question: "What is service worker in Angular?",
+  answer: "Service worker is used for caching and offline support in PWA.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 147,
+  question: "What is environment production build?",
+  answer: "Production build uses environment.prod.ts for optimized settings.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 148,
+  question: "What is CI/CD in Angular?",
+  answer: "CI/CD automates build, test and deployment process for Angular apps.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 149,
+  question: "What is version control in Angular projects?",
+  answer: "Version control tracks code changes. Git is commonly used.",
+  topic: "angular",
+  level: "advanced"
+},
+{
+  id: 150,
+  question: "What is best practice in Angular?",
+  answer: "Best practices include using clean code, modular structure, lazy loading, proper naming and performance optimization.",
+  topic: "angular",
+  level: "advanced"
+}
 ]
