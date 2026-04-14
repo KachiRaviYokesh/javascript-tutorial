@@ -111,7 +111,7 @@
         }
 
         .qa-card {
-            padding: 14px 0;
+            padding: 8px 0;
             border-bottom: 1px solid #2a2a2a
         }
 
@@ -122,7 +122,7 @@
         .question {
             font-weight: 600;
             font-size: .95rem;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             color: #fff
         }
 
@@ -238,7 +238,7 @@
 
             .question {
                 font-size: .82rem;
-                margin-bottom: 3px
+                margin-bottom: 2px
             }
 
             .answer {
@@ -1599,7 +1599,7 @@ totalPages: number;\n}\non(loadPage, (s, {page}) => ({...s, currentPage: page}))
 
         function render() {
             const filtered = gf();
-            const c = document.getElementById('container');
+            const c = document.getElementById('container'); 
             c.innerHTML = filtered.length ? filtered.map(i => `<div class="qa-card" data-cat="${i.cat}"><div class="question">${hl(i.q, search)}</div><div class="answer">${hl(i.a, search)}</div></div>`).join('') : '<div class="no-results">No results found.</div>';
             // Apply syntax highlighting to all pre blocks
             c.querySelectorAll('pre').forEach(pre => {
